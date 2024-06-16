@@ -1,1 +1,43 @@
-site_name: My Docs
+site_name: SibArc
+repo_url: https://github.com/tadesouaiaia/sibArc-website
+site_author:  Tade Souaiaia 
+nav:
+    - Home: index.md
+    
+    - Quick Start:
+        - Installation and Data:  quik_install.md     
+        - Running SibArc:         quik_demo.md 
+        - Interpreting Results:                     quik_result.md 
+    - About:
+        - Future Work:           about_future.md 
+
+
+
+
+theme:
+    name: readthedocs
+    highlightjs: false
+
+markdown_extensions:
+    - admonition
+    - attr_list
+    - pymdownx.details
+    - pymdownx.tabbed
+    - pymdownx.superfences
+    - pymdownx.highlight:
+        use_pygments: true
+        noclasses: true
+    - pymdownx.arithmatex:
+        generic: True
+    - pymdownx.betterem:
+        smart_enable: all
+    - pymdownx.caret
+
+extra_css:
+  - css/extra.css
+
+
+extra_javascript:
+  - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
+  - javascripts/details.js
+
