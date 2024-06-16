@@ -26,7 +26,7 @@ SibArc is a simple tool that allows inferences about complex genetic architectur
 # Overview 
 
 - SibArc is a software written in [Python.](https://www.python.org/downloads/) 
-- To run SibArc using the supplied sample data please see our [Quick Start Tutorial.](quikstart_data.md).
+- To run SibArc using the supplied sample data please see our [Quick Start Tutorial.](quik_demo.md).
 - Following the Quick Start, our full guide provides more information to get you started as well as information about interpretation of results
 
 

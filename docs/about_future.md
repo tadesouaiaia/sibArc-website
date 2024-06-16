@@ -1,4 +1,4 @@
-![Screenshot](img/slim/guide_logo1.png)
+![Screenshot](img/sib3.jpg)
 
 
 ## Future Work 
