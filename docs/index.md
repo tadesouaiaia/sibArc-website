@@ -4,13 +4,14 @@
 
  
 
-![Screenshot](img/sib1.jpg) 
+![Screenshot](img/logo.jpg) 
 
 
 [//]: # (![Screenshot](img/bridge_logo3.png) 
 
 
-SibArc is a simple tool that allows inferences about complex genetic architecture to be made from sibling data alone.  
+SibArc is a simple tool that allows inferences about complex genetic architecture to be made from sibling-trait data alone.  
+
 
 # Package Downloads 
 | Operating System | Link | Notes | 
@@ -25,9 +26,10 @@ SibArc is a simple tool that allows inferences about complex genetic architectur
 
 # Overview 
 
-- SibArc is a software written in [Python.](https://www.python.org/downloads/) 
+- SibArc is written in [Python.](https://www.python.org/downloads/) 
 - To run SibArc using the supplied sample data please see our [Quick Start Tutorial.](quik_demo.md).
-- Following the Quick Start, our full guide provides more information to get you started as well as information about interpretation of results
+- Following the Quick Start, please read our manuscript, to learn more about the theory behind sibArc. 
+
 
 
 
@@ -49,9 +51,9 @@ SibArc is a simple tool that allows inferences about complex genetic architectur
 
 
 ## Contact 
-For questions about the methodology, this website, or our manuscript please contact [Dr Clive Hoggart](http://www.pauloreilly.info/), 
-[Dr Tade Souaiaia](http://www.pauloreilly.info/), or [Dr Paul O'Reilly](http://www.pauloreilly.info/).  For source code and coding 
-issues please visit the bridgePRS github [here](https://github.com/clivehoggart/BridgePRS). 
+For questions about the methodology, this website, or our manuscript please contact [Dr Tade Souaiaia](tade.souaiaia@gmail.com), 
+[Dr Clive Hoggart](http://www.pauloreilly.info/), or [Dr Paul O'Reilly](http://www.pauloreilly.info/).  For source code and coding 
+issues please visit our [github page](https://github.com/tadesouaiaia/sibarc). 
 
 
 ## Acknowledgements

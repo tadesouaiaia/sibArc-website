@@ -1,4 +1,4 @@
-![Screenshot](img/sib3.jpg)
+![Screenshot](img/sib4.jpg)
 
 
 ## Future Work 

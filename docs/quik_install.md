@@ -1,4 +1,4 @@
-![Screenshot](img/sib2.jpg)
+[//]: ![Screenshot](img/sib1.jpg)
 
 ## Preparation 
 
@@ -26,13 +26,15 @@ into a suitable directory on your machine you will observe that a folder with th
 SibArc requires two column sibling phenotype data. The columns can be separated by a comma or whitespace, a header 
 is optional: 
   
-     Phenotype1,Phenotype2
-     -1.234532,-2.23423
-     -0.8323135,-0.332535 
-      0.235323,1.111334
-      1.213234,1.353234
-      2.334235,2.344321                
 
+     Phenotype1,Phenotype2
+     -2.23511,-2.33331
+     -1.23041,-1.03325
+     -1.55322,-0.03213
+      0.32353,0.991132
+      0.53233,2.124533
+      1.23345,0.936323
+      2.35326,1.323531 
 
 !!! tips "Sample Sibling Data"
     Sample Sibling Data can be found in the data folder 
