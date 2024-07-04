@@ -1,6 +1,6 @@
 site_name: SibArc
 repo_url: https://github.com/tadesouaiaia/sibArc-website
-site_author:  Tade Souaiaia 
+site_author:   Tade Souaiaia 
 nav:
     - Home: index.md
     
