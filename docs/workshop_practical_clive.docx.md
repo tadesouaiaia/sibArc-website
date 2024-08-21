@@ -106,7 +106,7 @@ Fst between these populations is 0.11. The `--phenotype` argument
 specifies the column label of the phenotype in the test and validation
 files, e.g. `EAS_valid.dat`. The `--cores` argument specifies
 the number of cores used in the analysis.  A full list of arguments
-that can be used on the commandline can be found [here (https://www.bridgeprs.net/guide_args/)].
+that can be used on the commandline can be found [here](https://www.bridgeprs.net/guide_args/).
 
 #### The \*.config files
 .config files to tell the
@@ -157,7 +157,7 @@ required to use in brackets): East Asian (EAS), South Asian (SAS),
 European (Eur), African (AFR) and American (AMR).
 
 **For real data analyses 1000G reference data for larger subsets of SNPs can be
-downloaded [here(https://www.bridgeprs.net)]**
+downloaded [here](https://www.bridgeprs.net)**
 
 Can you work out what the other arguments are doing?
 
