@@ -75,11 +75,11 @@ EUR population. The same SNPs are contained in each set of summary statistics.
 
 The `phenotypes` folders has two files: "test" and "validation" with
 IDs, the outcome phenotype and covariates. "Test" data is used to
-optimise the PRS and "validation" data is not used to estimate the
-PRS, it is just to assess model performance.
+optimise the PRS and "validation" data is is just to assess model performance,
+it is not used to estimate the PRS.
 
 The `genotypes` folders are in `plink1.9` format and are split by
-chromosome. These folders contain the genetic data for individuals in
+chromosome. These folders contain the genetic data for both test and validation individuals in
 the phenotypes folder.
 
 Test data will only be used for individuals with both genotype and phenotype
