@@ -173,12 +173,10 @@ explained (R2) by the three PRS BridgePRS estimates and the variance
 explained by a weighted average of the three model. The weighted model
 is BridgePRS estimated "best" PRS
 
-This weighted combined PRS should be used. The three
+The weighted combined PRS should be used. The three
 separate PRS estimated by BridgePRS are:
-* PRS using a prior effect-size distribution from the European model --
-  **stage2 model**
-* PRS using only the target (Non-European) dataset, stage 1 analysis
-  -  **stage 1 model**
+* PRS using a prior effect-size distribution from the European model - **stage2 model**
+* PRS using only the target (Non-European) dataset, stage 1 analysis - **stage 1 model**
 * PRS using both stage 1 and stage  2 results - **stage1+2 model**
 
 Each of these 3 models are given weights corresponding to how well
