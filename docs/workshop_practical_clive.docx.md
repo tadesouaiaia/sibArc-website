@@ -56,7 +56,7 @@ gzcat data/pop_EAS/sumstats/EAS.chr* | wc -l
 gzcat data/pop_EUR/sumstats/EUR.chr* | wc -l
 gzcat data/pop_AFR/sumstats/AFR.chr* | wc -l
 ```
-`zcat`/`gzcat` are used as the files are gzipped. `\|` "pipes" the
+`zcat`/`gzcat` are used as the files are gzipped. `|` "pipes" the
 output to `wc -l` which counts the number of lines.
 
 Results in these files are only shown for SNPs with MAF>0.
