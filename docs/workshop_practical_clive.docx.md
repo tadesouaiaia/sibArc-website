@@ -166,26 +166,25 @@ view the output summary plot
 ```
 evince  out/prs-combined_AFR-EUR/bridge.afr-eur.prs-combined.result.pdf
 ```
-on a Mac simply use `open` instead of `evince`.
+on a Mac use `open` instead of `evince`.
 
 The barplot at the top which shows the varaince
 explained (R2) by the three PRS BridgePRS estimates and the variance
 explained by a weighted average of the three model. The weighted model
-is BridgePRS estimated "best" PRS
+is BridgePRS estimated "best" PRS. 
 
-The weighted combined PRS should be used. The three
-separate PRS estimated by BridgePRS are:
-* PRS using a prior effect-size distribution from the European model - **stage2 model**
-* PRS using only the target (Non-European) dataset, stage 1 analysis - **stage 1 model**
-* PRS using both stage 1 and stage  2 results - **stage1+2 model**
+The three separate PRS estimated by BridgePRS are:
+* PRS estimated using a prior effect-size distribution from the base (European) PRS - **stage2 model**
+* PRS estimated using only the target (Non-European) dataset, stage 1 analysis - **stage 1 model**
+* PRS estimated using both stage 1 and stage  2 results - **stage1+2 model**
 
-Each of these 3 models are given weights corresponding to how well
+Each of these three models are given weights corresponding to how well
 they fit the test data. These weights are then used to combine the PRS
 to give the single weighted combined PRS.
 
+The weighted combined PRS should typically be used.
 The models, stage1, stage2 and stage1+2, should not be used unless users have a
-strong prior belief that the models is better, i.e.
-
+strong prior belief that a particular model is better. The hypotheses of the three models are:
 * Stage 2 model reflects the belief that the target population GWAS is only
   informative in conjugtion with the base population GWAS.
 * Stage 1 model reflects the belief that the target population GWAS is
