@@ -8,7 +8,8 @@ and some experience of running BridgePRS software. After completing
 this practical, you should:
 
 * Be able to perform cross-population analyses using BridgePRS
-  * setting up configuration files used as input by BridgePRS
+  * understand what input files are required by BridgePRS
+  * setting up configuration files used to pass arguments to BridgePRS
 * Interpret output from BridgePRS
 
 ### BridgePRS input data
