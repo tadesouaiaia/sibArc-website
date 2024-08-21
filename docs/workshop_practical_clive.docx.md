@@ -7,9 +7,9 @@ The aim of this practical is to provide you with a basic understanding
 and some experience of running BridgePRS software. After completing
 this practical, you should:
 
-* Be able to perform cross-population analyses.
-* Set up the configuration files used as input by the software.
-* Be familiar with running cross-ancestry PRS analyses using PRS-CSx.
+* Be able to perform cross-population analyses using BridgePRS
+  * setting up configuration files used as input by BridgePRS
+* Interpret output from BridgePRS
 
 ### BridgePRS input data
 In the BridgePRS directory there is a data folder which we will use in
