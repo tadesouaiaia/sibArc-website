@@ -263,7 +263,7 @@ If you have made a mistake, correct and run again using the
 ##### Qustions?
 * How has using the less well powered EAS and AFR GWAS affected the predictive
   accuracy of the BridgePRS models?
-* How do AFR and EUR results compare?
+* How do AFR and EAS results compare?
 
 ##### Analyses with smaller EUR GWAS summary statistics
 Edit the config files again to run analyses using the 40k EUR GWAS
