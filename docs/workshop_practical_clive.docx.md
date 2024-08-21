@@ -27,7 +27,7 @@ drwxr-xr-x   5 hoggac01  staff      160  7 Aug 20:30 pop_EUR
 -rw-r--r--   1 hoggac01  staff   200376  7 Aug 21:30 qc_snplist.txt
 ```
 
-The pop_\* folders contain simulated genotype, phenotype and GWAS
+The `pop_AFR, pop_EAS, pop_EUR` folders contain simulated genotype, phenotype and GWAS
 summary statistics representative of
 Europeans, East Asians and Africans for input to BridgePRS. Each pop_\*
 folder is split into summary statistics, and
