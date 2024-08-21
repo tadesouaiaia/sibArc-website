@@ -51,7 +51,7 @@ SibArc is a simple tool that allows inferences about complex genetic architectur
 
 
 ## Contact 
-For questions about the methodology, this website, or our manuscript please contact [Dr Tade Souaiaia](tade.souaiaia@gmail.com), 
+For questions about the methodology, this website, or our manuscript please contact [Dr Tade Souaiaia](https://groups.google.com/) 
 [Dr Clive Hoggart](http://www.pauloreilly.info/), or [Dr Paul O'Reilly](http://www.pauloreilly.info/).  For source code and coding 
 issues please visit our [github page](https://github.com/tadesouaiaia/sibarc). 
 
