@@ -95,7 +95,7 @@ Example run of BridgePRS:
 ```
 Arguments can be passed to BridgePRS on both the commandline and in
 config files. config files, used above, are a neat way to store population
-specific arguments, therefore for a standard two population analysis
+specific arguments, for a standard two population analysis
 two config are required. By default the first config file is for the target
 population and the second is for the base population. The `-o` argument
 specifies the output folder. The `--fst` argument is used to specify a prior
@@ -106,7 +106,7 @@ Fst between these populations is 0.11. The `--phenotype` argument
 specifies the column label of the phenotype in the test and validation
 files, e.g. `EAS_valid.dat`. The `--cores` argument specifies
 the number of cores used in the analysis.  A full list of arguments
-that can be used on the commandline can be found here....
+that can be used on the commandline can be found [here (https://www.bridgeprs.net/guide_args/)].
 
 #### The \*.config files
 .config files to tell the
