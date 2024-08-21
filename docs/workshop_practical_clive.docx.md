@@ -156,7 +156,7 @@ required to use in brackets): East Asian (EAS), South Asian (SAS),
 European (Eur), African (AFR) and American (AMR).
 
 **For real data analyses 1000G reference data for larger subsets of SNPs can be
-downloaded here**
+downloaded [here(https://www.bridgeprs.net)]**
 
 Can you work out what the other arguments are doing?
 
