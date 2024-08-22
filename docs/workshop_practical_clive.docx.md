@@ -200,8 +200,6 @@ and weighted. `EAS_weighted_combined_snp_weights.dat` has the SNP
 weights for the combined to allow this model to be applied to other
 samples.
 
-### Using BidgePRS SNP weights
-
 ### Using BridgePRS without target summary statistics
 Often GWAS summary statistics are only available in one
 population. BridgePRS can use these summary statistics and optimise
@@ -273,3 +271,24 @@ Edit the config files again to run analyses using the 40k EUR GWAS
 a new directory e.g. `out_half_eur`.
 
 ##### Qustions?
+* How has using the less well powered EUR GWAS affected the predictive
+  accuracy of the BridgePRS models?
+* How do AFR and EAS results compare?
+
+### Using BidgePRS SNP weights
+The SNP weights in `EAS_weighted_combined_snp_weights.dat` can be used to make
+predictions in other samples for which we have overlapping genotype data. We demonstrate
+this using `plink` and the data in `data/pop_EAS/genotypes/`. The genotype data is split
+by chromosome, therefore need to estimate predictions for each chromosome separately and
+then combine these prediction. The following bash commands will do this by running plink,
+however, we first make a directory to write these predictions to
+```
+mkdir out/preds
+for chr in {1..22}
+do
+    plink --score out/prs-combined_EAS-EUR/EAS_weighted_combined_snp_weights.dat 1 2 4 list-variants \
+          --bfile data/pop_EAS/genotypes/chr$chr \
+          --out out/preds/EAS_chr$chr
+done
+```
+We then read these prediction into R to combine
