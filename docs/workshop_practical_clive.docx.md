@@ -200,6 +200,8 @@ and weighted. `EAS_weighted_combined_snp_weights.dat` has the SNP
 weights for the combined to allow this model to be applied to other
 samples.
 
+### Using BidgePRS SNP weights
+
 ### Using BridgePRS without target summary statistics
 Often GWAS summary statistics are only available in one
 population. BridgePRS can use these summary statistics and optimise
