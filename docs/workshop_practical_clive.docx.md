@@ -292,3 +292,21 @@ do
 done
 ```
 We then read these prediction into R to combine
+```
+R
+library(data.table)
+tmp <- fread(paste0('out1/preds/EAS_chr1.profile'))
+pred <- data.frame( tmp$IID, tmp$SCORESUM )
+colnames(pred) <- c('IID','Score')
+for( chr in 2:22 ){
+    tmp <- fread(paste0('out1/preds/EAS_chr',chr,'.profile'))
+    pred[,2] <- pred[,2] + tmp$SCORESUM
+}
+
+# Check predictions are the same as those produced directly by BridgePRS
+valid <- fread('out1/prs-combined_EAS-EUR/EAS_weighted_combined_preds.dat')
+# Match IDs
+ptr <- match( valid$IID, pred$IID )
+plot( pred$Score[ptr], valid$Weighted )
+```
+Predictions are the same \+/\- rounding error and a constant.
