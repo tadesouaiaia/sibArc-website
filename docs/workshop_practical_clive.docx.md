@@ -11,7 +11,7 @@ this practical, you should:
   * understand what input files are required by BridgePRS
   * setting up configuration files used to pass arguments to BridgePRS
 * Interpret output from BridgePRS
- * Use BridgePRS output to calculate PRS in unseen samples using SNP weights
+  * Use BridgePRS output to calculate PRS in unseen samples using SNP weights
 
 ### BridgePRS input data
 In the BridgePRS directory there is a data folder which we will use in
