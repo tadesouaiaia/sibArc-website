@@ -63,7 +63,7 @@ output to `wc -l` which counts the number of lines.
 
 Results in these files are only shown for SNPs with MAF>0 and are a
 random subset of HapMap SNPs.
-#### Questions?
+### Questions?
 * Which population has the most polymorphic SNPs?
 * Which population has the least polymorphic SNPs?
 * Why do you think this bias exists?
@@ -167,7 +167,7 @@ European (Eur), African (AFR) and American (AMR).
 **For real data analyses 1000G reference data for larger subsets of SNPs can be
 downloaded [here](https://www.bridgeprs.net)**
 
-#### Qustion?
+### Qustion?
 Can you work out what the other command line arguments are doing?
 Can you work out what the other config file arguments are doing?
 
@@ -232,7 +232,7 @@ level from the target population. Here is an example using the
 ./bridgePRS prs-single run -o out_single/ --config_files data/eur_eas.config --phenotype y --cores 10
 ```
 Look at `data/eur_eas.config`.
-#### Questions?
+### Questions?
 * What GWAS summary data is used?
 * What test data is used for model optimisation?
 * What validation data is used?
@@ -250,7 +250,7 @@ cat out/prs-combined_EAS-EUR/EAS_weighted_combined_var_explained.txt
 This single summary statistic analysis is equilvant to the stage 2
 analysis previously but with all the weight on the EUR prior.
 
-#### Question?
+### Question?
 * How does prediction using only EUR summary statistics compare with
 those which include information from the EAS summary statistics?
 
@@ -290,7 +290,7 @@ grep Sumstats out_half_target/logs/bridgePRS.afr-eur.pipeline.go.log
 If you have made a mistake, correct and run again using the
 `--restart` flag which deletes the previously genereated results.
 
-#### Qustions?
+### Qustions?
 * How has using the less well powered EAS and AFR GWAS affected the predictive
   accuracy of the BridgePRS models?
 * How do AFR and EAS results compare?
@@ -300,7 +300,7 @@ Edit the config files again to run analyses using the 40k EUR GWAS
 (i.e. `EUR_half`) and the 20k EAS and AFR GWAS and write to results to
 a new directory e.g. `out_half_eur`.
 
-#### Qustions?
+### Qustions?
 * How has using the less well powered EUR GWAS affected the predictive
   accuracy of the BridgePRS models?
 * How do AFR and EAS results compare?
