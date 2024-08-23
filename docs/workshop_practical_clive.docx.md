@@ -159,6 +159,7 @@ European (Eur), African (AFR) and American (AMR).
 **For real data analyses 1000G reference data for larger subsets of SNPs can be
 downloaded [here](https://www.bridgeprs.net)**
 
+### Qustion?
 Can you work out what the other arguments are doing?
 
 ### BridgePRS output
@@ -172,7 +173,14 @@ on a Mac use `open` instead of `evince`.
 The barplot at the top which shows the varaince
 explained (R2) by the three PRS BridgePRS estimates and the variance
 explained by a weighted average of the three model. The weighted model
-is BridgePRS estimated "best" PRS. 
+is BridgePRS estimated "best" PRS.
+
+Look at the following output file
+```
+cat out/prs-combined_AFR-EUR/weighted_combined_var_explained.txt
+```
+### Question?
+Which plot in the summary plot was constructed from this output file? 
 
 The three separate target population PRS estimated by BridgePRS are:
 * **Stage2 model** -- estimated using target population data with prior effect-size distribution from the base (European) population
@@ -229,7 +237,7 @@ EAS summary statistics have been incorporated to improve the PRS.
 #### African analysis
 Run BridgePRS again to estimate PRS in Africans using `afr.config`.
 
-##### Qustions?
+### Qustions?
 * In addition to pointing to differnt input files what other difference is
   there between the EAS and AFR config files?
 * How do the results for EAS and AFR compare?
