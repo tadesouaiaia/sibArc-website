@@ -86,9 +86,9 @@ IDs, the outcome phenotype and covariates. "Test" data is used to
 optimise the PRS and "validation" data is is just to assess model performance,
 it is not used to estimate the PRS.
 
-The `genotypes` folders are in `plink1.9` format and are split by
-chromosome. These folders contain the genetic data for both test and validation individuals in
-the phenotypes folder.
+The `genotypes` folders are in `plink` binary format and are split by
+chromosome. These folders contain the genetic data for both test and
+validation individuals in the phenotypes folder.
 
 Test data will only be used for individuals with both genotype and phenotype
 information. Similarly model performance metrics will only use  samples with both
@@ -148,7 +148,7 @@ The `POP` argument simply labels the population used in this .config
 file for output.
 
 #### Estimating Linkage Dissequilibrium (LD)
-BridgePRS requires individual level genetic data in `plink1.9` binary
+BridgePRS requires individual level genetic data in `plink` binary
 format to estimate linkage dissequilibrium (LD) in the populations
 which produced the GWAS summary statistics. The genotype test and
 validation data could be used, e.g. data here
@@ -167,7 +167,8 @@ European (Eur), African (AFR) and American (AMR).
 downloaded [here](https://www.bridgeprs.net)**
 
 ### Qustion?
-Can you work out what the other arguments are doing?
+Can you work out what the other command line arguments are doing?
+Can you work out what the other config file arguments are doing?
 
 ### BridgePRS output
 The main output is in the folder `out/prs-combined_EAS-EUR/`. First
@@ -177,18 +178,21 @@ evince  out/prs-combined_AFR-EUR/bridge.afr-eur.prs-combined.result.pdf
 ```
 on a Mac use `open` instead of `evince`.
 
-The barplot at the top which shows the varaince
-explained (R2) by the three PRS BridgePRS estimates and the variance
-explained by a weighted average of the three model. The weighted model
-is BridgePRS estimated "best" PRS.
+The barplot at the top shows the varaince explained (R2) by the
+four PRS models BridgePRS estimates. The weighted model is BridgePRS
+estimated "best" PRS.
 
 Look at the following output file
 ```
 cat out/prs-combined_AFR-EUR/weighted_combined_var_explained.txt
 ```
 ### Question?
-Which plot in the summary plot was constructed from this output file? 
+* Which plot in the summary plot was constructed from this output
+  file?
+* How do the Manhattan plots of the base and target populations
+  compare?
 
+#### The models estimated by BridgePRS
 The three separate target population PRS estimated by BridgePRS are:
 * **Stage2 model** -- estimated using target population data with prior effect-size distribution from the base (European) population
 * **Stage 1 model** -- estimated using only the target (Non-European) data
@@ -242,11 +246,11 @@ EAS summary statistics have been incorporated to improve the PRS.
 
 ### Further analysis with BridgePRS
 #### African analysis
-Run BridgePRS again to estimate PRS in Africans using `afr.config`.
+Run BridgePRS again to estimate PRS in Africans using
+`afr.config`. Note, you should also change the command line `fst`
+argument to match the Fst between Africans and Europeans, use 0.15.
 
 ### Qustions?
-* In addition to pointing to differnt input files what other difference is
-  there between the EAS and AFR config files?
 * How do the results for EAS and AFR compare?
   
 #### Analyses with other GWAS summary statistics
@@ -306,7 +310,7 @@ do
           --out out/preds/EAS_chr$chr
 done
 ```
-We then read these prediction into R to combine
+We then read these predictions into R to combine
 ```
 R
 library(data.table)
