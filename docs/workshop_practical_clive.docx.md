@@ -113,12 +113,12 @@ Fst between these populations is 0.11. The `--phenotype` argument
 specifies the column label of the phenotype in the test and validation
 files, e.g. `EAS_valid.dat`. The `--cores` argument specifies
 the number of cores used in the analysis.  A full list of arguments
-that can be used on the commandline can be found [here](https://www.bridgeprs.net/guide_args/).
+that can be used on the command line can be found [here](https://www.bridgeprs.net/guide_args/).
 
 #### The \*.config files
-.config files to tell the
-software where to find the required input files and the column headers of the
-summary statistics files, take a look, e.g.
+.config files tell BridgePRS where to find the required input files 
+and the column headers of the summary statistics files for a
+population data set, take a look, e.g.
 ```
 cat data/eas.config 
 POP=EAS
@@ -131,7 +131,7 @@ SUMSTATS_SIZE=20000
 SUMSTATS_SUFFIX=.glm.linear.gz
 GENOTYPE_PREFIX=pop_EAS/genotypes/chr
 PHENOTYPE_FILE=pop_EAS/phenotypes/EAS_test.dat  
-VALIDATION_FILE=pop_EAS/phenotypes/EAS_valid2.dat 
+VALIDATION_FILE=pop_EAS/phenotypes/EAS_valid.dat 
 SNP_FILE=qc_snplist.txt
 SSF-P=P
 SSF-SNPID=ID
@@ -182,15 +182,6 @@ The barplot at the top shows the varaince explained (R2) by the
 four PRS models BridgePRS estimates. The weighted model is BridgePRS
 estimated "best" PRS.
 
-Look at the following output file
-```
-cat out/prs-combined_AFR-EUR/weighted_combined_var_explained.txt
-```
-### Question?
-* Which plot in the summary plot was constructed from this output
-  file?
-* How do the Manhattan plots of the base and target populations
-  compare?
 
 #### The models estimated by BridgePRS
 The three separate target population PRS estimated by BridgePRS are:
@@ -202,9 +193,10 @@ Each of these three models are given weights corresponding to how well
 they fit the test data. These weights are then used to combine the PRS
 to give the single weighted combined PRS.
 
-The weighted combined PRS should typically be used.
-The models, stage1, stage2 and stage1+2, should not be used unless users have a
-strong prior belief that a particular model is better. The hypotheses of the three models are:
+The weighted combined PRS should typically be used.  The models,
+stage1, stage2 and stage1+2, should not be used unless users have a
+strong prior belief that a particular model is better. The hypotheses
+of the three models are:
 * Stage 2 model reflects the belief that the target population GWAS is only
   informative in conjugtion with the base population GWAS.
 * Stage 1 model reflects the belief that the target population GWAS is
@@ -212,6 +204,16 @@ strong prior belief that a particular model is better. The hypotheses of the thr
   information.
 * Stage 1+2 model reflects the belief both the base and target population
   GWAS contribute independent information.
+
+Look at the following output file
+```
+cat out/prs-combined_AFR-EUR/EAS_weighted_combined_var_explained.txt
+```
+### Question?
+* Which plot in the summary plot was constructed from this output
+  file?
+* How do the Manhattan plots of the base and target populations
+  compare?
 
 `EAS_weighted_combined_preds.dat` has PRS predictions for samples in
 the validation data using all four models: stage1, stage2, stage1+2
@@ -223,26 +225,33 @@ samples.
 Often GWAS summary statistics are only available in one
 population. BridgePRS can use these summary statistics and optimise
 them to estimate a PRS for another target population given individual
-level from the target population. Here is an example
+level from the target population. Here is an example using the
+`data/eur_eas.config` config file
 ```
 ./bridgePRS prs-single run -o out_single/ --config_files data/eur_eas.config --phenotype y --cores 10
 ```
-Look at `data/eur_eas.config`, the file uses EUR GWAS summary
-statistics and EAS test and validation data. Results of interest are
-written to the folder `out_single/prs-single_EAS/quantify/`. Model
-performance is shown in the file `EAS_quantify_var_explained.txt` and
-plotted in ....
+Look at `data/eur_eas.config`.
+### Questions?
+* What GWAS summary data is used?
+* What test data is used for model optimisation?
+* What validation data is used?
 
-See hpw these results compare with the previous analysis which
+Results of interest are written to the folder
+`out_single/prs-single_EAS/quantify/`. Model performance is shown in
+the file `EAS_quantify_var_explained.txt` and plotted in ....
+
+See how these results compare with the previous analysis which
 included EAS GWAS summary statistics.
 ```
 cat out_single/prs-single_EAS/quantify/EAS_quantify_var_explained.txt
 cat out/prs-combined_EAS-EUR/EAS_weighted_combined_var_explained.txt
 ```
 This single summary statistic analysis is equilvant to the stage 2
-analysis previously but with all the weight on the EUR prior. The
-superior performance of the previous stage 2 analysis shows how the
-EAS summary statistics have been incorporated to improve the PRS.
+analysis previously but with all the weight on the EUR prior.
+
+### Question?
+* How does prediction using only EUR summary statistics compare with
+those which include information from the EAS summary statistics?
 
 ### Further analysis with BridgePRS
 #### African analysis
@@ -251,7 +260,8 @@ Run BridgePRS again to estimate PRS in Africans using
 argument to match the Fst between Africans and Europeans, use 0.15.
 
 ### Qustions?
-* How do the results for EAS and AFR compare?
+* Which population, EAS or AFR, has the best prediction?
+* What are the reasons for the differences in prediction between the populations?
   
 #### Analyses with other GWAS summary statistics
 For each population the config files contain commented out links to GWAS summary
