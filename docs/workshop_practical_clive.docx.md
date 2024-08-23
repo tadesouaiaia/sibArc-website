@@ -308,10 +308,10 @@ a new directory e.g. `out_half_eur`.
 ### Using BidgePRS SNP weights
 The SNP weights in `EAS_weighted_combined_snp_weights.dat` can be used to make
 predictions in other samples for which we have overlapping genotype data. We demonstrate
-this using `plink` and the data in `data/pop_EAS/genotypes/`. The genotype data is split
-by chromosome, therefore need to estimate predictions for each chromosome separately and
-then combine these prediction. The following bash commands will do this by running plink,
-however, we first make a directory to write these predictions to
+this using `plink` and data in `data/pop_EAS/genotypes/`. The genotype data is split
+by chromosome, therefore predictions are estimated for each chromosome separately and
+then combined. The following bash commands estimate the per chromosome predictions using plink,
+we first make a directory to write these predictions to
 ```
 mkdir out/preds
 for chr in {1..22}
