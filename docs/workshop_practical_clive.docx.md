@@ -60,9 +60,16 @@ gzcat data/pop_AFR/sumstats/AFR.chr* | wc -l
 `zcat`/`gzcat` are used as the files are gzipped. `|` "pipes" the
 output to `wc -l` which counts the number of lines.
 
-Results in these files are only shown for SNPs with MAF>0.
-The SNPs are a subset of the HapMap panel, there seems to
-be a bias to polymorphoic EUR SNPs. Take a look a look at the files, e.g.
+Results in these files are only shown for SNPs with MAF>0 and are a
+random subset of HapMap SNPs.
+### Questions?
+* Which population has the most polymorphic SNPs?
+* Which population has the least polymorphic SNPs?
+* Why do you think this bias exists?
+* Which population would you expect to have the most polymorphic SNPs
+  if SNPs were ascertained from 1000G?
+
+Take a look a look at the files, e.g.
 ```
 zcat data/pop_AFR/sumstats/AFR.chr19.glm.linear.gz | head 
 zcat data/pop_AFR/sumstats/AFR_half.chr19.glm.linear.gz | head 
