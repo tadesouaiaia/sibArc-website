@@ -21,7 +21,7 @@ this practical, you should:
 
 * Be able to perform cross-population analyses using BridgePRS
   * understand what input files are required by BridgePRS
-  * setting up configuration files used to pass arguments to BridgePRS
+  * set up configuration files to pass arguments to BridgePRS
 * Interpret output from BridgePRS
   * Use BridgePRS output to calculate PRS in unseen samples using SNP weights
 
