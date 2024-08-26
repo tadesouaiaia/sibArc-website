@@ -329,7 +329,7 @@ a new directory e.g. `out_half_eur`.
 
 <a href="#top">[Back to Table of Contents](#table-of-contents)</a>
 
-## Using BidgePRS SNP weights
+## Using BridgePRS SNP weights
 The SNP weights in `EAS_weighted_combined_snp_weights.dat` can be used to make
 predictions in other samples for which we have overlapping genotype data. We demonstrate
 this using `plink` and data in `data/pop_EAS/genotypes/`. The genotype data is split
