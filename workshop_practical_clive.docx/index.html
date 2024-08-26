@@ -57,11 +57,17 @@
               </ul>
               <p class="caption"><span class="caption-text">Misc</span></p>
               <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../tmp/workshop_practical_paul.docx/">Day 1 (AM)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tmp/workshop_practical_tade/">Day 1 (PM)</a>
+                  </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Day 2 (AM)</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#learning-objectives">Learning Objectives</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#bridgeprs-input-data">BridgePRS input data</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#questions">Questions?</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#passing-arguments-to-run-bridgeprs">Passing arguments to run BridgePRS</a>
         <ul>
@@ -71,29 +77,41 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#qustion">Qustion?</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#bridgeprs-output">BridgePRS output</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#the-models-estimated-by-bridgeprs">The models estimated by BridgePRS</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#question">Question?</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#using-bridgeprs-without-target-summary-statistics">Using BridgePRS without target summary statistics</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#questions_1">Questions?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#question_1">Question?</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#further-analysis-with-bridgeprs">Further analysis with BridgePRS</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#african-analysis">African analysis</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#qustions">Qustions?</a>
     </li>
-        </ul>
+    <li class="toctree-l3"><a class="reference internal" href="#qustions">Qustions?</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#analyses-with-other-gwas-summary-statistics">Analyses with other GWAS summary statistics</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#qustions_1">Qustions?</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#qustions_1">Qustions?</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#analyses-with-smaller-eur-gwas-summary-statistics">Analyses with smaller EUR GWAS summary statistics</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#qustions_2">Qustions?</a>
+    <li class="toctree-l3"><a class="reference internal" href="#analyses-with-smaller-eur-gwas-summary-statistics">Analyses with smaller EUR GWAS summary statistics</a>
     </li>
         </ul>
     </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#qustions_2">Qustions?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-bidgeprs-snp-weights">Using BidgePRS SNP weights</a>
     </li>
     </ul>
                   </li>
@@ -135,6 +153,7 @@ this practical, you should:</p>
 <li>understand what input files are required by BridgePRS</li>
 <li>setting up configuration files used to pass arguments to BridgePRS</li>
 <li>Interpret output from BridgePRS</li>
+<li>Use BridgePRS output to calculate PRS in unseen samples using SNP weights</li>
 </ul>
 <h3 id="bridgeprs-input-data">BridgePRS input data</h3>
 <p>In the BridgePRS directory there is a data folder which we will use in
@@ -178,9 +197,17 @@ gzcat data/pop_AFR/sumstats/AFR.chr* | wc -l
 </code></pre></div>
 <code>zcat</code>/<code>gzcat</code> are used as the files are gzipped. <code>|</code> "pipes" the
 output to <code>wc -l</code> which counts the number of lines.</p>
-<p>Results in these files are only shown for SNPs with MAF&gt;0.
-The SNPs are a subset of the HapMap panel, there seems to
-be a bias to polymorphoic EUR SNPs. Take a look a look at the files, e.g.
+<p>Results in these files are only shown for SNPs with MAF&gt;0 and are a
+random subset of HapMap SNPs.</p>
+<h3 id="questions">Questions?</h3>
+<ul>
+<li>Which population has the most polymorphic SNPs?</li>
+<li>Which population has the least polymorphic SNPs?</li>
+<li>Why do you think this bias exists?</li>
+<li>Which population would you expect to have the most polymorphic SNPs
+  if SNPs were ascertained from 1000G?</li>
+</ul>
+<p>Take a look a look at the files, e.g.
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>zcat data/pop_AFR/sumstats/AFR.chr19.glm.linear.gz | head 
 zcat data/pop_AFR/sumstats/AFR_half.chr19.glm.linear.gz | head 
 </code></pre></div>
@@ -193,9 +220,9 @@ EUR population. The same SNPs are contained in each set of summary statistics.</
 IDs, the outcome phenotype and covariates. "Test" data is used to
 optimise the PRS and "validation" data is is just to assess model performance,
 it is not used to estimate the PRS.</p>
-<p>The <code>genotypes</code> folders are in <code>plink1.9</code> format and are split by
-chromosome. These folders contain the genetic data for both test and validation individuals in
-the phenotypes folder.</p>
+<p>The <code>genotypes</code> folders are in <code>plink</code> binary format and are split by
+chromosome. These folders contain the genetic data for both test and
+validation individuals in the phenotypes folder.</p>
 <p>Test data will only be used for individuals with both genotype and phenotype
 information. Similarly model performance metrics will only use  samples with both
 genotype and phenotype information, however, predictions are generated
@@ -217,11 +244,11 @@ Fst between these populations is 0.11. The <code>--phenotype</code> argument
 specifies the column label of the phenotype in the test and validation
 files, e.g. <code>EAS_valid.dat</code>. The <code>--cores</code> argument specifies
 the number of cores used in the analysis.  A full list of arguments
-that can be used on the commandline can be found <a href="https://www.bridgeprs.net/guide_args/">here</a>.</p>
+that can be used on the command line can be found <a href="https://www.bridgeprs.net/guide_args/">here</a>.</p>
 <h4 id="the-config-files">The *.config files</h4>
-<p>.config files to tell the
-software where to find the required input files and the column headers of the
-summary statistics files, take a look, e.g.
+<p>.config files tell BridgePRS where to find the required input files 
+and the column headers of the summary statistics files for a
+population data set, take a look, e.g.
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>cat data/eas.config 
 POP=EAS
 LDPOP=EAS
@@ -233,7 +260,7 @@ SUMSTATS_SIZE=20000
 SUMSTATS_SUFFIX=.glm.linear.gz
 GENOTYPE_PREFIX=pop_EAS/genotypes/chr
 PHENOTYPE_FILE=pop_EAS/phenotypes/EAS_test.dat  
-VALIDATION_FILE=pop_EAS/phenotypes/EAS_valid2.dat 
+VALIDATION_FILE=pop_EAS/phenotypes/EAS_valid.dat 
 SNP_FILE=qc_snplist.txt
 SSF-P=P
 SSF-SNPID=ID
@@ -248,7 +275,7 @@ between the argument name and the argument being passed.</p>
 <p>The <code>POP</code> argument simply labels the population used in this .config
 file for output.</p>
 <h4 id="estimating-linkage-dissequilibrium-ld">Estimating Linkage Dissequilibrium (LD)</h4>
-<p>BridgePRS requires individual level genetic data in <code>plink1.9</code> binary
+<p>BridgePRS requires individual level genetic data in <code>plink</code> binary
 format to estimate linkage dissequilibrium (LD) in the populations
 which produced the GWAS summary statistics. The genotype test and
 validation data could be used, e.g. data here
@@ -264,27 +291,30 @@ required to use in brackets): East Asian (EAS), South Asian (SAS),
 European (Eur), African (AFR) and American (AMR).</p>
 <p><strong>For real data analyses 1000G reference data for larger subsets of SNPs can be
 downloaded <a href="https://www.bridgeprs.net">here</a></strong></p>
-<p>Can you work out what the other arguments are doing?</p>
+<h3 id="qustion">Qustion?</h3>
+<p>Can you work out what the other command line arguments are doing?
+Can you work out what the other config file arguments are doing?</p>
 <h3 id="bridgeprs-output">BridgePRS output</h3>
 <p>The main output is in the folder <code>out/prs-combined_EAS-EUR/</code>. First
 view the output summary plot
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>evince  out/prs-combined_AFR-EUR/bridge.afr-eur.prs-combined.result.pdf
 </code></pre></div>
 on a Mac use <code>open</code> instead of <code>evince</code>.</p>
-<p>The barplot at the top which shows the varaince
-explained (R2) by the three PRS BridgePRS estimates and the variance
-explained by a weighted average of the three model. The weighted model
-is BridgePRS estimated "best" PRS. </p>
-<p>The three separate PRS estimated by BridgePRS are:
-* PRS estimated using a prior effect-size distribution from the base (European) PRS - <strong>stage2 model</strong>
-* PRS estimated using only the target (Non-European) dataset, stage 1 analysis - <strong>stage 1 model</strong>
-* PRS estimated using both stage 1 and stage  2 results - <strong>stage1+2 model</strong></p>
+<p>The barplot at the top shows the varaince explained (R2) by the
+four PRS models BridgePRS estimates. The weighted model is BridgePRS
+estimated "best" PRS.</p>
+<h4 id="the-models-estimated-by-bridgeprs">The models estimated by BridgePRS</h4>
+<p>The three separate target population PRS estimated by BridgePRS are:
+* <strong>Stage2 model</strong> -- estimated using target population data with prior effect-size distribution from the base (European) population
+* <strong>Stage 1 model</strong> -- estimated using only the target (Non-European) data
+* <strong>Stage1+2 model</strong> -- estimated using both stage 1 and stage 2 models</p>
 <p>Each of these three models are given weights corresponding to how well
 they fit the test data. These weights are then used to combine the PRS
 to give the single weighted combined PRS.</p>
-<p>The weighted combined PRS should typically be used.
-The models, stage1, stage2 and stage1+2, should not be used unless users have a
-strong prior belief that a particular model is better. The hypotheses of the three models are:
+<p>The weighted combined PRS should typically be used.  The models,
+stage1, stage2 and stage1+2, should not be used unless users have a
+strong prior belief that a particular model is better. The hypotheses
+of the three models are:
 * Stage 2 model reflects the belief that the target population GWAS is only
   informative in conjugtion with the base population GWAS.
 * Stage 1 model reflects the belief that the target population GWAS is
@@ -292,6 +322,16 @@ strong prior belief that a particular model is better. The hypotheses of the thr
   information.
 * Stage 1+2 model reflects the belief both the base and target population
   GWAS contribute independent information.</p>
+<p>Look at the following output file
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>cat out/prs-combined_AFR-EUR/EAS_weighted_combined_var_explained.txt
+</code></pre></div></p>
+<h4 id="question">Question?</h4>
+<ul>
+<li>Which plot in the summary plot was constructed from this output
+  file?</li>
+<li>How do the Manhattan plots of the base and target populations
+  compare?</li>
+</ul>
 <p><code>EAS_weighted_combined_preds.dat</code> has PRS predictions for samples in
 the validation data using all four models: stage1, stage2, stage1+2
 and weighted. <code>EAS_weighted_combined_snp_weights.dat</code> has the SNP
@@ -301,31 +341,41 @@ samples.</p>
 <p>Often GWAS summary statistics are only available in one
 population. BridgePRS can use these summary statistics and optimise
 them to estimate a PRS for another target population given individual
-level from the target population. Here is an example
+level from the target population. Here is an example using the
+<code>data/eur_eas.config</code> config file
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>./bridgePRS prs-single run -o out_single/ --config_files data/eur_eas.config --phenotype y --cores 10
 </code></pre></div>
-Look at <code>data/eur_eas.config</code>, the file uses EUR GWAS summary
-statistics and EAS test and validation data. Results of interest are
-written to the folder <code>out_single/prs-single_EAS/quantify/</code>. Model
-performance is shown in the file <code>EAS_quantify_var_explained.txt</code> and
-plotted in ....</p>
-<p>See hpw these results compare with the previous analysis which
+Look at <code>data/eur_eas.config</code>.</p>
+<h3 id="questions_1">Questions?</h3>
+<ul>
+<li>What GWAS summary data is used?</li>
+<li>What test data is used for model optimisation?</li>
+<li>What validation data is used?</li>
+</ul>
+<p>Results of interest are written to the folder
+<code>out_single/prs-single_EAS/quantify/</code>. Model performance is shown in
+the file <code>EAS_quantify_var_explained.txt</code> and plotted in ....</p>
+<p>See how these results compare with the previous analysis which
 included EAS GWAS summary statistics.
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>cat out_single/prs-single_EAS/quantify/EAS_quantify_var_explained.txt
 cat out/prs-combined_EAS-EUR/EAS_weighted_combined_var_explained.txt
 </code></pre></div>
 This single summary statistic analysis is equilvant to the stage 2
-analysis previously but with all the weight on the EUR prior. The
-superior performance of the previous stage 2 analysis shows how the
-EAS summary statistics have been incorporated to improve the PRS.</p>
+analysis previously but with all the weight on the EUR prior.</p>
+<h3 id="question_1">Question?</h3>
+<ul>
+<li>How does prediction using only EUR summary statistics compare with
+those which include information from the EAS summary statistics?</li>
+</ul>
 <h3 id="further-analysis-with-bridgeprs">Further analysis with BridgePRS</h3>
 <h4 id="african-analysis">African analysis</h4>
-<p>Run BridgePRS again to estimate PRS in Africans using <code>afr.config</code>.</p>
-<h5 id="qustions">Qustions?</h5>
+<p>Run BridgePRS again to estimate PRS in Africans using
+<code>afr.config</code>. Note, you should also change the command line <code>fst</code>
+argument to match the Fst between Africans and Europeans, use 0.15.</p>
+<h4 id="qustions">Qustions?</h4>
 <ul>
-<li>In addition to pointing to differnt input files what other difference is
-  there between the EAS and AFR config files?</li>
-<li>How do the results for EAS and AFR compare?</li>
+<li>Which population, EAS or AFR, has the best prediction?</li>
+<li>What are the reasons for the differences in prediction between the populations?</li>
 </ul>
 <h4 id="analyses-with-other-gwas-summary-statistics">Analyses with other GWAS summary statistics</h4>
 <p>For each population the config files contain commented out links to GWAS summary
@@ -347,22 +397,60 @@ grep Sumstats out_half_target/logs/bridgePRS.afr-eur.pipeline.go.log
 </code></pre></div></p>
 <p>If you have made a mistake, correct and run again using the
 <code>--restart</code> flag which deletes the previously genereated results.</p>
-<h5 id="qustions_1">Qustions?</h5>
+<h3 id="qustions_1">Qustions?</h3>
 <ul>
 <li>How has using the less well powered EAS and AFR GWAS affected the predictive
   accuracy of the BridgePRS models?</li>
-<li>How do AFR and EUR results compare?</li>
+<li>How do AFR and EAS results compare?</li>
 </ul>
 <h5 id="analyses-with-smaller-eur-gwas-summary-statistics">Analyses with smaller EUR GWAS summary statistics</h5>
 <p>Edit the config files again to run analyses using the 40k EUR GWAS
 (i.e. <code>EUR_half</code>) and the 20k EAS and AFR GWAS and write to results to
 a new directory e.g. <code>out_half_eur</code>.</p>
-<h5 id="qustions_2">Qustions?</h5>
+<h3 id="qustions_2">Qustions?</h3>
+<ul>
+<li>How has using the less well powered EUR GWAS affected the predictive
+  accuracy of the BridgePRS models?</li>
+<li>How do AFR and EAS results compare?</li>
+</ul>
+<h3 id="using-bidgeprs-snp-weights">Using BidgePRS SNP weights</h3>
+<p>The SNP weights in <code>EAS_weighted_combined_snp_weights.dat</code> can be used to make
+predictions in other samples for which we have overlapping genotype data. We demonstrate
+this using <code>plink</code> and data in <code>data/pop_EAS/genotypes/</code>. The genotype data is split
+by chromosome, therefore predictions are estimated for each chromosome separately and
+then combined. The following bash commands estimate the per chromosome predictions using plink,
+we first make a directory to write these predictions to
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>mkdir out/preds
+for chr in {1..22}
+do
+    plink --score out/prs-combined_EAS-EUR/EAS_weighted_combined_snp_weights.dat 1 2 4 list-variants \
+          --bfile data/pop_EAS/genotypes/chr$chr \
+          --out out/preds/EAS_chr$chr
+done
+</code></pre></div>
+We then read these predictions into R to combine
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>R
+library(data.table)
+tmp &lt;- fread(paste0(&#39;out1/preds/EAS_chr1.profile&#39;))
+pred &lt;- data.frame( tmp$IID, tmp$SCORESUM )
+colnames(pred) &lt;- c(&#39;IID&#39;,&#39;Score&#39;)
+for( chr in 2:22 ){
+    tmp &lt;- fread(paste0(&#39;out1/preds/EAS_chr&#39;,chr,&#39;.profile&#39;))
+    pred[,2] &lt;- pred[,2] + tmp$SCORESUM
+}
+
+# Check predictions are the same as those produced directly by BridgePRS
+valid &lt;- fread(&#39;out1/prs-combined_EAS-EUR/EAS_weighted_combined_preds.dat&#39;)
+# Match IDs
+ptr &lt;- match( valid$IID, pred$IID )
+plot( pred$Score[ptr], valid$Weighted )
+</code></pre></div>
+Predictions are the same +/- rounding error and a constant.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../about_future/" class="btn btn-neutral float-left" title="Future Work"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../tmp/workshop_practical_tade/" class="btn btn-neutral float-left" title="Day 1 (PM)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
     </div>
 
   <hr/>
@@ -389,7 +477,7 @@ a new directory e.g. <code>out_half_eur</code>.</p>
         </span>
     
     
-      <span><a href="../about_future/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../tmp/workshop_practical_tade/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
   </span>

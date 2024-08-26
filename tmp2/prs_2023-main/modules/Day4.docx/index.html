@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Tade Souaiaia" />
+      <link rel="shortcut icon" href="../../../../img/favicon.ico" />
+    <title>Day4.docx - SibArc</title>
+    <link rel="stylesheet" href="../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../css/theme_extra.css" />
+        <link href="../../../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Day4.docx";
+        var mkdocs_page_input_path = "tmp2/prs_2023-main/modules/Day4.docx.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../js/html5shiv.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../.." class="icon icon-home"> SibArc
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Quick Start</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../../quik_install/">Installation and Data</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../../quik_demo/">Running SibArc</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../../quik_result/">Interpreting Results</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">About</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../../about_future/">Future Work</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Misc</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../../tmp/workshop_practical_paul.docx/">Day 1 (AM)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../../tmp/workshop_practical_tade/">Day 1 (PM)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../../workshop_practical_clive.docx/">Day 2 (AM)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../..">SibArc</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Day4.docx</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/tadesouaiaia/sibArc-website/edit/master/docs/tmp2/prs_2023-main/modules/Day4.docx.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="introduction-to-cross-ancestry-prs-analysis">Introduction to Cross-Ancestry PRS analysis</h2>
+<p>Before starting the practical the following commands will need to be run from within your virtual machine:</p>
+<p>(1) conda create -n "PRScsx" python=3.7</p>
+<p>(2) conda activate PRScsx</p>
+<p>(3) pip install scipy</p>
+<p>(4) pip install h5py</p>
+<p>The goal of this practical is to provide you with basic understanding and experience of running the PRS-CSx software. After completing this practical, you should:
+* Be able to perform cross-population descriptives.
+* Be familiar with running cross-ancestry PRS analyses using PRS-CSx.
+* Understand how to evaluate linear models using Akaike’s Information Criterion</p>
+<h4 id="1-the-1000-genomes-dataset">1. The 1000 Genomes dataset</h4>
+<p>The data we will be working with are coming from the 1000 Genomes Project reference panel. The data relates to individuals from 26 different source populations around the world. For simplicity, the populations have been collapsed into 5 broader continental super-populations: East Asian, European, South Asian, Amerindian, African ((EAS, EUR, SAS, EUR and AFR)). The scripts used to download and process the 1000Genomes data for the purposes of this course will be provided in the course appendix at the end of this week. </p>
+<h4 id="2-cross-population-allele-frequency">2. Cross-population allele frequency</h4>
+<p>Genetic variation is conveyed using allelic frequencies. Allele frequency is shaped by evolutionary forces and drift.  Here we compare profiles of allele frequency across the five ancestral populations. Global differences in allelic frequency has important implications for the portability of PRS across populations. Using plink it is possible to generate allele frequency statistics for each SNP, across populations, using the annotations provided in the file pop_info.pheno. In <em>/home/manager/data/Data_Day4</em>:
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>./software/plink_linux<span style="color: #bbbbbb"> </span>--bfile<span style="color: #bbbbbb"> </span>./data/chr1-22<span style="color: #bbbbbb"> </span>--freq<span style="color: #bbbbbb"> </span>--within<span style="color: #bbbbbb"> </span>./data/pop_info.pheno
+</code></pre></div>
+Population-stratified allele frequencies are reported in the output file plink.frq.strat.
+For each population, print the numbers of total SNPs to screen, as follows:
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>grep<span style="color: #bbbbbb"> </span>-F<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;AFR&#39;</span><span style="color: #bbbbbb"> </span>plink.frq.strat<span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>wc<span style="color: #bbbbbb"> </span>-l
+</code></pre></div>
+From there we can print the number of SNPs with minor allele frequencies greater than 0 (and are hence potentially available for genomic analyes).
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>grep<span style="color: #bbbbbb"> </span>-F<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;EAS&#39;</span><span style="color: #bbbbbb"> </span>plink.frq.strat<span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>awk<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;$6 &gt;0&#39;</span><span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>wc<span style="color: #bbbbbb"> </span>-l
+</code></pre></div>
+Recycle the code above to find the number of available SNPs in each of the 4 other global populations (EUR, AFR, SAS, AMR).</p>
+<h4 id="questions"><strong>Questions</strong></h4>
+<h5 id="i-which-population-contains-the-most-snps">(i) Which population contains the most SNPs?</h5>
+<h5 id="ii-what-is-the-significance-of-the-observed-population-order">(ii) What  is the significance of the observed population order?</h5>
+<p>&nbsp;</p>
+<h4 id="3-distribution-of-allele-frequencies">3. Distribution of allele frequencies</h4>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>R
+library<span style="color: #666666">(</span>dplyr<span style="color: #666666">)</span>
+library<span style="color: #666666">(</span>ggplot2<span style="color: #666666">)</span>
+freq<span style="color: #bbbbbb"> </span>&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;plink.frq.strat&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">header</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+plotDat<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>freq<span style="color: #bbbbbb"> </span>%&gt;%
+<span style="color: #bbbbbb">  </span>mutate<span style="color: #666666">(</span><span style="color: #19177C">AlleleFrequency</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>cut<span style="color: #666666">(</span>MAF,<span style="color: #bbbbbb"> </span>seq<span style="color: #666666">(0</span>,<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span>,<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.25<span style="color: #666666">)))</span><span style="color: #bbbbbb"> </span>%&gt;%
+<span style="color: #bbbbbb">  </span>group_by<span style="color: #666666">(</span>AlleleFrequency,<span style="color: #bbbbbb"> </span>CLST<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span>%&gt;%
+<span style="color: #bbbbbb">  </span>summarise<span style="color: #666666">(</span><span style="color: #19177C">FractionOfSNPs</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>n<span style="color: #666666">()</span>/nrow<span style="color: #666666">(</span>freq<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span>*<span style="color: #bbbbbb"> </span><span style="color: #666666">100)</span>
+
+ggplot<span style="color: #666666">(</span>na.omit<span style="color: #666666">(</span>plotDat<span style="color: #666666">)</span>,
+<span style="color: #bbbbbb">       </span>aes<span style="color: #666666">(</span>AlleleFrequency,<span style="color: #bbbbbb"> </span>FractionOfSNPs,<span style="color: #bbbbbb"> </span><span style="color: #19177C">group</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>CLST,<span style="color: #bbbbbb"> </span><span style="color: #19177C">col</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>CLST<span style="color: #666666">))</span><span style="color: #bbbbbb"> </span>+
+<span style="color: #bbbbbb">  </span>geom_line<span style="color: #666666">()</span><span style="color: #bbbbbb"> </span>+
+<span style="color: #bbbbbb">  </span>scale_y_continuous<span style="color: #666666">(</span><span style="color: #19177C">limits</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>c<span style="color: #666666">(0</span>,<span style="color: #bbbbbb"> </span><span style="color: #666666">12))</span><span style="color: #bbbbbb"> </span>+
+<span style="color: #bbbbbb">  </span>ggtitle<span style="color: #666666">(</span><span style="color: #BA2121">&quot;Distribution of allele frequency across genome&quot;</span><span style="color: #666666">)</span>
+</code></pre></div>
+<h4 id="questions_1"><strong>Questions</strong></h4>
+<h5 id="i-which-population-has-the-most-snps">(i) Which population has the most SNPs?</h5>
+<h5 id="ii-what-is-the-significance-of-the-observed-population-ordering">(ii) What  is the significance of the observed population ordering?</h5>
+<h5 id="iii-what-is-the-reason-behind-these-two-features">(iii) What is the reason behind these two features?</h5>
+<p>&nbsp;</p>
+<h4 id="4-calculation-of-fst">4. Calculation of Fst</h4>
+<p>Fst is a formal metric which is used to convey the level of genetic divergence between populations (on a scale between 0 and 1), using information derived from a set of genome-wide and mutually independent SNPs. Fst between parwise populations is estimated efficiently in Plink-2. So first we need to download Plink-2 using the command below:
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #bbbbbb"> </span>apt<span style="color: #bbbbbb"> </span>install<span style="color: #bbbbbb"> </span>plink2
+</code></pre></div>
+A higher Fst corresponds to greater divergence between populations. Use the following command to calculate Fst:
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>plink2<span style="color: #bbbbbb"> </span>--bfile<span style="color: #bbbbbb"> </span>./data/chr1-22<span style="color: #bbbbbb"> </span>--fst<span style="color: #bbbbbb"> </span>POP<span style="color: #bbbbbb"> </span>--pheno<span style="color: #bbbbbb"> </span>./data/pop_info.pheno
+</code></pre></div>
+Check the output file plink2.fst.summary</p>
+<h4 id="questions_2"><strong>Questions</strong></h4>
+<h5 id="i-which-population-pairs-have-the-highest-fst">(i) Which population pairs have the highest Fst ?</h5>
+<h5 id="ii-for-which-populations-is-fst-smallest">(ii) For which populations is Fst smallest??</h5>
+<p>&nbsp;</p>
+<h2 id="introduction-to-prs-csx">Introduction to PRS-CSx</h2>
+<h4 id="5-background-to-prs-csx">5. Background to PRS-CSX</h4>
+<p>PRS-CSx is a Python based command line tool that integrates GWAS summary statistics and external LD reference panels from multiple populations to improve cross-population polygenic prediction. We will be using simulated trait data pertaininng to systolic blood pressure (SBP) to explore PRS performance using 2 target populations that consist of 650 individuals of African ancestry and 500 individuals of European ancestry. Please note when running PRSice that the object of the flag "--prsice" will change according to whether plink is being called within the linux-like environment of the virtual machine (PRSice_linux) or a mac (PRSice_mac). Both executables can be found in the <em>/home/manager/data/Data_Day4</em> directory. </p>
+<h4 id="6-extraction-of-snps">6. Extraction of SNPs</h4>
+<p>PRS-CSx uses only HAPMAP3 SNPs therefore we produce a set of plink files containing this SNP subset.
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>./software/plink_linux<span style="color: #bbbbbb"> </span>--bfile<span style="color: #bbbbbb"> </span>./data/1kg.eur.dbSNP153.hg38<span style="color: #bbbbbb"> </span>--extract<span style="color: #bbbbbb"> </span>./data/csxsnp<span style="color: #bbbbbb"> </span>--make-bed<span style="color: #bbbbbb"> </span>--out<span style="color: #bbbbbb"> </span>./data/EUR_1kg.hm3.only.csx
+
+./software/plink_linux<span style="color: #bbbbbb"> </span>--bfile<span style="color: #bbbbbb"> </span>./data/1kg.afr.dbSNP153.hg38<span style="color: #bbbbbb"> </span>--extract<span style="color: #bbbbbb"> </span>./data/csxsnp<span style="color: #bbbbbb"> </span>--make-bed<span style="color: #bbbbbb"> </span>--out<span style="color: #bbbbbb"> </span>./data/AFR_1kg.hm3.only.csx
+</code></pre></div></p>
+<h4 id="7-running-prs-csx">7. Running PRS-CSx</h4>
+<p>To model the coupling of effect sizes at individual SNPs across ancestries PRS-CSx uses an MCMC (Bayesian) sampling algorithm to determine values of the global shrinkage parameter ("phi") by Maximum likelihood. For samples of mixed or admixed genetic ancestry (which ours are not) the optimal value of the shrinkage parameter is estimated autonomously from the data. Here we use the value of phi (1e-4), which is suggested by the software authors, given that our trait is simulated to have a relatively small number (N=110) causal variants, distributed genome-wide.
+To save time, we will be running the analyses across chromosome 15, rather than the entire genome. The commands needed to run PRS-CSx are contained in two script files, located in /home/manager/data/Data_Day4/scripts. The file run_prscsx_afr-target.sh is used to estimate optimal SNP weights for predicting into the African target population. </p>
+<p>NB - move the snp file to the reference folder</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>cp /home/manager/PRScsx/snpinfo_mult_1kg_hm3 /home/manager/data/Data_Day4/reference/csx    
+</code></pre></div>
+<p>NB - the ld block files must be moved to /home/manager/data/Data_Day4/reference/csx to /home/manager/PRScsx/</p>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>mv /home/manager/PRScsx/*.tar.gz /home/manager/PRScsx/
+</code></pre></div>
+then extracted with tar</p>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>tar -xvfz ld...tar.gz
+</code></pre></div>
+be careful of space, your vm has 100GB cap. remove the .gz files once extracted</p>
+<p><strong>Script contents</strong>:
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>python<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/software/PRScsx.py<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--ref_dir<span style="color: #666666">=</span>/home/manager/data/Data_Day4/reference/csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--bim_prefix<span style="color: #666666">=</span>/home/manager/data/Data_Day4/data/AFR_1kg.hm3.only.csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--sst_file<span style="color: #666666">=</span>/home/manager/data/Data_Day4/data/EUR-SBP-simulated.sumstats.prscsx,/home/manager/data/Data_Day4/data/AFR-SBP-simulated.sumstats.prscsx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--n_gwas<span style="color: #666666">=25732</span>,4855<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pop<span style="color: #666666">=</span>EUR,AFR<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--chrom<span style="color: #666666">=15</span><span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--phi<span style="color: #666666">=</span>1e-4<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--out_dir<span style="color: #666666">=</span>/home/manager/data/Data_Day4/out/csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--out_name<span style="color: #666666">=</span>afr.target.csx
+</code></pre></div>
+The file run_prscsx_eur-target.sh is used to estimate optimal SNP weights for predicting into the European target population:
+<strong>Script contents</strong>:
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>python<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/software/PRScsx.py<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--ref_dir<span style="color: #666666">=</span>/home/manager/data/Data_Day4/reference/csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--bim_prefix<span style="color: #666666">=</span>/home/manager/data/Data_Day4/data/EUR_1kg.hm3.only.csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--sst_file<span style="color: #666666">=</span>/home/manager/data/Data_Day4/data/EUR-SBP-simulated.sumstats.prscsx,/home/manager/data/Data_Day4/data/AFR-SBP-simulated.sumstats.prscsx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--n_gwas<span style="color: #666666">=25732</span>,4855<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pop<span style="color: #666666">=</span>EUR,AFR<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--chrom<span style="color: #666666">=15</span><span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--phi<span style="color: #666666">=</span>1e-4<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--out_dir<span style="color: #666666">=</span>/home/manager/data/Data_Day4/out/csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--out_name<span style="color: #666666">=</span>eur.target.csx
+</code></pre></div>
+Prior to running each script you will need to update the first line with a reference (i.e the pathname) to your home directory. From <em>/home/manager/data/Data_Day4</em> the scripts can then be run as follows:
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>./scripts/run_prscsx_afr-target.sh
+./scripts/run_prscsx_eur-target.sh
+</code></pre></div></p>
+<h4 id="questions_3"><strong>Questions</strong></h4>
+<h5 id="i-how-many-results-files-do-you-see-in-the-output-directory">(i) How many results files do you see in the output directory?</h5>
+<h5 id="ii-what-does-each-file-correspond-to">(ii) What does each file correspond to?</h5>
+<h5 id="ii-in-which-column-are-the-adjusted-snp-weights-contained">(ii) In which column are the adjusted SNP weights contained?</h5>
+<p>&nbsp;</p>
+<h4 id="8-processing">8. Processing</h4>
+<p>The next step would be to collate adjusted SNP weight information from multiple chromosomes and relabel the consolidated files for clarity. The following code works regardless of whether the preceding PRS-CSx analysis was performed for single or multiple chromosomes. In <em>/home/manager/data/Data_Day4/out/csx</em>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">for</span><span style="color: #bbbbbb"> </span>file<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">in</span><span style="color: #bbbbbb"> </span>afr.target.csx_AFR_*;<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">do</span>
+cat<span style="color: #bbbbbb"> </span><span style="color: #19177C">$file</span><span style="color: #bbbbbb"> </span>&gt;&gt;<span style="color: #bbbbbb"> </span>posteriors.afr.by.afr
+<span style="color: #008000; font-weight: bold">done</span>
+
+<span style="color: #008000; font-weight: bold">for</span><span style="color: #bbbbbb"> </span>file<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">in</span><span style="color: #bbbbbb"> </span>afr.target.csx_EUR_*;<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">do</span>
+cat<span style="color: #bbbbbb"> </span><span style="color: #19177C">$file</span><span style="color: #bbbbbb"> </span>&gt;&gt;<span style="color: #bbbbbb"> </span>posteriors.afr.by.eur
+<span style="color: #008000; font-weight: bold">done</span>
+
+<span style="color: #008000; font-weight: bold">for</span><span style="color: #bbbbbb"> </span>file<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">in</span><span style="color: #bbbbbb"> </span>eur.target.csx_AFR_*;<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">do</span>
+cat<span style="color: #bbbbbb"> </span><span style="color: #19177C">$file</span><span style="color: #bbbbbb"> </span>&gt;&gt;<span style="color: #bbbbbb"> </span>posteriors.eur.by.afr
+<span style="color: #008000; font-weight: bold">done</span>
+
+<span style="color: #008000; font-weight: bold">for</span><span style="color: #bbbbbb"> </span>file<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">in</span><span style="color: #bbbbbb"> </span>eur.target.csx_EUR_*;<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">do</span>
+cat<span style="color: #bbbbbb"> </span><span style="color: #19177C">$file</span><span style="color: #bbbbbb"> </span>&gt;&gt;<span style="color: #bbbbbb"> </span>posteriors.eur.by.eur
+<span style="color: #008000; font-weight: bold">done</span>
+</code></pre></div></p>
+<h4 id="9-data-processing-in-r">9. Data processing in R</h4>
+<p>The next stage of data processing, done in R will create a new set of summary statistics files, containing the adjusting SNP weights from PRS-CSx. Staying in <em>/home/manager/data/Data_Day4/out/csx</em> :
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>R
+<span style="color: #3D7B7B; font-style: italic"># Load posteriors effect sizes from PRS-CSx output</span>
+
+afr.afr&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;posteriors.afr.by.afr&quot;</span>,<span style="color: #bbbbbb"> </span>col.names<span style="color: #666666">=</span>c<span style="color: #666666">(</span><span style="color: #BA2121">&quot;chr&quot;</span>,<span style="color: #BA2121">&quot;SNP&quot;</span>,<span style="color: #BA2121">&quot;bp&quot;</span>,<span style="color: #BA2121">&quot;a1&quot;</span>,<span style="color: #BA2121">&quot;a2&quot;</span>,<span style="color: #BA2121">&quot;post.afr.afr&quot;</span><span style="color: #666666">))</span>
+afr.by.eur&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;posteriors.afr.by.eur&quot;</span>,<span style="color: #bbbbbb"> </span>col.names<span style="color: #666666">=</span>c<span style="color: #666666">(</span><span style="color: #BA2121">&quot;chr&quot;</span>,<span style="color: #BA2121">&quot;SNP&quot;</span>,<span style="color: #BA2121">&quot;bp&quot;</span>,<span style="color: #BA2121">&quot;a1&quot;</span>,<span style="color: #BA2121">&quot;a2&quot;</span>,<span style="color: #BA2121">&quot;post.afr.by.eur&quot;</span><span style="color: #666666">))</span>
+eur.eur&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;posteriors.eur.by.eur&quot;</span>,<span style="color: #bbbbbb"> </span>col.names<span style="color: #666666">=</span>c<span style="color: #666666">(</span><span style="color: #BA2121">&quot;chr&quot;</span>,<span style="color: #BA2121">&quot;SNP&quot;</span>,<span style="color: #BA2121">&quot;bp&quot;</span>,<span style="color: #BA2121">&quot;a1&quot;</span>,<span style="color: #BA2121">&quot;a2&quot;</span>,<span style="color: #BA2121">&quot;post.eur.eur&quot;</span><span style="color: #666666">))</span>
+eur.by.afr&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;posteriors.eur.by.afr&quot;</span>,<span style="color: #bbbbbb"> </span>col.names<span style="color: #666666">=</span>c<span style="color: #666666">(</span><span style="color: #BA2121">&quot;chr&quot;</span>,<span style="color: #BA2121">&quot;SNP&quot;</span>,<span style="color: #BA2121">&quot;bp&quot;</span>,<span style="color: #BA2121">&quot;a1&quot;</span>,<span style="color: #BA2121">&quot;a2&quot;</span>,<span style="color: #BA2121">&quot;post.eur.by.afr&quot;</span><span style="color: #666666">))</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Load original summary statistics</span>
+afr.SBP&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;/home/manager/data/Data_Day4/data/AFR-SBP-simulated.sumstats.prscsx&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">header</span><span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+eur.SBP&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;/home/manager/data/Data_Day4/data/EUR-SBP-simulated.sumstats.prscsx&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">header</span><span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Combine the posterior derived weights and summary statistics</span>
+eur.SBP.merge1&lt;-merge<span style="color: #666666">(</span><span style="color: #19177C">x</span><span style="color: #666666">=</span>eur.SBP,<span style="color: #bbbbbb"> </span><span style="color: #19177C">y</span><span style="color: #666666">=</span>eur.eur<span style="color: #666666">[</span>c<span style="color: #666666">(2</span>,6<span style="color: #666666">)]</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">by</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;SNP&quot;</span>,<span style="color: #bbbbbb"> </span>all.y<span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+eur.SBP.merge&lt;-merge<span style="color: #666666">(</span><span style="color: #19177C">x</span><span style="color: #666666">=</span>eur.SBP.merge1,<span style="color: #bbbbbb"> </span><span style="color: #19177C">y</span><span style="color: #666666">=</span>afr.by.eur<span style="color: #666666">[</span>c<span style="color: #666666">(2</span>,6<span style="color: #666666">)]</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">by</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;SNP&quot;</span>,<span style="color: #bbbbbb"> </span>all.y<span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+afr.SBP.merge1&lt;-merge<span style="color: #666666">(</span><span style="color: #19177C">x</span><span style="color: #666666">=</span>afr.SBP,<span style="color: #bbbbbb"> </span><span style="color: #19177C">y</span><span style="color: #666666">=</span>afr.afr<span style="color: #666666">[</span>c<span style="color: #666666">(2</span>,6<span style="color: #666666">)]</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">by</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;SNP&quot;</span>,<span style="color: #bbbbbb"> </span>all.y<span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+afr.SBP.merge&lt;-merge<span style="color: #666666">(</span><span style="color: #19177C">x</span><span style="color: #666666">=</span>afr.SBP.merge1,<span style="color: #bbbbbb"> </span><span style="color: #19177C">y</span><span style="color: #666666">=</span>eur.by.afr<span style="color: #666666">[</span>c<span style="color: #666666">(2</span>,6<span style="color: #666666">)]</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">by</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;SNP&quot;</span>,<span style="color: #bbbbbb"> </span>all.y<span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Save files</span>
+write.table<span style="color: #666666">(</span>afr.SBP.merge,<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;/home/manager/data/Data_Day4/afr.SBP.posterior.sumstats&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">quote</span><span style="color: #666666">=</span>F,<span style="color: #bbbbbb"> </span>row.names<span style="color: #666666">=</span>F<span style="color: #666666">)</span>
+write.table<span style="color: #666666">(</span>eur.SBP.merge,<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;/home/manager/data/Data_Day4/eur.SBP.posterior.sumstats&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">quote</span><span style="color: #666666">=</span>F,<span style="color: #bbbbbb"> </span>row.names<span style="color: #666666">=</span>F<span style="color: #666666">)</span>
+
+q<span style="color: #666666">()</span>
+</code></pre></div></p>
+<h4 id="10-use-prsice-to-apply-the-adjusted-snp-effects-to-target-phenotypes">10. Use PRSice to apply the adjusted SNP effects to target phenotypes</h4>
+<p>We first need to create a list of SNPs to be used as input, based on the previous PRS-CSx analysis. This is done in location <em>/home/manager/data/Data_Day4</em>.
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>awk<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;NR&gt;1 {print $1}&#39;</span><span style="color: #bbbbbb"> </span>afr.SBP.posterior.sumstats<span style="color: #bbbbbb"> </span>&gt;<span style="color: #bbbbbb"> </span>snps.afr.posterior
+awk<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;NR&gt;1 {print $1}&#39;</span><span style="color: #bbbbbb"> </span>eur.SBP.posterior.sumstats<span style="color: #bbbbbb"> </span>&gt;<span style="color: #bbbbbb"> </span>snps.eur.posterior
+</code></pre></div>
+The next series of commands implement in-ancestry and cross-ancestry prediction of the systolic blood pressure phenotype using the PRS-CSx optimised SNP weights. <strong>Do not forget</strong> to exchange <em>PRSice_linux</em> for <em>PRSice_mac</em> if running the commands in a Mac environment. The phenotypic files sbp_afr_1kg.sim_pheno and sbp_eur_1kg.sim_pheno contain data on systolic blood pressure with simulated heritabilities that vary from 10%, 20%, 33%, 50% and 100%. To compensate for the fact that the adjusted weights generated are based on chromosome 15, rather than the entire genome, we will be using the <strong><em>100%</em></strong> trait version (pheno100) for this analysis.</p>
+<h5 id="11-predicting-from-african-training-to-african-target-data">11. Predicting from African training to African target data</h5>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>Rscript<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/software/PRSice.R<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--prsice<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/software/PRSice_linux<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--base<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/afr.sbp.posterior.sumstats<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--extract<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/snps.afr.posterior<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--A1<span style="color: #bbbbbb"> </span>A1<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pvalue<span style="color: #bbbbbb"> </span>P<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--no-clump<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--stat<span style="color: #bbbbbb"> </span>post.afr.afr<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--beta<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--snp<span style="color: #bbbbbb"> </span>SNP<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--score<span style="color: #bbbbbb"> </span>sum<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--target<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/AFR_1kg.hm3.only.csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--binary-target<span style="color: #bbbbbb"> </span>F<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/sbp_afr_1kg.sim_pheno<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno-col<span style="color: #bbbbbb"> </span>pheno100<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--thread<span style="color: #bbbbbb"> </span><span style="color: #666666">8</span><span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--out<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/out/prscsx_prsice/SBP.afr.afr
+</code></pre></div>
+<h5 id="12-predicting-from-european-training-to-african-target-data">12. Predicting from European training to African target data</h5>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>Rscript<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/software/PRSice.R<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--prsice<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/software/PRSice_linux<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--base<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/eur.SBP.posterior.sumstats<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--extract<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/snps.eur.posterior<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--A1<span style="color: #bbbbbb"> </span>A1<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pvalue<span style="color: #bbbbbb"> </span>P<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--no-clump<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--stat<span style="color: #bbbbbb"> </span>post.afr.by.eur<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--beta<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--snp<span style="color: #bbbbbb"> </span>SNP<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--score<span style="color: #bbbbbb"> </span>sum<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--target<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/AFR_1kg.hm3.only.csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--binary-target<span style="color: #bbbbbb"> </span>F<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/sbp_afr_1kg.sim_pheno<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno-col<span style="color: #bbbbbb"> </span>pheno100<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--thread<span style="color: #bbbbbb"> </span><span style="color: #666666">8</span><span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--out<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/out/prscsx_prsice/SBP.afr.by.eur
+</code></pre></div>
+<h5 id="13-predicting-from-european-training-to-european-target-data">13. Predicting from European training to European target data</h5>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>Rscript<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/software/PRSice.R<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--prsice<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/software/PRSice_linux<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--base<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/eur.SBP.posterior.sumstats<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--extract<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/snps.eur.posterior<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--A1<span style="color: #bbbbbb"> </span>A1<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pvalue<span style="color: #bbbbbb"> </span>P<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--no-clump<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--stat<span style="color: #bbbbbb"> </span>post.eur.eur<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--beta<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--snp<span style="color: #bbbbbb"> </span>SNP<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--score<span style="color: #bbbbbb"> </span>sum<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--target<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/EUR_1kg.hm3.only.csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--binary-target<span style="color: #bbbbbb"> </span>F<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/sbp_eur_1kg.sim_pheno<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno-col<span style="color: #bbbbbb"> </span>pheno100<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--thread<span style="color: #bbbbbb"> </span><span style="color: #666666">8</span><span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--out<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/out/prscsx_prsice/SBP.eur.eur
+</code></pre></div>
+<h5 id="14-predicting-from-african-training-to-european-target-data">14. Predicting from African training to European target data</h5>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>Rscript<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/software/PRSice.R<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--prsice<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/software/PRSice_linux<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--base<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/afr.SBP.posterior.sumstats<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--extract<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/snps.afr.posterior<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--A1<span style="color: #bbbbbb"> </span>A1<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pvalue<span style="color: #bbbbbb"> </span>P<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--no-clump<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--stat<span style="color: #bbbbbb"> </span>post.eur.by.afr<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--beta<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--snp<span style="color: #bbbbbb"> </span>SNP<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--score<span style="color: #bbbbbb"> </span>sum<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--target<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/EUR_1kg.hm3.only.csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--binary-target<span style="color: #bbbbbb"> </span>F<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/sbp_eur_1kg.sim_pheno<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno-col<span style="color: #bbbbbb"> </span>pheno100<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--thread<span style="color: #bbbbbb"> </span><span style="color: #666666">8</span><span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--out<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/out/prscsx_prsice/SBP.eur.by.afr
+</code></pre></div>
+<h4 id="15-create-summary-files">15. Create summary files</h4>
+<p>From location <em>/home/manager/data/Data_Day4/out/prscsx_prsice</em>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>awk<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;{print $1,&quot;\t&quot;,$4,&quot;\t&quot;,$8,&quot;\t&quot;,$10}&#39;</span><span style="color: #bbbbbb"> </span>SBP.afr.afr.summary<span style="color: #bbbbbb"> </span>&gt;<span style="color: #bbbbbb"> </span>quicksum.afr-afr
+awk<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;{print $1,&quot;\t&quot;,$4,&quot;\t&quot;,$8,&quot;\t&quot;,$10}&#39;</span><span style="color: #bbbbbb"> </span>SBP.afr.by.eur.summary<span style="color: #bbbbbb"> </span>&gt;<span style="color: #bbbbbb"> </span>quicksum.afr-by-eur
+awk<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;{print $1,&quot;\t&quot;,$4,&quot;\t&quot;,$8,&quot;\t&quot;,$10}&#39;</span><span style="color: #bbbbbb"> </span>SBP.eur.by.afr.summary<span style="color: #bbbbbb"> </span>&gt;<span style="color: #bbbbbb"> </span>quicksum.eur-by-afr
+awk<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;{print $1,&quot;\t&quot;,$4,&quot;\t&quot;,$8,&quot;\t&quot;,$10}&#39;</span><span style="color: #bbbbbb"> </span>SBP.eur.eur.summary<span style="color: #bbbbbb"> </span>&gt;<span style="color: #bbbbbb"> </span>quicksum.eur-eur
+</code></pre></div></p>
+<h4 id="questions_4"><strong>Questions</strong></h4>
+<h5 id="i-what-information-is-being-summarized-in-the-output-files"><strong>(i) What information is being summarized in the output files??</strong></h5>
+<h5 id="ii-for-each-prediction-model-what-is-the-r2-and-value"><strong>(ii) For each prediction model what is the R2 and  value???</strong></h5>
+<p>&nbsp;</p>
+<h4 id="16-complete-the-remaining-prs-analysis-in-r">16. Complete the remaining PRS analysis in R</h4>
+<h5 id="step-1-load-and-prepare-data">Step 1: Load and prepare data</h5>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>R
+<span style="color: #3D7B7B; font-style: italic"># Load libraries</span>
+sudo<span style="color: #bbbbbb"> </span>apt<span style="color: #bbbbbb"> </span>install<span style="color: #bbbbbb"> </span>cmake
+install.packages<span style="color: #666666">(</span><span style="color: #BA2121">&quot;AICcmodavg&quot;</span><span style="color: #666666">)</span>
+install.packages<span style="color: #666666">(</span><span style="color: #BA2121">&quot;fmsb&quot;</span><span style="color: #666666">)</span>
+library<span style="color: #666666">(</span>AICcmodavg<span style="color: #666666">)</span>
+library<span style="color: #666666">(</span>fmsb<span style="color: #666666">)</span>
+
+afr.afr&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;/home/manager/data/Data_Day4/out/prscsx_prsice/SBP.afr.afr.best&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">header</span><span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+afr.eur&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;/home/manager/data/Data_Day4/out/prscsx_prsice/SBP.afr.by.eur.best&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">header</span><span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+eur.eur&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;/home/manager/data/Data_Day4/out/prscsx_prsice/SBP.eur.eur.best&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">header</span><span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+eur.afr&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;/home/manager/data/Data_Day4/out/prscsx_prsice/SBP.eur.by.afr.best&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">header</span><span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+
+colnames<span style="color: #666666">(</span>afr.afr<span style="color: #666666">)[4]</span>&lt;-<span style="color: #BA2121">&quot;afr.afr&quot;</span><span style="color: #bbbbbb">   </span><span style="color: #3D7B7B; font-style: italic"># african prediction using african PRS</span>
+colnames<span style="color: #666666">(</span>afr.eur<span style="color: #666666">)[4]</span>&lt;-<span style="color: #BA2121">&quot;afr.eur&quot;</span><span style="color: #bbbbbb">   </span><span style="color: #3D7B7B; font-style: italic"># african prediction using european PRS</span>
+colnames<span style="color: #666666">(</span>eur.eur<span style="color: #666666">)[4]</span>&lt;-<span style="color: #BA2121">&quot;eur.eur&quot;</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># european prediction using european PRS</span>
+colnames<span style="color: #666666">(</span>eur.afr<span style="color: #666666">)[4]</span>&lt;-<span style="color: #BA2121">&quot;eur.afr&quot;</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># european prediction using african PRS</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Merge PRSs according to target ancestry and source population</span>
+combined.afr&lt;-merge<span style="color: #666666">(</span><span style="color: #19177C">x</span><span style="color: #666666">=</span>afr.afr,<span style="color: #bbbbbb"> </span><span style="color: #19177C">y</span><span style="color: #666666">=</span>afr.eur<span style="color: #666666">[</span>c<span style="color: #666666">(2</span>,4<span style="color: #666666">)]</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">by</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;IID&quot;</span>,<span style="color: #bbbbbb"> </span>all.x<span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+combined.eur&lt;-merge<span style="color: #666666">(</span><span style="color: #19177C">x</span><span style="color: #666666">=</span>eur.eur,<span style="color: #bbbbbb"> </span><span style="color: #19177C">y</span><span style="color: #666666">=</span>eur.afr<span style="color: #666666">[</span>c<span style="color: #666666">(2</span>,4<span style="color: #666666">)]</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">by</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;IID&quot;</span>,<span style="color: #bbbbbb"> </span>all.x<span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Rescale scores to have mean = ‘0’ and standard deviation = ‘1’</span>
+combined.afr<span style="color: #666666">[4</span>:5<span style="color: #666666">]</span><span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>as.data.frame<span style="color: #666666">(</span>scale<span style="color: #666666">(</span>combined.afr<span style="color: #666666">[4</span>:5<span style="color: #666666">]))</span>
+combined.eur<span style="color: #666666">[4</span>:5<span style="color: #666666">]</span><span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>as.data.frame<span style="color: #666666">(</span>scale<span style="color: #666666">(</span>combined.eur<span style="color: #666666">[4</span>:5<span style="color: #666666">]))</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Load phenotype data</span>
+sbp.eur&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;/home/manager/data/Data_Day4/data/SBP_eur_1kg.sim_pheno&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">header</span><span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+sbp.afr&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;/home/manager/data/Data_Day4/data/SBP_afr_1kg.sim_pheno&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">header</span><span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Merge phenotypes and PRS</span>
+combined.eur.pheno&lt;-merge<span style="color: #666666">(</span><span style="color: #19177C">x</span><span style="color: #666666">=</span>combined.eur<span style="color: #666666">[</span>-c<span style="color: #666666">(2</span>,3<span style="color: #666666">)]</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">y</span><span style="color: #666666">=</span>sbp.eur<span style="color: #666666">[</span>,c<span style="color: #666666">(2</span>,3<span style="color: #666666">)]</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">by</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;IID&quot;</span>,<span style="color: #bbbbbb"> </span>all.x<span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+combined.afr.pheno&lt;-merge<span style="color: #666666">(</span><span style="color: #19177C">x</span><span style="color: #666666">=</span>combined.afr<span style="color: #666666">[</span>-c<span style="color: #666666">(2</span>,3<span style="color: #666666">)]</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">y</span><span style="color: #666666">=</span>sbp.afr<span style="color: #666666">[</span>,c<span style="color: #666666">(2</span>,3<span style="color: #666666">)]</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">by</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;IID&quot;</span>,<span style="color: #bbbbbb"> </span>all.x<span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+</code></pre></div>
+<h5 id="step-2-model-selection-using-akaikes-information-criterion">Step 2: Model selection using Akaike’s Information Criterion</h5>
+<p>In the final step we want to determine whether the use of the multi-ancestry PRS formulation generated by PRS-CSx performs better at predicting systolic blood pressure, compared to the single-ancestry PRS formulation. To do this we use (AIC Akaike’s Information Criterion). AIC is used to assess the performance of a competing set of regression models. We use it to compare the performance of models that contain different numbers of predictors, given that R2 is inflated by the inclusion of redundant terms in a model. </p>
+<h5 id="16b-model-evaluation">16b. Model evaluation</h5>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># EUROPEAN</span>
+model1.eur<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>glm<span style="color: #666666">(</span>pheno100<span style="color: #bbbbbb"> </span>~<span style="color: #bbbbbb"> </span>eur.eur,<span style="color: #bbbbbb"> </span><span style="color: #19177C">data</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>combined.eur.pheno,<span style="color: #bbbbbb"> </span><span style="color: #19177C">family</span><span style="color: #666666">=</span>gaussian<span style="color: #666666">)</span>
+model2.eur<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>glm<span style="color: #666666">(</span>pheno100<span style="color: #bbbbbb"> </span>~<span style="color: #bbbbbb"> </span>eur.afr,<span style="color: #bbbbbb"> </span><span style="color: #19177C">data</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>combined.eur.pheno,<span style="color: #bbbbbb"> </span><span style="color: #19177C">family</span><span style="color: #666666">=</span>gaussian<span style="color: #666666">)</span>
+model3.eur<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>glm<span style="color: #666666">(</span>pheno100<span style="color: #bbbbbb"> </span>~<span style="color: #bbbbbb"> </span>eur.eur<span style="color: #bbbbbb"> </span>+<span style="color: #bbbbbb"> </span>eur.afr,<span style="color: #bbbbbb"> </span><span style="color: #19177C">data</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>combined.eur.pheno,<span style="color: #bbbbbb"> </span><span style="color: #19177C">family</span><span style="color: #666666">=</span>gaussian<span style="color: #666666">)</span>
+
+models.eur<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>list<span style="color: #666666">(</span>model1.eur,<span style="color: #bbbbbb"> </span>model2.eur,<span style="color: #bbbbbb"> </span>model3.eur<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># define model set</span>
+mod.names.eur<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>c<span style="color: #666666">(</span><span style="color: #BA2121">&#39;eur.eur&#39;</span>,<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;eur.afr&#39;</span>,<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;eur.combined&#39;</span><span style="color: #666666">)</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># add model names</span>
+aictab<span style="color: #666666">(</span>cand.set<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>models.eur,<span style="color: #bbbbbb"> </span><span style="color: #19177C">modnames</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>mod.names.eur<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># calculate model AICs model</span>
+
+<span style="color: #3D7B7B; font-style: italic"># AFRICAN</span>
+model1.afr<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>glm<span style="color: #666666">(</span>pheno100<span style="color: #bbbbbb"> </span>~<span style="color: #bbbbbb"> </span>afr.afr,<span style="color: #bbbbbb"> </span><span style="color: #19177C">data</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>combined.afr.pheno,<span style="color: #bbbbbb"> </span><span style="color: #19177C">family</span><span style="color: #666666">=</span>gaussian<span style="color: #666666">)</span>
+model2.afr<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>glm<span style="color: #666666">(</span>pheno100<span style="color: #bbbbbb"> </span>~<span style="color: #bbbbbb"> </span>afr.eur,<span style="color: #bbbbbb"> </span><span style="color: #19177C">data</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>combined.afr.pheno,<span style="color: #bbbbbb"> </span><span style="color: #19177C">family</span><span style="color: #666666">=</span>gaussian<span style="color: #666666">)</span>
+model3.afr<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>glm<span style="color: #666666">(</span>pheno100<span style="color: #bbbbbb"> </span>~<span style="color: #bbbbbb"> </span>afr.afr<span style="color: #bbbbbb"> </span>+<span style="color: #bbbbbb"> </span>afr.eur,<span style="color: #bbbbbb"> </span><span style="color: #19177C">data</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>combined.afr.pheno,<span style="color: #bbbbbb"> </span><span style="color: #19177C">family</span><span style="color: #666666">=</span>gaussian<span style="color: #666666">)</span>
+
+models.afr<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>list<span style="color: #666666">(</span>model1.afr,<span style="color: #bbbbbb"> </span>model2.afr,<span style="color: #bbbbbb"> </span>model3.afr<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># define model set</span>
+mod.names.afr<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>c<span style="color: #666666">(</span><span style="color: #BA2121">&#39;afr.afr&#39;</span>,<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;afr.eur&#39;</span>,<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;afr.combined&#39;</span><span style="color: #666666">)</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># add model names</span>
+aictab<span style="color: #666666">(</span>cand.set<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>models.afr,<span style="color: #bbbbbb"> </span><span style="color: #19177C">modnames</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>mod.names.afr<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># calculate model AICs</span>
+
+<span style="color: #3D7B7B; font-style: italic"># NagelkerkeR2 calculations in R</span>
+<span style="color: #3D7B7B; font-style: italic"># African target</span>
+NagelkerkeR2<span style="color: #666666">(</span>model1.afr<span style="color: #666666">)</span>
+NagelkerkeR2<span style="color: #666666">(</span>model2.afr<span style="color: #666666">)</span>
+NagelkerkeR2<span style="color: #666666">(</span>model3.afr<span style="color: #666666">)</span>
+
+<span style="color: #3D7B7B; font-style: italic"># European target</span>
+NagelkerkeR2<span style="color: #666666">(</span>model1.eur<span style="color: #666666">)</span>
+NagelkerkeR2<span style="color: #666666">(</span>model2.eur<span style="color: #666666">)</span>
+NagelkerkeR2<span style="color: #666666">(</span>model3.eur<span style="color: #666666">)</span>
+
+For<span style="color: #bbbbbb"> </span>each<span style="color: #bbbbbb"> </span>ancestry<span style="color: #bbbbbb"> </span>which<span style="color: #bbbbbb"> </span>predictive<span style="color: #bbbbbb"> </span>model<span style="color: #bbbbbb"> </span>performs<span style="color: #bbbbbb"> </span>best<span style="color: #bbbbbb"> </span>and<span style="color: #bbbbbb"> </span>worst?
+Does<span style="color: #bbbbbb"> </span>combining<span style="color: #bbbbbb"> </span>the<span style="color: #bbbbbb"> </span>two<span style="color: #bbbbbb"> </span>sets<span style="color: #bbbbbb"> </span>of<span style="color: #bbbbbb"> </span>adjusted<span style="color: #bbbbbb"> </span>scores<span style="color: #bbbbbb"> </span>perform<span style="color: #bbbbbb"> </span>consistently<span style="color: #bbbbbb"> </span>better<span style="color: #bbbbbb"> </span>than<span style="color: #bbbbbb"> </span>modelling<span style="color: #bbbbbb"> </span>each<span style="color: #bbbbbb"> </span>one<span style="color: #bbbbbb"> </span>separately?
+</code></pre></div>
+<h4 id="questions_5"><strong>Questions</strong></h4>
+<h5 id="i-for-each-ancestry-which-model-performs-best-and-which-performs-worst"><strong>(i) For each ancestry which model performs best and which performs worst?</strong></h5>
+<h5 id="ii-does-linearly-combining-adjusted-scores-european-plus-african-always-result-in-better-performance-compared-to-single-ancestry-prediction"><strong>(ii) Does linearly combining adjusted scores (European plus African) always result in better performance compared to single-ancestry prediction?</strong></h5>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/tadesouaiaia/sibArc-website" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../..";</script>
+    <script src="../../../../js/theme_extra.js"></script>
+    <script src="../../../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      <script src="../../../../javascripts/details.js"></script>
+      <script src="../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

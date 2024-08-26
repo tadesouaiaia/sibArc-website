@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Tade Souaiaia" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Polygenic Risk Score Analyses Workshop 2024 - SibArc</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link href="../../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Polygenic Risk Score Analyses Workshop 2024";
+        var mkdocs_page_input_path = "tmp2/practical_docs_hidden/Day1a.docx.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> SibArc
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Quick Start</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../quik_install/">Installation and Data</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../quik_demo/">Running SibArc</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../quik_result/">Interpreting Results</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">About</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about_future/">Future Work</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Misc</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../tmp/workshop_practical_paul.docx/">Day 1 (AM)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../tmp/workshop_practical_tade/">Day 1 (PM)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../workshop_practical_clive.docx/">Day 2 (AM)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">SibArc</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Polygenic Risk Score Analyses Workshop 2024</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/tadesouaiaia/sibArc-website/edit/master/docs/tmp2/practical_docs_hidden/Day1a.docx.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="polygenic-risk-score-analyses-workshop-2024">Polygenic Risk Score Analyses Workshop 2024</h1>
+<h1 id="day-1a-gwas-relevant-statistics">Day 1a: GWAS &amp; relevant Statistics</h1>
+<h2 id="introduction-to-bash">Introduction to Bash</h2>
+<p>Most software in Bioinformatics and Statistical Genetics need to be
+ run in a Unix environment (e.g. Linux or Mac OS) and most
+ high-performance computer clusters run Unix systems. Therefore,
+ although there are alternatives available on Windows (command line,
+ Linux subsystems or Virtual Machines), it will be highly beneficial to
+ become familiar with performing research in a Unix-only environment.</p>
+<h2 id="moving-around-the-file-system">Moving around the File System</h2>
+<p>To begin our practical, please open up a \"terminal\" on your computer
+ (on a Mac this is stored in Applications/Utilities/).</p>
+<p>We can change our directory using the following command:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>   cd \&lt;Path&gt;\
+</code></pre></div>
+<p>where *\<Path>* is the path to the target directory.</p>
+<p>Some common usage of cd includes</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>   cd ~/ # will bring you to your home directory
+
+   cd ../ # will bring you to the parent directory (up one level)
+
+   cd XXX # will bring you to the XXX directory, so long as it is in the current directory
+</code></pre></div>
+<p>As an example, we can move to the <strong>data</strong> directory by
+ typing:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>   cd data/
+</code></pre></div>
+<h2 id="looking-at-the-current-directory">Looking at the Current Directory</h2>
+<p>Next we can move into the <strong>~/data/Day1a_Data/Day1a_Data</strong> folder (from the data/ folder type: cd Day1a_Data/Day1a_Data). We can list out
+ the folder content by typing: </p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>    ls
+</code></pre></div>
+<p>For ls, there are a number of additional Unix command options that you
+ can append to it to get additional information, for example:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>    ls -l  # shows files as list
+
+    ls -lh  # shows files as a list with human readable format
+
+    ls -lt  # shows the files as a list sorted by time-last-edited
+
+    ls -lS  # shows the files as a list sorted by size
+</code></pre></div>
+<h2 id="counting-number-of-lines-in-file">Counting Number of Lines in File</h2>
+<p>We can also count the number of lines in a file with the following
+ command (where</p>
+<p>*\<file>* is the file of interest):</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>    wc -l &lt;file&gt;
+</code></pre></div>
+<p>Often we would like to store the output of a command, which we can do
+ by <em>redirecting</em> the output of the command to a file. For example, we
+ can redirect the count of the <strong>GIANT_Height.txt</strong> to <strong>giant_count</strong>
+ using the following command:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code> wc -l GIANT_Height.txt &gt; giant_count.txt
+</code></pre></div>
+<h2 id="search-file-content">Search File Content</h2>
+<p>Another common task is to search for specific words or characters in a
+ file (e.g. does this file contain our gene of interest?). This can be
+ performed using the "grep" command as follows:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>   grep &lt;string&gt; file
+</code></pre></div>
+<p>For example, to check if the Single Nucleotide Polymorphism
+ (SNP) <em>rs10786427</em> is present in <strong>GIANT_Height.txt</strong>,
+ we can do:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>   grep rs10786427 GIANT_Height.txt
+</code></pre></div>
+<p>In addition, grep allows us to check if patterns contained in one file
+ can be found in another file. For example, if we want to extract a
+ subset of samples from the phenotype file (e.g. extract the list of
+ samples in <strong>Data/Day_1a/TAR.height</strong>), we can do:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>    grep -f Select.sample TAR.height
+</code></pre></div>
+<p>An extremely useful feature of the terminal is chaining multiple
+ commands into one command, which we call <strong><em>piping</em></strong> .</p>
+<p>For example, we can use piping to count the number of samples in
+ <strong>Select.sample</strong></p>
+<p>that were found in <strong>TAR.height</strong> in a single command, as follows:</p>
+<p><code>bash 
+   grep -f Select.sample TAR.height | wc -l</code></p>
+<h2 id="filtering-and-reshuffling-files">Filtering and Reshuﬄing Files</h2>
+<p>A very powerful feature of the terminal is the <strong>awk</strong> programming
+ language, which allows us to extract subsets of a data file, filter
+ data according to some criteria or perform arithmetic operations on
+ the data. awk manipulates a data file by per- forming operations on
+ its <strong>columns</strong> - this is extremely useful for scientific data sets
+ because typically the columns features or variables of interest.</p>
+<p>For example, we can use awk to produce a new results file that only
+ contains SNP rsIDs (column 1), allele frequencies (column 4) and <em>P</em>
+ -values (column 7) as follows:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  awk &#39;{ print $1,$4,$7}&#39; GIANT_Height.txt &gt; GIANT_Height_3cols.txt
+</code></pre></div>
+<p>We can also use a \"conditional statement\" in awk to extract all
+ significant [SNPs]</p>
+<p>from the results file, using the following command:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code> awk &#39;{if($7 &lt; 5e-8) { print } }&#39; GIANT_Height.txt &gt; Significant_SNPs.txt
+</code></pre></div>
+<p>Or the short form:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code> awk &#39;$7 &lt; 5e-8{ print}&#39; GIANT_Height.txt &gt; Significant_SNPs.txt
+</code></pre></div>
+<p>"if(<span class="arithmatex">\(7&lt;5e-8)" and "\)</span>7 &lt; 5e-8" tell awk to extract any rows
+ with column 7 (the column containing <em>P</em> -value) with a value of
+ smaller than 5e-8 and {print} means that we would like to print the
+ entire row when this criterion is met.</p>
+<h1 id="introduction-to-r">Introduction to R</h1>
+<p><strong>R</strong> is a useful programming language that allows us to perform a
+variety of statis- tical tests and data manipulation. It can also be
+used to generate fantastic data visualisations. Here we will go
+through some of the basics of <strong>R</strong> so that you can better understand
+the practicals throughout the workshop.</p>
+<h2 id="basics">Basics</h2>
+<p>If you are not using R Studio then you can type <strong>R</strong> in your terminal
+ to run <strong>R</strong> in the terminal.</p>
+<p>## Adding script to working dir</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  cd ~/data/Day1a_Data/Day1a_Data
+  wget https://raw.githubusercontent.com/WCSCourses/prs_2023/main/scripts/nagelkerke.R
+</code></pre></div>
+<h2 id="working-directory">Working Directory</h2>
+<p>When we start <strong>R</strong>, we will be working in a specific folder called
+ the <strong>working directory</strong>. We can check the current/working
+ directory we are in by typing:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>   getwd()
+</code></pre></div>
+<p>And we can change our working directory to the <strong>Practical</strong> folder by</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>   setwd(&quot;~/data/Day1a_Data/Day1a_Data&quot;)
+</code></pre></div>
+<h2 id="libraries">Libraries</h2>
+<p>Most functionality of <strong>R</strong> is organised in \"packages\" or
+ \"libraries\". To access these functions, we will have to install and
+ \"load\" these packages. Most commonly used packages are installed
+ together with the standard installation process. You can install a new
+ library using the install.packages function.</p>
+<p>For example, to install <em>ggplot2</em>, run the command:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>    install.packages(&quot;ggplot2&quot;)
+</code></pre></div>
+<p>After installation, you can load the library by typing</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>    library(ggplot2)
+</code></pre></div>
+<p>Alternatively, we can import functions (e.g. that we have written)
+ from an R script file on our computer. For example, you can load the
+ Nagelkerke <em>R2</em> function by typing</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>     source(&quot;nagelkerke.R&quot;)
+</code></pre></div>
+<p>And you are now able to use the Nagelkerke <em>R2</em> function (we will use
+ this function at the end of this worksheet).</p>
+<h2 id="variables-in-r">Variables in R</h2>
+<p>You can assign a value or values to any variable you want using \&lt;-.
+ e.g</p>
+<p>Assign a number to a</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  a &lt;- 1
+</code></pre></div>
+<p>Assign a vector containing a,b,c to v1</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  v1 &lt;- c(&quot;a&quot;, &quot;b&quot;,&quot;c&quot;)
+</code></pre></div>
+<h2 id="functions">Functions</h2>
+<p>You can perform lots of operations in <strong>R</strong> using diﬀerent built-in R
+ functions. Some examples are below:</p>
+<p>Assign number of samples</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>    nsample &lt;- 10000
+</code></pre></div>
+<p>Generate nsample random normal variable with mean = 0 and sd = 1</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>    normal &lt;- rnorm(nsample, mean=0,sd=1)
+
+    normal.2 &lt;- rnorm(nsample, mean=0,sd=1)
+</code></pre></div>
+<p>We can examine the first few entries of the result using head</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  head(normal)
+</code></pre></div>
+<p>And we can obtain the mean and sd using</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  mean(normal)
+
+  sd(normal)
+</code></pre></div>
+<p>We can also calculate the correlation between two variables
+ using cor</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  cor(normal, normal.2)
+</code></pre></div>
+<h2 id="plotting">Plotting</h2>
+<p>While <strong>R</strong> contains many powerful plotting functions in its base
+ packages,customisationn can be diﬃcult (e.g. changing the colour
+ scales, arranging the axes). <strong>ggplot2</strong> is a powerful visualization package that provides extensive
+ flexibility and customi- sation of plots. As an example, we can do the following</p>
+<p>Load the package</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  library(ggplot2)
+</code></pre></div>
+<p>Specify sample size</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  nsample &lt;-1000
+</code></pre></div>
+<p>Generate random grouping using sample with replacement</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code> groups &lt;- sample(c(&quot;a&quot;,&quot;b&quot;), nsample, replace=T)
+</code></pre></div>
+<p>Now generate the data</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code> dat &lt;- data.frame(x=rnorm(nsample), y=rnorm(nsample), groups)
+</code></pre></div>
+<p>Generate a scatter plot with diﬀerent coloring based on group</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code> ggplot(dat, aes(x=x,y=y,color=groups))+geom_point()
+</code></pre></div>
+<h2 id="regression-models">Regression Models</h2>
+<p>In statistical modelling, regression analyses are a set of statistical
+ techniques for estimating the relationships among variables or
+ features. We can perform regression analysis in <strong>R</strong>.</p>
+<p>Use the following code to perform linear regression on simulated
+ variables "x" and "y":</p>
+<p>Simulate data</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code> nsample &lt;- 10000
+
+ x &lt;- rnorm(nsample)
+
+ y &lt;- rnorm(nsample)
+</code></pre></div>
+<p>Run linear regression</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  lm(y~x)
+</code></pre></div>
+<p>We can store the result into a variable</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>   reg &lt;- lm(y~x)
+</code></pre></div>
+<p>And get a detailed output using summary</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>   summary(lm(y~x))
+</code></pre></div>
+<p>We can also extract the coeﬃcient of regression using</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>   reg$coeﬃcient
+</code></pre></div>
+<p>And we can obtain the residuals by</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  residual &lt;- resid(reg)
+</code></pre></div>
+<p>Examine the first few entries of residuals</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>   head(residual)
+</code></pre></div>
+<p>We can also include covariates into the model</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  covar &lt;- rnorm(nsample)
+
+  lm(y~x+covar)
+</code></pre></div>
+<p>And can even perform interaction analysis</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  lm(y~x+covar+x*covar)
+</code></pre></div>
+<p>Alternatively, we can use the glm function to perform the regression:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  glm(y~x)
+</code></pre></div>
+<p>For binary traits (case controls studies), logistic regression can be
+ performed using</p>
+<p>Simulate samples</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  nsample &lt;- 10000
+
+  x &lt;- rnorm(nsample)
+</code></pre></div>
+<p>Simulate binary traits (must be coded with 0 and 1)</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  y &lt;- sample(c(0,1), size=nsample, replace=T)
+</code></pre></div>
+<p>Perform logistic regression</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  glm(y~x, family=binomial)
+</code></pre></div>
+<p>Obtain the detailed output</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>  summary(glm(y~x, family=binomial))
+</code></pre></div>
+<p>We will need the NagelkerkeR2 function</p>
+<p>to calculate the pseudo R2 for logistic model</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>   source(&quot;nagelkerke.R&quot;)
+
+   reg &lt;- glm(y~x, family=binomial)
+</code></pre></div>
+<p>Calculate the Nagelkerke R2 using the NagelkerkeR2 function</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>     NagelkerkeR2(reg)
+</code></pre></div>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/tadesouaiaia/sibArc-website" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      <script src="../../../javascripts/details.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Tade Souaiaia" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Advanced Polygenic Risk Score Analyses - SibArc</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link href="../../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Advanced Polygenic Risk Score Analyses";
+        var mkdocs_page_input_path = "tmp2/practical_docs_hidden/Day2b.docx.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> SibArc
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Quick Start</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../quik_install/">Installation and Data</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../quik_demo/">Running SibArc</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../quik_result/">Interpreting Results</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">About</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about_future/">Future Work</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Misc</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../tmp/workshop_practical_paul.docx/">Day 1 (AM)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../tmp/workshop_practical_tade/">Day 1 (PM)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../workshop_practical_clive.docx/">Day 2 (AM)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">SibArc</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Advanced Polygenic Risk Score Analyses</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/tadesouaiaia/sibArc-website/edit/master/docs/tmp2/practical_docs_hidden/Day2b.docx.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="advanced-polygenic-risk-score-analyses">Advanced Polygenic Risk Score Analyses</h1>
+<h2 id="day-2-afternoon-practical-pathway-prs-analyses">Day 2 - Afternoon Practical: Pathway PRS Analyses</h2>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#gene-set-analysis-intro">Introduction to gene set (pathway) PRS analysis</a></li>
+<li><a href="#prset-inputs">Inputs required for gene-set PRS analysis</a><ol>
+<li><a href="#molecular-signatures-Database-msigdb">Molecular Signatures Database MSigDB</a></li>
+<li><a href="#other-inputs">Other inputs that can be used for gene-set PRS using PRSet</a></li>
+</ol>
+</li>
+<li><a href="#exercise-4-gene-set-based-prs-analysis">Exercise: Calculate gene-set PRS analysis</a></li>
+<li><a href="#considerations">Considerations when analysing and interpreting gene set PRSs</a><ol>
+<li><a href="#clumping">Clumping for each gene set independently</a></li>
+<li><a href="#thresholding">P-value thresholding in gene set PRS analyses</a></li>
+<li><a href="#p-value-testing">Self-contained vs competitive testing</a></li>
+</ol>
+</li>
+</ol>
+<h2 id="key-learning-outcomes">Key Learning Outcomes</h2>
+<p>After completing this practical, you should be able to:
+  1. Understand the motivation and rationale for calculating gene set PRS.
+  2. Identify the additional inputs required for gene set PRS analysis.
+  3. Calculate gene set based PRSs using PRSet.
+  5. Understand and interpret the outcomes of gene set PRSs and how they differ from genome-wide PRS.</p>
+<h2 id="data-structure">Data Structure</h2>
+<p>You will find all practical materials in the <strong>data/Day_2b</strong> directory. Relevant materials that you should find at the start of the practical are:</p>
+<p>📂: Base_Data
+  - GIANT_Height.txt,</p>
+<p>📂: Target_Data
+  - TAR.fam
+  - TAR.bim
+  - TAR.bed
+  - TAR.height
+  - TAR.covariate</p>
+<p>📁: Reference
+   - Homo_sapiens.GRCh38.109.gtf.gz
+   - Sets.gmt</p>
+<p><a id="gene-set-analysis-intro"></a></p>
+<h2 id="introduction-to-gene-set-pathway-prs-analysis">Introduction to gene set (pathway) PRS analysis</h2>
+<p>Most PRS methods summarize genetic risk to a single number, based on the aggregation of an individual’s <strong>genome-wide</strong> risk alleles. This approach does not consider the different contributions of the various biological processes that can influence complex diseases and traits. </p>
+<p>During this session, you will learn how to run a gene set (or pathway) based PRS analyses. The key difference between genome-wide PRS and gene set or pathway-based PRSs analyses is that, instead of aggregating the estimated effects of risk alleles across the entire genome, gene set PRSs aggregate risk alleles across as many gene sets as the user defines (Figure 1).</p>
+<p><img alt="pathway PRS" src="https://github.com/tadesouaiaia/prsWorkshop-website/blob/main/docs/images/pathwayPRS_overview.png" />
+<sub> <strong>Figure 1:</strong> The pathway polygenic risk score approach. Coloured boxes represent genes, lines link genes that are within the same genomic pathway. See full description <a href="https://doi.org/10.1371/journal.pgen.1010624">here</a>.
+</sub></p>
+<hr />
+<blockquote>
+<p>📌 In this practical, we will go through some of the additional input requirements and considerations for the analysis of gene set PRS analysis, and will then calculate some gene set based PRS using <a href="https://choishingwan.github.io/PRSice/quick_start_prset/">PRSet</a>.
+</p>
+</blockquote>
+<hr />
+<p>By aggregating PRS across multiple gene sets (or pathways), these PRS analyses will allow us to determine the genetic contribution made by each biological process in complex traits and diseases. For more information about the rationale and the software that we are going to use, please see the PRSet publication <a href="https://doi.org/10.1371/journal.pgen.1010624">PRSet: Pathway-based polygenic risk score analyses and software</a>. </p>
+<hr />
+<blockquote>
+<p>❓ Why is it useful to have polygenic scores measured across gene-sets (or pathways) for individuals? Isn’t it suﬃcient to just obtain a ranking of gene-sets according to GWAS-signal enrichment (using gene set enrichment tools such as MAGMA or partitioned LDSC)?
+</p>
+</blockquote>
+<hr />
+<p><a id="prset-inputs"></a></p>
+<h2 id="inputs-required-for-gene-set-prs-analysis">Inputs required for gene-set PRS analysis</h2>
+<p>Summary statistics from GWAS, as well as individual level genotype and phenotype data are required to perform gene set PRS analyses. </p>
+<p>In this session, the following Base and Target data is used. Base data is publicly available. All Target data in this worshop are <strong>simulated</strong>. They have no specific biological meaning and are for demonstration purposes only. </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Data Set</strong></th>
+<th style="text-align: center;"><strong>Description</strong></th>
+<th style="text-align: center;"><strong>Download Link</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Base from the <a href="https://portals.broadinstitute.org/collaboration/giant/index.php/GIANT_consortium_data_files">GIANT Consortium</a></td>
+<td style="text-align: center;">GWAS of height on 253,288 individuals</td>
+<td style="text-align: center;"><a href="https://portals.broadinstitute.org/collaboration/giant/images/0/01/GIANT_HEIGHT_Wood_et_al_2014_publicrelease_HapMapCeuFreq.txt.gz">Link</a></td>
+</tr>
+<tr>
+<td style="text-align: center;">Simulated Target Data</td>
+<td style="text-align: center;">Individual-level phenotype and genotype files</td>
+<td style="text-align: center;">Data folder</td>
+</tr>
+</tbody>
+</table>
+<p>Additionally, to perform gene set PRS analyses, information about the gene sets for which we want to calculate the PRSs are required. In this tutorial, we will use as input gene-sets from the <strong>Molecular Signatures Database</strong>. However, PRSet also takes as input <strong>BED and SNP files</strong>. </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Data Set</strong></th>
+<th style="text-align: center;"><strong>Description</strong></th>
+<th style="text-align: center;"><strong>Download Link</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Ensembl Human Genome GTF file</td>
+<td style="text-align: center;">A file containing the coordinates for genes in the human genome. Used by PRSet to map the SNPs onto genic regions</td>
+<td style="text-align: center;"><a href="https://ftp.ensembl.org/pub/release-109/gtf/homo_sapiens/">Link to Homo_sapiens.GRCh38.109.gtf.gz</a></td>
+</tr>
+<tr>
+<td style="text-align: center;">MSigDB Gene Sets</td>
+<td style="text-align: center;">File containing the gene-set information. <em>Free registration required.</em></td>
+<td style="text-align: center;"><a href="http://software.broadinstitute.org/gsea/msigdb/download_file.jsp?filePath=/resources/msigdb/6.1/h.all.v6.1.symbols.gmt">Download link after registration</a></td>
+</tr>
+</tbody>
+</table>
+<p><a id="molecular-signatures-Database-msigdb"></a></p>
+<h3 id="molecular-signatures-database-msigdb-general-transfer-format-file">Molecular Signatures Database MSigDB + General Transfer Format file</h3>
+<p>MSigDB oﬀers an excellent source of gene sets, including the hallmark genes, gene sets of diﬀerent biological processes, gene sets of diﬀerent oncogenic signatures etc. All gene sets from MSigDB follows the Gene Matrix Transposed file format (GMT), which consists of one line per gene set, each containing at least 3 column of data:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Set A</td>
+<td style="text-align: center;">Description</td>
+<td style="text-align: center;">Gene 1</td>
+<td style="text-align: center;">Gene 2</td>
+<td style="text-align: center;">...</td>
+</tr>
+<tr>
+<td style="text-align: center;">Set A</td>
+<td style="text-align: center;">Description</td>
+<td style="text-align: center;">Gene 1</td>
+<td style="text-align: center;">Gene 2</td>
+<td style="text-align: center;">...</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p>💬 While you can read the GMT file using Excel, we recommend exploring these files using bash. You should be aware that Excel has a tendency to convert gene names into dates (e.g. SEPT9 to Sep-9)
+</p>
+</blockquote>
+<hr />
+<blockquote>
+<p>** Have a look at the Reference/Sets.gmt file. **</p>
+<p>❓ How many gene sets are there in the Reference/Sets.gmt file? </p>
+<p>❓ How many genes does the largest gene set contain?
+</p>
+</blockquote>
+<hr />
+<p>As GMT format does not contain the chromosomal location for each individual gene, an additional file (General Transfer Format file) is required to provide the chromosomal location such that SNPs can be mapped to genes.</p>
+<p>The General Transfer Format (GTF) file contains the chromosomal coordinates for each gene. It is a <strong>tab</strong> separated file and all fields except the last must contain a value. You can read the full format specification <a href="https://useast.ensembl.org/info/website/upload/gff.html">here</a>. </p>
+<p>Two columns in the GTF file that might be of particular interest are:
+- Column 3: <strong>feature</strong>, which indicates what feature that line of GTF represents. This allows us to select or ignore features that are of interest. </p>
+<ul>
+<li>Column 9: <strong>attribute</strong>, which contains a semicolon-separated list of tag-value pairs (separated by a space), providing additional information about each feature. A key can be repeated multiple times.</li>
+</ul>
+<hr />
+<h2 id="tip-to-parse-column-9-and-split-the-additional-information-in-separate-columns-you-can-use-the-following-r-code">&gt; 📌 <em>Tip</em>, to parse column 9 and split the additional information in separate columns, you can use the following R code:</h2>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>library(data.table)
+library(magrittr)
+
+# Function to extract attributes from column 9 in GTF files:
+extract_attribute = function(input, attribute) {
+  strsplit(input, split = &quot;;&quot;) %&gt;%
+    unlist %&gt;%
+    .[grepl(attribute, .)] %&gt;%
+    gsub(&quot;\&quot;&quot;, &quot;&quot;, .) %&gt;%
+    strsplit(., split = &quot; &quot;) %&gt;%
+    unlist %&gt;%
+    tail(n = 1) %&gt;%
+    return
+}
+
+gtf38 = fread(&quot;./Reference/Homo_sapiens.GRCh38.109.gtf.gz&quot;)
+
+gtf38_parsed = gtf38 %&gt;%
+  # Select genes only, based on column 3 (feature) 
+  .[V3 == &quot;gene&quot;] %&gt;%
+  # Select genes located in autosomes
+  .[`#!genebuild-last-updated 2022-11` %in% 1:22] %&gt;%
+  # Create colummns with Gene information
+  .[, c(&quot;chr&quot;, &quot;Gene_start&quot;, &quot;Gene_end&quot;, &quot;ensemblID&quot;, &quot;Gene_Name&quot;, &quot;Gene_biotype&quot;) := data.table(
+    `#!genebuild-last-updated 2022-11`,
+    V4,
+    V5,
+    sapply(V9, extract_attribute, &quot;gene_id&quot;),
+    sapply(V9, extract_attribute, &quot;gene_name&quot;),
+    sapply(V9, extract_attribute, &quot;gene_biotype&quot;))] %&gt;%
+  # Filter the columns of interest
+  .[, c(&quot;chr&quot;, &quot;Gene_start&quot;, &quot;Gene_end&quot;, &quot;ensemblID&quot;, &quot;Gene_Name&quot;, &quot;Gene_biotype&quot;)]
+</code></pre></div>
+<hr />
+<blockquote>
+<p>** Have a look at the Reference/Homo_sapiens.GRCh38.109.gtf.gz file. **</p>
+<p>❓ Based on the column with information about the features, how many instances of feature = "gene" can you find ? </p>
+<p>❓ Based on the column with inforamtion about the attributes, how many protein-coding genes are there in the Reference/Homo_sapiens.GRCh38.109.gtf.gz file? 
+</p>
+</blockquote>
+<hr />
+<p><a id="other-inputs"></a></p>
+<h3 id="other-inputs-that-can-be-used-for-gene-set-prs-using-prset">Other inputs that can be used for gene set PRS using PRSet</h3>
+<h4 id="browser-extensible-data-bed">Browser Extensible Data BED</h4>
+<p>Browser Extensible Data (BED) file (diﬀerent to the binary ped file from PLINK), is a file format to define genetic regions. It contains 3 required fields per line (chromosome, start coordinate and end coordinate) together with 9 additional optional field. A special property of BED is that it is a 0-based format, i.e. chromosome starts at 0, as opposed to the usual 1-based format such as the PLINK format. For example, a SNP on chr1:10000 will be represented as:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;"><strong>9999</strong></td>
+<td style="text-align: center;"><strong>10000</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p>❓ How should we represent the coordinate of rs2980300 (chr1:785989) in BED format?
+</p>
+</blockquote>
+<hr />
+<h4 id="list-of-snps">List of SNPs</h4>
+<p>Finally, PRSet also allow SNP sets, where the user have flexibility to decide what SNPs are included. The list of SNPs can have two different formats:
+- SNP list format, a file containing a single column of SNP ID. Name of the set will be the file name or can be provided using <code>--snp-set File:Name</code>
+- MSigDB format: Each row represent a single SNP set with the first column containing the name of the SNP set.</p>
+<p><a href="#top"><a href="#table-of-contents">Back to Top</a></a>
+<a id="exercise-4-gene-set-based-prs-analysis"></a></p>
+<h2 id="exercise-calculate-gene-set-prs-analysis">Exercise: Calculate gene set PRS analysis</h2>
+<p>We are now ready to perform gene-set association analyses using PRSet.</p>
+<p>To perform the PRSet analysis and obtain the set based PRS and competitive P-value, simply provide the GTF file and the GMT file to PRSice and specify the number of permutation for competitive P-value calculation using the --set-perm option.</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>Rscript ./Software/PRSice.R \
+    --prsice Software/PRSice_linux  \ ----&gt; ATTENTION, the binary file may be different depending on the operative system (linux, mac, windows)
+    --base Base_Data/GIANT_Height.txt \
+    --target Target_Data/TAR \
+    --A1 Allele1 \
+    --A2 Allele2 \
+    --snp MarkerName \
+    --pvalue p \
+    --stat b \
+    --beta \
+    --binary-target F \
+    --pheno Target_Data/TAR.height \
+    --cov Target_Data/TAR.covariate \
+    --out Height.set \
+    --gtf Reference/Homo_sapiens.GRCh38.109.gtf.gz \
+    --wind-5 5kb \
+    --wind-3 1kb \
+    --msigdb Reference/Sets.gmt \
+    --multi-plot 10 \
+    --set-perm 1000
+</code></pre></div>
+<hr />
+<h2 id="if-the-wind-5-and-wind-3-flag-is-not-specified-prset-will-use-the-exact-coordinates-of-each-gene-as-the-boundary-by-specifying-eg-wind-5-5kb-and-wind-3-1kb-then-the-boundary-of-each-gene-will-be-extended-5-kb-towards-the-5-end-and-1-kb-towards-the-3-end-so-that-regulatory-elements-of-the-gene-can-be-included">&gt; 📌 If the --wind-5 and --wind-3 flag is not specified, PRSet will use the exact coordinates of each gene as the boundary. By specifying eg. --wind-5 5kb and --wind-3 1kb then the boundary of each gene will be extended 5 kb towards the 5’ end and 1 kb towards the 3’ end so that regulatory elements of the gene can be included.</h2>
+<h2 id="results-and-plots-specific-of-gene-set-prs-analyses">Results and Plots specific of gene set PRS analyses</h2>
+<hr />
+<blockquote>
+<p>** Check the .summary results file, with and without running the PRSet specific options **</p>
+<p>❓ How does this file change? What extra information is incorporated when including the PRSet specific commands?
+</p>
+</blockquote>
+<hr />
+<p>Apart from the output files, running the PRSet options will provide extra information about the new gene set PRSs calculated. For example, a new figure with the results for each gene set PRS.</p>
+<p><img alt="Figure" src="https://github.com/tadesouaiaia/prsWorkshop-website/blob/main/docs/images/Day2b_Height.set_MULTISET_BARPLOT.png" />
+<sub> <strong>Figure 2</strong> : An example of the multi-set plot. Sets are sorted based on their self-contained R2. Base is the genome wide PRS. </sub></p>
+<p><a id="considerations"></a></p>
+<h2 id="considerations-when-analysing-and-interpreting-gene-set-prss">Considerations when analysing and interpreting gene-set PRSs</h2>
+<p><a id="clumping"></a></p>
+<h3 id="clumping-for-each-gene-set-independently">Clumping for each gene set independently</h3>
+<p>In standard clumping and P-value thresholding methods, clumping is performed to account for linkage disequilibrium between SNPs. If genome-wide clumping is performed at the gene set level, we may remove signal as <a href="https://choishingwan.github.io/PRSice/prset_detail/#snp-set-files">shown in this toy example</a>.</p>
+<p>To maximize signal within each gene set, clumping is performed for each gene set separately.</p>
+<hr />
+<blockquote>
+<blockquote>
+<p>** Check the .summary results file. When answering questions, do not count the Base, as this result corresponds to the genome-wide PRS **</p>
+<p>❓ Check the '.summary' file. How many SNPs are included in the top 10 gene sets?</p>
+</blockquote>
+<p>❓ Can you plot the relationship between the gene set R2 and the number of SNPs in each gene set? What general trend can be seen?
+</p>
+</blockquote>
+<hr />
+<p><a id="thresholding"></a></p>
+<h3 id="p-value-thresholding-in-gene-set-prs-analyses">P-value thresholding in gene set PRS analyses</h3>
+<p>PRSet default option is to no not perform p-value thresholding. It will simply calculate the set based PRS at P-value threshold of 1. </p>
+<hr />
+<blockquote>
+<p>❓ Why do you think that the default option of PRSet is P-value threshold of 1?</p>
+<p>❓ In what cases would you like to apply P-value thresholding?
+</p>
+</blockquote>
+<hr />
+<p><a id="p-value-testing"></a></p>
+<h3 id="self-contained-vs-competitive-testing">Self-contained vs competitive testing</h3>
+<p>An important aspect when calculating gene set based PRSs is the type of test used for association. Since we are only considering one region of the genome, self-contained and/or competitive tests can be performed. </p>
+<p>The null-hypothesis of self-contained and competitive test statistics is diﬀerent:
+  – <strong>Self-Contained</strong> - None of the genes within the gene-set are associated with the phenotype
+  – <strong>Competitive</strong> - Genes within the gene-set are no more associated with the phenotype than genes outside the gene-set
+Therefore, a bigger gene-set will have a higher likelihood of having a significant P -value from self-contained test, which is not desirable.</p>
+<hr />
+<blockquote>
+<p>** Check the .summary results file again **</p>
+<p>❓ What are the 3 gene-sets with the smallest competitive P-values? </p>
+<p>❓ Why do you think that we check the competitive P-value, instead of the self contained P-value?</p>
+<p>** Imagine that you are running an analysis to find the gene sets most associated with height **
+❓ Considering the competitive P-value results, what gene set do you think is the most interesting and why?
+</p>
+</blockquote>
+<hr />
+<p><a href="#top"><a href="#table-of-contents">Back to Top</a></a></p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/tadesouaiaia/sibArc-website" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      <script src="../../../javascripts/details.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

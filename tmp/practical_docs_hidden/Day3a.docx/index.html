@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Tade Souaiaia" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Advanced Polygenic Risk Score Analyses - SibArc</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link href="../../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Advanced Polygenic Risk Score Analyses";
+        var mkdocs_page_input_path = "tmp/practical_docs_hidden/Day3a.docx.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> SibArc
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Quick Start</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../quik_install/">Installation and Data</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../quik_demo/">Running SibArc</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../quik_result/">Interpreting Results</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">About</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about_future/">Future Work</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Misc</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../workshop_practical_paul.docx/">Day 1 (AM)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../workshop_practical_tade/">Day 1 (PM)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../workshop_practical_clive.docx/">Day 2 (AM)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">SibArc</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Advanced Polygenic Risk Score Analyses</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/tadesouaiaia/sibArc-website/edit/master/docs/tmp/practical_docs_hidden/Day3a.docx.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="advanced-polygenic-risk-score-analyses">Advanced Polygenic Risk Score Analyses</h1>
+<h2 id="day-3-polygenic-risk-score-analyses-workshop-2024">Day 3 - Polygenic Risk Score Analyses Workshop 2024</h2>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#Key-learning-outcomes">Key Learning Outcomes</a></li>
+<li><a href="#Base-and-target-datasets">Base and Target datasets</a></li>
+<li><a href="#Downloading-Datasets">Downloading Datasets</a></li>
+<li><a href="#Method-for-calculating-PRS">Method for Calculating PRS</a></li>
+<li><a href="#exercise-1-estimating-r2">Exercise 1 Estimating R<sup>2</sup></a></li>
+<li><a href="#exercise-2-visualising-r2">Exercise 2 Visualising and comparing R<sup>2</sup></a></li>
+</ol>
+<h2 id="day-3a-practical">Day 3a practical</h2>
+<h2 id="key-learning-outcomes">Key Learning Outcomes</h2>
+<p>After completing this practical, you should be able to:
+  1. Compute and analyse ancestry-matched and unmatched PRS using PRSice-2.
+  2. Understand and interpret the results from PRSise-2 derived scores. 
+  3. Understand and identify the impact of ancestry on the predictive utility of PRS.
+  4. Understand and identify the impact of sample size on the predictive utility of PRS.
+  5. Understand the challenges and limitations of applying PRS in populations with diverse genetic backgrounds.</p>
+<h2 id="base-and-target-datasets">Base and Target datasets</h2>
+<p>In this practical, we will compute a PRS for systolic blood pressure (SBP) and assess it performance across European and African ancestry datasets to clearly illustrate the portability problem. </p>
+<p><strong>We will assess the predictive utility of 3 scores</strong>:</p>
+<p><strong>ANCESTRY-MATCHED</strong>
+1. EUR base - EUR target: Utilise European summary statistics as the training data and individual-level genotyped data from Europeans as the target dataset. 
+2. AFR base - AFR target: Utilise African summary statistics as the training data and individual-level genotyped data from Africans as the target dataset.</p>
+<p><strong>ANCESTRY-UNMATCHED</strong></p>
+<ol>
+<li>EUR base - AFR target: Utilise European summary statistics as the training data and individual-level genotyped data from Africans as the target dataset. </li>
+</ol>
+<p>Please note that the sample sizes of the individual-level target data are as follows: 
+Europeans (n = ~500) and Africans (n = ~650). </p>
+<ul>
+<li>Note: This is simulated data with no real-life biological meaning or implication. </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Dataset</strong></th>
+<th style="text-align: center;"><strong>Source</strong></th>
+<th style="text-align: center;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Base dataset (EUR, AFR)</td>
+<td style="text-align: center;">simulated</td>
+<td style="text-align: center;">GWAS summary stats of SBP</td>
+</tr>
+<tr>
+<td style="text-align: center;">Target dataset (EUR, AFR)</td>
+<td style="text-align: center;">simulated</td>
+<td style="text-align: center;">EUR (n = ~500), AFR (n = ~650)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="downloading-datasets">Downloading Datasets</h2>
+<p>All required software for this practical is found in the <strong>/home/manager/data/Data_Day4/software</strong> directory.</p>
+<p>🛠️: Software
+  - PRSice.R 
+  - PRSice_linux
+  - plink_linux</p>
+<p>All required data for this practical is found in the <strong>/home/manager/data/Data_Day4/data</strong> directory. </p>
+<p>The relevant data that you should see there at the start of the practical are as follows:</p>
+<p>📂: Base_Data (summary statistics)
+  - AFR-SBP-simulated.sumstats.prscsx
+  - EUR-SBP-simulated.sumstats.prscsx</p>
+<p>📂: Target_Data
+  - AFR_1kg.hm3.only.csx (.bed, .bim, .fam)
+  - EUR_1kg.hm3.only.csx (.bed, .bim, .fam)
+  - sbp.afr.1kg.sim_pheno
+  - sbp.eur.1kg.sim_pheno</p>
+<p>📁: Reference files
+  - 1kg.afr.dbSNP153.hg38.bed
+  - 1kg.afr.dbSNP153.hg38.bim
+  - 1kg.afr.dbSNP153.hg38.fam
+  - 1kg.eur.dbSNP153.hg38.bed
+  - 1kg.eur.dbSNP153.hg38.bim
+  - 1kg.eur.dbSNP153.hg38.fam</p>
+<h2 id="method-for-calculating-prs">Method for calculating PRS</h2>
+<p>For this practical we will use PRSice-2. PRSice-2 is one of the dedicated PRS calculation and analysis programs that makes use of a sequence of PLINK functions. The tools utilises the standard clumping and thresholding (C+T) approach.</p>
+<h2 id="exercise-1-estimating-r2">Exercise 1 Estimating R<sup>2</sup></h2>
+<h3 id="code">Code</h3>
+<p>Open the terminal and move to the data directory for this practical:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data
+</code></pre></div>
+<p>Create the output directory - "out":
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>mkdir<span style="color: #bbbbbb"> </span>out
+</code></pre></div></p>
+<p>Look at the data files within the directory: </p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>ls<span style="color: #bbbbbb"> </span>-l
+</code></pre></div>
+<p>Now, calculate PRS using <strong>PRSice 2</strong></p>
+<h4 id="scenario-1-predicting-from-eur-training-to-eur-target-data">Scenario 1: Predicting from EUR training to EUR target data:</h4>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>Rscript<span style="color: #bbbbbb"> </span>/home/manager/PRSice_linux/PRSice.R<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--prsice<span style="color: #bbbbbb"> </span>/home/manager/PRSice_linux/PRSice<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--base<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/EUR-SBP-simulated.sumstats.prscsx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--A1<span style="color: #bbbbbb"> </span>A1<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pvalue<span style="color: #bbbbbb"> </span>P<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--no-clump<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--beta<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--snp<span style="color: #bbbbbb"> </span>SNP<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--score<span style="color: #bbbbbb"> </span>sum<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--target<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/EUR_1kg.hm3.only.csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--binary-target<span style="color: #bbbbbb"> </span>F<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/sbp_eur_1kg.sim_pheno<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno-col<span style="color: #bbbbbb"> </span>pheno100<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--thread<span style="color: #bbbbbb"> </span><span style="color: #666666">8</span><span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--out<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/out/SBP.eur.eur<span style="color: #bbbbbb">  </span>
+</code></pre></div>
+<h3 id="key-code-parameters">Key code parameters</h3>
+<p>The parameters listed in this table remain consistent across various scenarios, but the specific values may change based on the dataset and analysis scenario. </p>
+<p>For illustrative purposes, this table uses the first scenario, EUR base and EUR target population:</p>
+<details>
+<summary>Click to view the parameters table</summary>
+
+<table>
+  <tr>
+    <th>Parameter</th>
+    <th>Value</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>prsice</td>
+    <td>PRSice_xxx</td>
+    <td>Informs PRSice.R that the location of the PRSice binary, xxx is the operating system (mac or linux)</td>
+  </tr>
+  <tr>
+    <td>base</td>
+    <td>EUR-SBP-simulated.sumstats.prscsx</td>
+    <td>Specifies the GWAS summary statistics file for input</td>
+  </tr>
+  <tr>
+    <td>A1</td>
+    <td>A1</td>
+    <td>Column name for the effect allele in the GWAS summary statistics</td>
+  </tr>
+  <tr>
+    <td>p value</td>
+    <td>P</td>
+    <td>Column name for the p-values of SNPs in the GWAS summary statistics</td>
+  </tr>
+  <tr>
+    <td>no clump</td>
+    <td>-</td>
+    <td>Instructs PRSice to skip the clumping process, which is used to remove SNPs in linkage disequilibrium</td>
+  </tr>
+  <tr>
+    <td>beta</td>
+    <td>-</td>
+    <td>Indicates that the effect sizes are given in beta coefficients (linear regression coefficients)</td>
+  </tr>
+  <tr>
+    <td>snp</td>
+    <td>SNP</td>
+    <td>Column name for SNP identifiers in the GWAS summary statistics</td>
+  </tr>
+  <tr>
+    <td>score</td>
+    <td>sum</td>
+    <td>Specifies that the score calculation should sum the product of SNP effect sizes and their genotype counts</td>
+  </tr>
+  <tr>
+    <td>target</td>
+    <td>EUR_1kg.hm3.only.csx</td>
+    <td>Specifies the genotype data file for the target sample</td>
+  </tr>
+  <tr>
+    <td>binary-target</td>
+    <td>F</td>
+    <td>Indicates that the phenotype of interest is not binary (e.g., quantitative trait), F for no</td>
+  </tr>
+  <tr>
+    <td>pheno</td>
+    <td>sbp_eur_1kg.sim_pheno</td>
+    <td>Specifies the file containing phenotype data</td>
+  </tr>
+  <tr>
+    <td>pheno-col</td>
+    <td>pheno100</td>
+    <td>Column name in the phenotype file that contains the phenotype data to be used for PRS calculation</td>
+  </tr>
+  <tr>
+    <td>cov*</td>
+    <td>EUR.covariate</td>
+    <td>Specifies the file containing covariate data for the analysis</td>
+  </tr>
+  <tr>
+    <td>base-maf*</td>
+    <td>MAF:0.01</td>
+    <td>Filter out SNPs with MAF < 0.01 in the GWAS summary statistics, using information in the MAF column</td>
+  </tr>
+  <tr>
+    <td>base-info*</td>
+    <td>INFO:0.8</td>
+    <td>Filter out SNPs with INFO < 0.8 in the GWAS summary statistics, using information in the INFO column</td>
+  </tr>
+  <tr>
+    <td>stat*</td>
+    <td>OR</td>
+    <td>Column name for the odds ratio (effect size) in the GWAS summary statistics</td>
+  </tr>
+  <tr>
+    <td>or*</td>
+    <td>-</td>
+    <td>Inform PRSice that the effect size is an Odd Ratio</td>
+  </tr>
+  <tr>
+    <td>thread</td>
+    <td>8</td>
+    <td>Specifies the number of computing threads to use for the analysis</td>
+  </tr>
+  <tr>
+    <td>out</td>
+    <td>SBP_trial.eur.eur</td>
+    <td>Specifies the name for the output files generated by PRSice</td>
+  </tr>
+</table>
+
+*Note: These parameters are not used within this exercise but will likely be included when conducting your own analyses.
+
+</details>
+
+<p><strong>QUESTIONS</strong> </p>
+<p>Move to the out directory you created earlier:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>out
+</code></pre></div>
+<p>Look at the files produced following your first analyis within the directory: </p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>ls<span style="color: #bbbbbb"> </span>-l
+</code></pre></div>
+<details>
+  <summary>How many files have been generated from this code and what does each file show you?</summary>
+
+
+  This code generates six files. Each files serves a different purpose in the analysis and interpretation of derived PRS.
+  These are outlined below: 
+
+  1. **.summary**: Provides a high-level summary of the best-performing PRS analysis result, allowing for a quick assessment of the PRS model's performance.
+  2. **.prsice**: Provides the PRS analysis results across all p-value thresholds. This file will be the input for the bar plot that assesses the R2 at each p-value threshold.
+  3. **.log**: Useful for debugging and detailed tracking of the computational steps undertaken during the PRS calculation.
+  4. **.best**: Provides details of which individuals (IID) are included in the PRS regression analysis that assesses the association between the genotype and phenotype, and provides their individual PRS score
+  5. **.png (Bar plot)**: Assist in visually assessing the performance of PRS calculated at each p-value threshold, with the most predictive bar being the highest R<sup>2</sup> and thus the tallest bar).
+      The y axis shows the phenotypic variance explained (R<sup>2</sup>), the x-axis the various p-value thresholds, and the text above each bar is the p-value showing the significance of the association between the PRS and phenotype.
+      The colours of the bars (from red to blue) indicate the strength of the association with red indicating lower p-values (greater significance). 
+  6. **.png (High resolution plot)**: Assist in visually assessing the performance of PRS calculated at each p-value threshold.
+     However, this high-resolution plot uses a negative logarithmic scale on the Y-axis to show the performance of different combinations of SNPS in predicting the trait as measured by their p-values. Lower p-values indicate better performance and appear higher on the Y-axis.
+</details>
+
+<p>Examine the plot indicating the R<sup>2</sup> at each p-value threshold: </p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>xdg-open<span style="color: #bbbbbb"> </span>SBP.eur.eur_BARPLOT_2024-06-12.png
+</code></pre></div>
+<details>
+  <summary>Which p-value threshold generates the "best-fit" PRS?</summary>
+
+  P-value threshold of 0.00205005.
+</details>
+
+<details> 
+  <summary>What does "best-fit" mean?</summary>
+
+  "Best-fit" refers to the p-value threshold at which the PRS accounts for the highest proportion of variance in the phenotype (R<sup>2</sup>) compared to other thresholds tested.
+</details>
+
+<details> 
+<summary>Why does this matter?</summary>
+
+  Choosing the optimal p-value threshold is crucial because it affects the sensitivity and specificity of the PRS. The optimal threshold balances including informative SNPs and excluding noise from less relevant variants.
+
+  A threshold that is too lenient (high p-value from GWAS association test) might include too many SNPs, adding noise and possibly diluting the predictive power of the score. Conversely, a threshold that is too stringent (low p-value) might exclude potentially informative SNPs, reducing the ability of the PRS to capture the genetic architecture of the trait.
+</details>
+
+<details>
+<summary>Which file provides a summary of the "best-fit" PRS?</summary>
+
+  SBP.eur.eur.summary
+</details>
+
+<p>View this summary output file: 
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>cat<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/out/SBP.eur.eur.summary
+</code></pre></div></p>
+<details>
+<summary>How much phenotypic variation does the "best-fit" PRS explain? What does this mean in very simple terms?</summary>
+
+  R<sup>2</sup> = 0.0829 (8.2%).
+
+  This R<sup>2</sup> value means that out of the total variability observed in the trait across the population (under study), 8.2% of the variation can be attributed to the genetic variants included in this PRS.
+</details>
+
+<details>
+<summary>What is the significance of the association (p-value) between the "best-fit" PRS and trait?</summary>
+The p-value is 1.72126e-11. 
+A p-value below 0.05 indicates statistically significant evidence that the PRS at this threshold explains phenotypic variance and captures genuine genetic associations with the phenotype (i.e. not by chance).
+</details>
+
+<details>
+<summary>How many SNPs are included in the "best-fit" PRS? </summary>
+Number of SNPs = 389.
+</details>
+
+<h4 id="scenario-2-predicting-from-afr-training-to-afr-target-data">Scenario 2: Predicting from AFR training to AFR target data:</h4>
+<p>Return to the data directory:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data
+</code></pre></div>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>Rscript<span style="color: #bbbbbb"> </span>/home/manager/PRSice_linux/PRSice.R<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--prsice<span style="color: #bbbbbb"> </span>/home/manager/PRSice_linux/PRSice<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--base<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/AFR-SBP-simulated.sumstats.prscsx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--A1<span style="color: #bbbbbb"> </span>A1<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pvalue<span style="color: #bbbbbb"> </span>P<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--no-clump<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--beta<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--snp<span style="color: #bbbbbb"> </span>SNP<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--score<span style="color: #bbbbbb"> </span>sum<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--target<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/AFR_1kg.hm3.only.csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--binary-target<span style="color: #bbbbbb"> </span>F<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/sbp_afr_1kg.sim_pheno<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno-col<span style="color: #bbbbbb"> </span>pheno50<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--thread<span style="color: #bbbbbb"> </span><span style="color: #666666">8</span><span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--out<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/out/SBP.afr.afr
+</code></pre></div>
+View the output file:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>cat<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/out/SBP.afr.afr.summary
+</code></pre></div>
+<p><strong>QUESTIONS</strong> </p>
+<details>
+  <summary>Which p-value threshold generates the "best-fit" PRS?</summary>
+  P-value threshold of 5e-08.
+</details>
+
+<details>
+  <summary>How many SNPs are included in the "best-fit" PRS explain?</summary>
+  Number of SNPs = 96.
+</details>
+
+<details>
+  <summary>How much phenotypic variation does the "best-fit" PRS explain?</summary>
+  R<sup>2</sup> = 0.0082124 (0.8%).
+</details>
+
+<h4 id="scenario-3-predicting-from-eur-training-to-afr-target-data">Scenario 3: Predicting from EUR training to AFR target data</h4>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>Rscript<span style="color: #bbbbbb"> </span>/home/manager/PRSice_linux/PRSice.R<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--prsice<span style="color: #bbbbbb"> </span>/home/manager/PRSice_linux/PRSice<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--base<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/EUR-SBP-simulated.sumstats.prscsx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--A1<span style="color: #bbbbbb"> </span>A1<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pvalue<span style="color: #bbbbbb"> </span>P<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--no-clump<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--beta<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--snp<span style="color: #bbbbbb"> </span>SNP<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--score<span style="color: #bbbbbb"> </span>sum<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--target<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/AFR_1kg.hm3.only.csx<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--binary-target<span style="color: #bbbbbb"> </span>F<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/sbp_afr_1kg.sim_pheno<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--pheno-col<span style="color: #bbbbbb"> </span>pheno50<span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--thread<span style="color: #bbbbbb"> </span><span style="color: #666666">8</span><span style="color: #bbbbbb"> </span><span style="color: #AA5D1F; font-weight: bold">\</span>
+--out<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/out/SBP.eur.afr
+</code></pre></div>
+<p>View the output file: </p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>cat<span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/out/SBP.eur.afr.summary<span style="color: #bbbbbb"> </span>
+</code></pre></div>
+<p><strong>QUESTIONS</strong> </p>
+<details>
+  <summary>Which p-value threshold generates the "best-fit" PRS?</summary>
+  P-value threshold of 0.00815005.
+</details>
+
+<details>
+  <summary>How many SNPs are included in the "best-fit" PRS explain?</summary>
+  Number of SNPs = 1192.
+</details>
+
+<details>
+  <summary>How much phenotypic variation does the "best-fit" PRS explain?</summary>
+  R<sup>2</sup> = 0.0160098 (1.6%).
+</details>
+
+<h2 id="exercise-2-visualising-and-comparing-r2">Exercise 2 Visualising and comparing R<sup>2</sup></h2>
+<p>In this exercise, we will analyse and compare the phenotypic variance explained (R<sup>2</sup>) by PRS across different combinations of base and target ancestries. 
+We will use R for visualisation.</p>
+<p><strong>Open a new terminal and open R</strong></p>
+<p>Open a new tab in the terminal (<strong>plus icon in the top left corner</strong>)</p>
+<p>In this new terminal window, make sure you are in the 'out' directory:</p>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data/out/
+</code></pre></div>
+Now open R: </p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>R
+</code></pre></div>
+<p>Once in R, combine the summary files and visualise the performance of each PRS: </p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Load necessary libraries</span>
+library<span style="color: #666666">(</span>ggplot2<span style="color: #666666">)</span>
+library<span style="color: #666666">(</span>RColorBrewer<span style="color: #666666">)</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Create a function to read the files and add ancestry information</span>
+read_and_label<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">function</span><span style="color: #666666">(</span>file,<span style="color: #bbbbbb"> </span>ancestry<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span><span style="color: #666666">{</span>
+<span style="color: #bbbbbb">  </span>data<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>read.table<span style="color: #666666">(</span>file,<span style="color: #bbbbbb"> </span><span style="color: #19177C">header</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>TRUE,<span style="color: #bbbbbb"> </span><span style="color: #19177C">sep</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;\t&quot;</span><span style="color: #666666">)</span>
+<span style="color: #bbbbbb">  </span>data<span style="color: #19177C">$Ancestry</span><span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>ancestry
+<span style="color: #bbbbbb">  </span><span style="color: #008000; font-weight: bold">return</span><span style="color: #666666">(</span>data<span style="color: #666666">)</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Read each file with the corresponding ancestry information</span>
+EUR_EUR<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>read_and_label<span style="color: #666666">(</span><span style="color: #BA2121">&quot;SBP.eur.eur.summary&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;EUR_EUR&quot;</span><span style="color: #666666">)</span>
+AFR_AFR<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>read_and_label<span style="color: #666666">(</span><span style="color: #BA2121">&quot;SBP.afr.afr.summary&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;AFR_AFR&quot;</span><span style="color: #666666">)</span>
+EUR_AFR<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>read_and_label<span style="color: #666666">(</span><span style="color: #BA2121">&quot;SBP.eur.afr.summary&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;EUR_AFR&quot;</span><span style="color: #666666">)</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Combine all data into one dataframe</span>
+all_data<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>rbind<span style="color: #666666">(</span>EUR_EUR,<span style="color: #bbbbbb"> </span>AFR_AFR,<span style="color: #bbbbbb"> </span>EUR_AFR<span style="color: #666666">)</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Create a bar graph with different colors for each ancestry</span>
+
+png<span style="color: #666666">(</span><span style="color: #BA2121">&#39;/home/manager/data/Data_Day4/data/out/PRS_ancestry_analysis.png&#39;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">unit</span><span style="color: #666666">=</span><span style="color: #BA2121">&#39;px&#39;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">res</span><span style="color: #666666">=300</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">width</span><span style="color: #666666">=3500</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">height</span><span style="color: #666666">=4500)</span>
+
+ancestry<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>ggplot<span style="color: #666666">(</span>all_data,<span style="color: #bbbbbb"> </span>aes<span style="color: #666666">(</span><span style="color: #19177C">x</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>Ancestry,<span style="color: #bbbbbb"> </span><span style="color: #19177C">y</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>PRS.R2,<span style="color: #bbbbbb"> </span><span style="color: #19177C">fill</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>Ancestry<span style="color: #666666">))</span><span style="color: #bbbbbb"> </span>+
+<span style="color: #bbbbbb">  </span>geom_bar<span style="color: #666666">(</span><span style="color: #19177C">stat</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;identity&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">position</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;dodge&quot;</span><span style="color: #666666">)</span><span style="color: #bbbbbb"> </span>+
+<span style="color: #bbbbbb">  </span>labs<span style="color: #666666">(</span><span style="color: #19177C">title</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;R2 Values by Ancestry&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">x</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Ancestry&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">y</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;R2 Value&quot;</span><span style="color: #666666">)</span><span style="color: #bbbbbb"> </span>+
+<span style="color: #bbbbbb">  </span>theme_minimal<span style="color: #666666">()</span><span style="color: #bbbbbb"> </span>+
+<span style="color: #bbbbbb">  </span>scale_fill_brewer<span style="color: #666666">(</span><span style="color: #19177C">palette</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Set3&quot;</span><span style="color: #666666">)</span><span style="color: #bbbbbb"> </span>+
+<span style="color: #bbbbbb">  </span>theme<span style="color: #666666">(</span>plot.title<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>element_text<span style="color: #666666">(</span><span style="color: #19177C">hjust</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.5,<span style="color: #bbbbbb"> </span><span style="color: #19177C">size</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #666666">16</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">face</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;bold&quot;</span><span style="color: #666666">)</span>,
+<span style="color: #bbbbbb">        </span>axis.title.x<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>element_text<span style="color: #666666">(</span><span style="color: #19177C">size</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #666666">14</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">face</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;bold&quot;</span><span style="color: #666666">)</span>,
+<span style="color: #bbbbbb">        </span>axis.title.y<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>element_text<span style="color: #666666">(</span><span style="color: #19177C">size</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #666666">14</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">face</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;bold&quot;</span><span style="color: #666666">)</span>,
+<span style="color: #bbbbbb">        </span>axis.text.x<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>element_text<span style="color: #666666">(</span><span style="color: #19177C">size</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #666666">12</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">angle</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #666666">45</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">hjust</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #666666">1)</span>,
+<span style="color: #bbbbbb">        </span>axis.text.y<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>element_text<span style="color: #666666">(</span><span style="color: #19177C">size</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #666666">12)</span>,
+<span style="color: #bbbbbb">        </span>legend.position<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;none&quot;</span><span style="color: #666666">)</span>
+
+print<span style="color: #666666">(</span>ancestry<span style="color: #666666">)</span>
+
+dev.off<span style="color: #666666">()</span>
+</code></pre></div>
+<p>Examine the bar plot indicating the R<sup>2</sup> for each base:target ancestry pair:
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>xdg-open<span style="color: #bbbbbb"> </span>PRS_ancestry_analysis.png
+</code></pre></div></p>
+<p><strong>QUESTIONS</strong> </p>
+<details>
+  <summary>Which base:target pair has the highest phenotypic variance explained?</summary>
+  EUR:EUR.
+</details>
+
+<details>
+  <summary>Which base:target pair has the lowest phenotypic variance explained?</summary>
+  AFR:AFR.
+</details>
+
+<details>
+  <summary>Explain the results? Are they as expected?</summary>
+  THINK - PAIR - SHARE
+   </details>
+
+<blockquote>
+<p>‼️ Note that all target phenotype data in this workshop are <strong>simulated</strong>. They have no specific biological meaning and are for demonstration purposes only. 
+</p>
+</blockquote>
+<hr />
+<p><a href="#top"><a href="#table-of-contents">Back to Top</a></a></p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/tadesouaiaia/sibArc-website" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      <script src="../../../javascripts/details.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

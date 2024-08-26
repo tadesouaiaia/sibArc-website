@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Tade Souaiaia" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Day3b.docx - SibArc</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link href="../../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Day3b.docx";
+        var mkdocs_page_input_path = "tmp/practical_docs_hidden/Day3b.docx.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> SibArc
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Quick Start</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../quik_install/">Installation and Data</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../quik_demo/">Running SibArc</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../quik_result/">Interpreting Results</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">About</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about_future/">Future Work</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Misc</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../workshop_practical_paul.docx/">Day 1 (AM)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../workshop_practical_tade/">Day 1 (PM)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../workshop_practical_clive.docx/">Day 2 (AM)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">SibArc</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Day3b.docx</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/tadesouaiaia/sibArc-website/edit/master/docs/tmp/practical_docs_hidden/Day3b.docx.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="day-3b-practical">Day 3b practical</h2>
+<p>We need to move into the directory you will be working in;</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>~/data/Data_Day4/data
+</code></pre></div>
+<h2 id="introduction-to-cross-ancestry-prs-computation">Introduction to Cross-Ancestry PRS computation</h2>
+<p>Before starting the practical, the following commands will need to be run from within your virtual machine. 
+These commands set up an 'environment' that allows you to work outside the virtual machine, which has memory restrictions.</p>
+<p>Set up the environment using conda:
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>conda<span style="color: #bbbbbb"> </span>create<span style="color: #bbbbbb"> </span>-n<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;PRScsx&quot;</span><span style="color: #bbbbbb"> </span><span style="color: #19177C">python</span><span style="color: #666666">=3</span>.7
+conda<span style="color: #bbbbbb"> </span>activate<span style="color: #bbbbbb"> </span>PRScsx
+pip<span style="color: #bbbbbb"> </span>install<span style="color: #bbbbbb"> </span>scipy
+pip<span style="color: #bbbbbb"> </span>install<span style="color: #bbbbbb"> </span>h5py
+</code></pre></div></p>
+<p>The aim of this practical is to provide you with a basic understanding and some experience of running PRS-CSx software. After completing this practical, you should:</p>
+<ul>
+<li>Be able to perform cross-population analyses.</li>
+<li>Be familiar with running cross-ancestry PRS analyses using PRS-CSx.</li>
+<li>Understand how to evaluate linear models using Akaike’s Information Criterion.</li>
+</ul>
+<h4 id="1-the-1000-genomes-datasets">1. The 1000 Genomes datasets</h4>
+<p>The data we will be working with comes from the 1000 Genomes Project reference panel. The data relates to individuals from 26 different source populations around the world. For simplicity, the populations have been collapsed into 5 broader continental super-populations: East Asian, European, South Asian, Amerindian, African ((EAS, EUR, SAS, EUR and AFR)).</p>
+<p>The scripts used to download and process the 1000Genomes data for the purposes of this course will be provided in the course appendix at the end of this week. </p>
+<h4 id="2-cross-population-allele-frequency">2. Cross-population allele frequency</h4>
+<p>Genetic variation is conveyed using allelic frequencies. Allele frequency is shaped by evolutionary forces and drift.  Here we compare profiles of allele frequency across the five ancestral populations. Global differences in allelic frequency has important implications for the portability of PRS across populations.</p>
+<p>Using plink it is possible to generate allele frequency statistics for each SNP, across populations, using the annotations provided in the <strong>file pop_info.pheno</strong>. In <em>/home/manager/data/Data_Day4</em>:</p>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>../
+./software/plink_linux<span style="color: #bbbbbb"> </span>--bfile<span style="color: #bbbbbb"> </span>./data/chr1-22<span style="color: #bbbbbb"> </span>--freq<span style="color: #bbbbbb"> </span>--within<span style="color: #bbbbbb"> </span>./data/pop_info.pheno
+</code></pre></div>
+Population-stratified allele frequencies are reported in the output file <strong>plink.frq.strat.</strong>
+For each population, print the numbers of total SNPs to screen, as follows:</p>
+<p><strong>AFR</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>grep<span style="color: #bbbbbb"> </span>-F<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;AFR&#39;</span><span style="color: #bbbbbb"> </span>plink.frq.strat<span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>wc<span style="color: #bbbbbb"> </span>-l
+</code></pre></div>
+From there we can print the number of SNPs with minor allele frequencies greater than 0 (and are hence potentially available for genomic analyes).</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>grep<span style="color: #bbbbbb"> </span>-F<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;AFR&#39;</span><span style="color: #bbbbbb"> </span>plink.frq.strat<span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>awk<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;$6 &gt;0&#39;</span><span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>wc<span style="color: #bbbbbb"> </span>-l
+</code></pre></div>
+<p><strong>EUR</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>grep<span style="color: #bbbbbb"> </span>-F<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;EUR&#39;</span><span style="color: #bbbbbb"> </span>plink.frq.strat<span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>wc<span style="color: #bbbbbb"> </span>-l
+</code></pre></div>
+Number of SNPs with MAF &gt; 0 in EUR.
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>grep<span style="color: #bbbbbb"> </span>-F<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;EUR&#39;</span><span style="color: #bbbbbb"> </span>plink.frq.strat<span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>awk<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;$6 &gt;0&#39;</span><span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>wc<span style="color: #bbbbbb"> </span>-l
+</code></pre></div></p>
+<p><strong>EAS</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>grep<span style="color: #bbbbbb"> </span>-F<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;EAS&#39;</span><span style="color: #bbbbbb"> </span>plink.frq.strat<span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>wc<span style="color: #bbbbbb"> </span>-l
+</code></pre></div>
+Number of SNPs with MAF &gt; 0 in EAS.
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>grep<span style="color: #bbbbbb"> </span>-F<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;EAS&#39;</span><span style="color: #bbbbbb"> </span>plink.frq.strat<span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>awk<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;$6 &gt;0&#39;</span><span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>wc<span style="color: #bbbbbb"> </span>-l
+</code></pre></div></p>
+<p><strong>SAS</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>grep<span style="color: #bbbbbb"> </span>-F<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;SAS&#39;</span><span style="color: #bbbbbb"> </span>plink.frq.strat<span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>wc<span style="color: #bbbbbb"> </span>-l
+</code></pre></div>
+Number of SNPs with MAF &gt; 0 in SAS.
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>grep<span style="color: #bbbbbb"> </span>-F<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;SAS&#39;</span><span style="color: #bbbbbb"> </span>plink.frq.strat<span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>awk<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;$6 &gt;0&#39;</span><span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>wc<span style="color: #bbbbbb"> </span>-l
+</code></pre></div></p>
+<p><strong>AFR</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>grep<span style="color: #bbbbbb"> </span>-F<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;AFR&#39;</span><span style="color: #bbbbbb"> </span>plink.frq.strat<span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>wc<span style="color: #bbbbbb"> </span>-l
+</code></pre></div>
+Number of SNPs with MAF &gt; 0 in AFR.
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>grep<span style="color: #bbbbbb"> </span>-F<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;AFR&#39;</span><span style="color: #bbbbbb"> </span>plink.frq.strat<span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>awk<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;$6 &gt;0&#39;</span><span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>wc<span style="color: #bbbbbb"> </span>-l
+</code></pre></div></p>
+<h4 id="questions"><strong>Questions</strong></h4>
+<h5 id="i-which-population-contains-the-most-snps">(i) Which population contains the most SNPs?</h5>
+<h5 id="ii-what-is-the-significance-of-the-observed-population-order">(ii) What  is the significance of the observed population order?</h5>
+<p>&nbsp;</p>
+<h4 id="3-distribution-of-allele-frequencies">3. Distribution of allele frequencies</h4>
+<p>In this exercise, we will analyse and compare the distribution of allele frequencies across different ancestries. 
+We will use R for visualisation.</p>
+<p><strong>Open a new terminal and open R</strong></p>
+<p>Open a new tab in the terminal (<strong>plus icon in the top left corner</strong>)</p>
+<p>In this new terminal window, make sure you are in the correct directory:</p>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/out/
+</code></pre></div>
+Now open R: </p>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>R
+</code></pre></div>
+Generate the plot:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Install the necessary libraries</span>
+install.packages<span style="color: #666666">(</span><span style="color: #BA2121">&quot;dplyr&quot;</span><span style="color: #666666">)</span>
+install.packages<span style="color: #666666">(</span><span style="color: #BA2121">&quot;ggplot2&quot;</span><span style="color: #666666">)</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Load necessary libraries</span>
+library<span style="color: #666666">(</span>dplyr<span style="color: #666666">)</span>
+library<span style="color: #666666">(</span>ggplot2<span style="color: #666666">)</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Create a function to read the files and add ancestry information</span>
+freq<span style="color: #bbbbbb"> </span>&lt;-read.table<span style="color: #666666">(</span><span style="color: #BA2121">&quot;~/data/Data_Day4/plink.frq.strat&quot;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">header</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span>T<span style="color: #666666">)</span>
+plotDat<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>freq<span style="color: #bbbbbb"> </span>%&gt;%
+<span style="color: #bbbbbb">  </span>mutate<span style="color: #666666">(</span><span style="color: #19177C">AlleleFrequency</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>cut<span style="color: #666666">(</span>MAF,<span style="color: #bbbbbb"> </span>seq<span style="color: #666666">(0</span>,<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span>,<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.25<span style="color: #666666">)))</span><span style="color: #bbbbbb"> </span>%&gt;%
+<span style="color: #bbbbbb">  </span>group_by<span style="color: #666666">(</span>AlleleFrequency,<span style="color: #bbbbbb"> </span>CLST<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span>%&gt;%
+<span style="color: #bbbbbb">  </span>summarise<span style="color: #666666">(</span><span style="color: #19177C">FractionOfSNPs</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>n<span style="color: #666666">()</span>/nrow<span style="color: #666666">(</span>freq<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span>*<span style="color: #bbbbbb"> </span><span style="color: #666666">100)</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Create a bar graph </span>
+png<span style="color: #666666">(</span><span style="color: #BA2121">&#39;/home/manager/data/Data_Day4/out/MAF_ancestry_analysis.png&#39;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">unit</span><span style="color: #666666">=</span><span style="color: #BA2121">&#39;px&#39;</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">res</span><span style="color: #666666">=300</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">width</span><span style="color: #666666">=3500</span>,<span style="color: #bbbbbb"> </span><span style="color: #19177C">height</span><span style="color: #666666">=4500)</span>
+
+maf_ancestry<span style="color: #bbbbbb"> </span>&lt;-<span style="color: #bbbbbb"> </span>ggplot<span style="color: #666666">(</span>na.omit<span style="color: #666666">(</span>plotDat<span style="color: #666666">)</span>,
+<span style="color: #bbbbbb">  </span>aes<span style="color: #666666">(</span>AlleleFrequency,<span style="color: #bbbbbb"> </span>FractionOfSNPs,<span style="color: #bbbbbb"> </span><span style="color: #19177C">group</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>CLST,<span style="color: #bbbbbb"> </span><span style="color: #19177C">col</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>CLST<span style="color: #666666">))</span><span style="color: #bbbbbb"> </span>+
+<span style="color: #bbbbbb">  </span>geom_line<span style="color: #666666">()</span><span style="color: #bbbbbb"> </span>+
+<span style="color: #bbbbbb">  </span>scale_y_continuous<span style="color: #666666">(</span><span style="color: #19177C">limits</span><span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>c<span style="color: #666666">(0</span>,<span style="color: #bbbbbb"> </span><span style="color: #666666">12))</span><span style="color: #bbbbbb"> </span>+
+<span style="color: #bbbbbb">  </span>ggtitle<span style="color: #666666">(</span><span style="color: #BA2121">&quot;Distribution of allele frequency across genome&quot;</span><span style="color: #666666">)</span>
+
+print<span style="color: #666666">(</span>maf_ancestry<span style="color: #666666">)</span>
+
+dev.off<span style="color: #666666">()</span>
+</code></pre></div>
+<p>Examine the plot the MAF across each ancestry: </p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># This does not work when you are in R, ensure you out of R before running:</span>
+xdg-open<span style="color: #bbbbbb"> </span>MAF_ancestry_analysis.png
+</code></pre></div>
+<h4 id="questions_1"><strong>Questions</strong></h4>
+<h5 id="i-which-population-has-the-most-snps">(i) Which population has the most SNPs?</h5>
+<h5 id="ii-what-is-the-significance-of-the-observed-population-ordering">(ii) What  is the significance of the observed population ordering?</h5>
+<h5 id="iii-what-is-the-reason-behind-these-two-features">(iii) What is the reason behind these two features?</h5>
+<h2 id="introduction-to-prs-csx">Introduction to PRS-CSx</h2>
+<h4 id="5-background-to-prs-csx">5. Background to PRS-CSX</h4>
+<p>PRS-CSx is a Python based command line tool that integrates GWAS
+summary statistics and LD reference data from multiple populations
+to estimate population-specific PRS. PRS-CSx applies a Bayesian model with a continuous
+shrinkage prior to SNP effects genome-wide. Sparseness of
+the genetic architecture across populations is controlled by a parameter phi. For a given value of phi, PRS-CSx uses Markov chain Monte Carlo to sample from the posterior of SNP effects from which the mean SNP effects are calculated and used in the PRS.</p>
+<h2 id="step-1-set-up-environment"><strong>Step 1: Set up environment</strong></h2>
+<p>First change to the working directory with the data for this practical 
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>/home/manager/data/Data_Day4/data
+</code></pre></div>
+Make a directory called <strong>hm3_by_ancestry</strong> within the data folder, and move a folder back out of the data folder</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>mkdir<span style="color: #bbbbbb"> </span>hm3_by_ancestry
+<span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>..
+</code></pre></div>
+<p><strong>AFR</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>for chr in {21..22}; do \
+/home/manager/data/Data_Day4/software/plink_linux \
+    --bfile /home/manager/data/Data_Day4/data/AFR_1kg.hm3.only.csx \
+    --chr $chr \
+    --make-bed \
+    --out /home/manager/data/Data_Day4/data/hm3_by_ancestry/AFR_1kg.hm3.chr${chr}_only.csx;
+done
+</code></pre></div></p>
+<p><strong>EUR</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>for chr in {21..22}; do \
+/home/manager/data/Data_Day4/software/plink_linux \
+    --bfile /home/manager/data/Data_Day4/data/EUR_1kg.hm3.only.csx \
+    --chr $chr \
+    --make-bed \
+    --out /home/manager/data/Data_Day4/data/hm3_by_ancestry/EUR_1kg.hm3.chr${chr}_only.csx;
+done
+</code></pre></div></p>
+<p><strong>Set up the necessary environment variables for threading and verify they are set correctly.</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>export N_THREADS=2
+export MKL_NUM_THREADS=$N_THREADS
+export NUMEXPR_NUM_THREADS=$N_THREADS
+export OMP_NUM_THREADS=$N_THREADS
+</code></pre></div>
+<strong>Verify the variables are set</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>echo $N_THREADS
+echo $MKL_NUM_THREADS
+echo $NUMEXPR_NUM_THREADS
+echo $OMP_NUM_THREADS
+</code></pre></div>
+<br></p>
+<h2 id="step-2-run-csx-derive-new-snps-weights-trained-on-european-and-african-summary-stats">Step 2: Run CSX. Derive new SNPs weights trained on European and African summary stats</h2>
+<p><strong>Generate job file containing the threaded PRScsx commands.</strong>
+First, to minimize computational resources and time, we should create a script to run the tasks in parallel. Make a script called <strong>create_multithread.sh</strong></p>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>nano<span style="color: #bbbbbb"> </span>create_multithread.sh
+</code></pre></div>
+Then copy and paste the code below into that script. After save, then close the script ctrl + x  </p>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic">#!/bin/bash</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Create the script file</span>
+<span style="color: #19177C">SCRIPT_FILE</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;multithread.sh&quot;</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Write the header of the script file</span>
+<span style="color: #008000">echo</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;#!/bin/bash&quot;</span><span style="color: #bbbbbb"> </span>&gt;<span style="color: #bbbbbb"> </span><span style="color: #19177C">$SCRIPT_FILE</span>
+
+
+
+<span style="color: #008000; font-weight: bold">for</span><span style="color: #bbbbbb"> </span>chr<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">in</span><span style="color: #bbbbbb"> </span><span style="color: #666666">{21</span>..22<span style="color: #666666">}</span>;<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">do</span>
+<span style="color: #bbbbbb">  </span><span style="color: #008000">echo</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;python3 /home/manager/data/Data_Day4/software/PRScsx.py \</span>
+<span style="color: #BA2121">        --ref_dir=/home/manager/data/Data_Day4/reference/csx \</span>
+<span style="color: #BA2121">        --bim_prefix=/home/manager/data/Data_Day4/data/hm3_by_ancestry/AFR_1kg.hm3.chr</span><span style="color: #A45A77; font-weight: bold">${</span><span style="color: #19177C">chr</span><span style="color: #A45A77; font-weight: bold">}</span><span style="color: #BA2121">_only.csx \</span>
+<span style="color: #BA2121">        --sst_file=/home/manager/data/Data_Day4/data/3b/data/sumstats_by_chr/EUR-SBP-simulated.sumstats.chr</span><span style="color: #A45A77; font-weight: bold">${</span><span style="color: #19177C">chr</span><span style="color: #A45A77; font-weight: bold">}</span><span style="color: #BA2121">,/home/manager/data/Data_Day4/data/3b/data/sumstats_by_chr/AFR-SBP-simulated.sumstats.chr</span><span style="color: #A45A77; font-weight: bold">${</span><span style="color: #19177C">chr</span><span style="color: #A45A77; font-weight: bold">}</span><span style="color: #BA2121"> \</span>
+<span style="color: #BA2121">        --n_gwas=25732,4855 \</span>
+<span style="color: #BA2121">        --chrom=</span><span style="color: #A45A77; font-weight: bold">${</span><span style="color: #19177C">chr</span><span style="color: #A45A77; font-weight: bold">}</span><span style="color: #BA2121"> \</span>
+<span style="color: #BA2121">        --n_iter=1000 \</span>
+<span style="color: #BA2121">        --n_burnin=500 \</span>
+<span style="color: #BA2121">        --thin=5 \</span>
+<span style="color: #BA2121">        --pop=EUR,AFR \</span>
+<span style="color: #BA2121">        --phi=1e-4 \</span>
+<span style="color: #BA2121">        --out_dir=/home/manager/data/Data_Day4/out/csx \</span>
+<span style="color: #BA2121">        --out_name=afr.target_chr</span><span style="color: #A45A77; font-weight: bold">${</span><span style="color: #19177C">chr</span><span style="color: #A45A77; font-weight: bold">}</span><span style="color: #BA2121">.csx&quot;</span><span style="color: #bbbbbb"> </span>&gt;&gt;<span style="color: #bbbbbb"> </span><span style="color: #19177C">$SCRIPT_FILE</span>
+<span style="color: #008000; font-weight: bold">done</span>
+</code></pre></div>
+Run: Ctrl + O, followed by Enter '<strong>to save</strong>'
+Run: Ctrl + X, to Exit</p>
+<p>You will need to change permission for the script to be able to execute</p>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>chmod<span style="color: #bbbbbb"> </span>+x<span style="color: #bbbbbb"> </span>create_multithread.sh
+</code></pre></div>
+Run the builder
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>./create_multithread.sh
+</code></pre></div>
+To be able to run the next command you first install 'parallel' </p>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>sudo<span style="color: #bbbbbb"> </span>apt<span style="color: #bbbbbb"> </span>install<span style="color: #bbbbbb"> </span>parallel
+</code></pre></div>
+<strong>Run the Job File with GNU Parallel:</strong> (May take a while)
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>parallel --verbose --jobs $N_THREADS &lt; multithread.sh
+</code></pre></div></p>
+<p><br></p>
+<h2 id="step-3-combine-csx-derived-snp-weights-across-chromosomes-currently-excludes-chromosome-3">Step 3: Combine CSX-derived SNP weights across chromosomes (Currently Excludes Chromosome 3)</h2>
+<p><strong>Load R and the necessary library</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>R
+</code></pre></div>
+Call in the package
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>library(dplyr)
+</code></pre></div>
+<strong>Define the path to the directory containing the PRS-CSX output files</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>path &lt;- &quot;/home/manager/data/Data_Day4/out/csx&quot;
+</code></pre></div>
+<strong>Define the ancestry you want to combine ("EUR" or "AFR")</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>ancestry &lt;- &quot;EUR&quot;
+</code></pre></div>
+<strong>Initialize an empty data frame to store the combined data</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>combined_data &lt;- data.frame()
+</code></pre></div>
+<strong>Loop through chromosomes 21 to 22, (currently excluding chromosome 3)</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>for (chr in setdiff(21:22, 3)) {
+  # Construct the file name
+  file_name &lt;- paste0(&quot;afr.target_chr&quot;, chr, &quot;.csx_&quot;, ancestry, &quot;_pst__a1_b0.5_phi1e-04_chr&quot;, chr, &quot;.txt&quot;)
+  file_path &lt;- file.path(path, file_name)
+
+  # Check if file exists before reading
+  if (file.exists(file_path)) {
+    # Read the data from the file
+    data &lt;- read.table(file_path, header = FALSE, sep = &quot;\t&quot;, col.names = c(&quot;CHR&quot;, &quot;rsid&quot;, &quot;pos&quot;, &quot;ref&quot;, &quot;alt&quot;, &quot;beta&quot;))
+
+    # Combine the data
+    combined_data &lt;- rbind(combined_data, data)
+  } else {
+    warning(paste(&quot;File not found:&quot;, file_path))
+  }
+}
+</code></pre></div>
+<strong>Write the combined data to a new file</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>output_file &lt;- file.path(path, paste0(&quot;combined_&quot;, ancestry, &quot;_pst_.txt&quot;))
+write.table(combined_data, output_file, sep = &quot;\t&quot;, row.names = FALSE, col.names = TRUE, quote = FALSE)
+</code></pre></div></p>
+<h3 id="task-replace-ancestry-eur-with-ancestry-afr-and-repeat-the-subsequent-steps-shown-above">Task: Replace 'ancestry &lt;- "EUR" ' with 'ancestry &lt;- "AFR" ' and repeat the subsequent steps shown above</h3>
+<p><br></p>
+<h1 id="step-4-merge-genotype-phenotype-data">Step 4: Merge genotype-phenotype data</h1>
+<hr />
+<p><strong>Prepare data</strong>
+The data is slow to merge unless you split the input bim file into just chr21 and chr22 (Q- why are those faster?)</p>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>cd /home/manager/data/Data_Day4/data/3b/data/
+plink --bfile AFR_1kg.hm3.only.csx --chr 21 22 --make-bed --out AFR_1kg.hm3.only.csx_21_22
+</code></pre></div>
+Start R with sudo rights to allow you to install
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>sudo R 
+</code></pre></div></p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code># Load libraries. For any unavailable package, install it with **install.packages(&quot;_package_name&quot;)**
+install.packages(&quot;BiocManager&quot;)
+BiocManager::install(&quot;snpStats&quot;)
+
+library(data.table)
+library(ggplot2)
+library(snpStats)
+
+# Define the path to the directory containing the PLINK files and phenotypic data
+plink_path &lt;- &quot;/home/manager/data/Data_Day4/data/3b/data/&quot;
+
+# Read PLINK files and phenotype data into R
+bim_file &lt;- file.path(plink_path, &quot;AFR_1kg.hm3.only.csx_21_22.bim&quot;)
+fam_file &lt;- file.path(plink_path, &quot;AFR_1kg.hm3.only.csx_21_22.fam&quot;)
+bed_file &lt;- file.path(plink_path, &quot;AFR_1kg.hm3.only.csx_21_22.bed&quot;)
+pheno_file &lt;- file.path(plink_path, &quot;sbp_afr_1kg.sim_pheno&quot;)
+
+# Read the genotype data using snpStats
+geno_data &lt;- read.plink(bed_file, bim_file, fam_file)
+
+# Extract SNP IDs from geno_data$map$snp.name
+snp_ids &lt;- geno_data$map$snp.name
+if (is.null(snp_ids) || !is.character(snp_ids)) {
+  stop(&quot;SNP IDs are missing or not in the correct format.&quot;)
+}
+
+# Convert the genotype data to a matrix and then to a data.table
+geno_matrix &lt;- as(geno_data$genotypes, &quot;matrix&quot;)
+geno_df &lt;- data.table(geno_matrix)
+setnames(geno_df, snp_ids)
+
+# Add IID column from the fam file
+geno_df[, IID := geno_data$fam$member]
+
+# Read the phenotypic data**
+pheno_data &lt;- fread(pheno_file, sep = &quot; &quot;, header = TRUE)
+</code></pre></div>
+<p><strong>Merge phenotype and genotype data</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code># Do merge
+combined_data &lt;- merge(pheno_data, geno_df, by = &quot;IID&quot;)
+
+# Keep only genotype columns
+geno &lt;- combined_data[, !names(combined_data) %in% c(&quot;FID&quot;, &quot;IID&quot;, &quot;pheno100&quot;, &quot;pheno20&quot;, &quot;pheno33&quot;, &quot;pheno10&quot;), with = FALSE]
+phen &lt;- combined_data$pheno100
+
+# Convert geno to numeric matrix**
+geno &lt;- as.matrix(geno)
+mode(geno) &lt;- &quot;numeric&quot;
+
+# Convert phen to vector
+phen &lt;- as.vector(phen)
+</code></pre></div>
+<br></p>
+<h2 id="step-5-split-data-into-validation-and-test-sets">Step 5: Split data into validation and test sets</h2>
+<p><strong>Specify Proportion</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code># Here we specify that 40% of all IDs will be used to construct the validation group
+set.seed(154)
+vali_proportion &lt;- 0.4
+vali_size &lt;- round(nrow(geno) * vali_proportion)
+vali_indices &lt;- sample(1:nrow(geno), vali_size, replace = FALSE)
+test_indices &lt;- setdiff(1:nrow(geno), vali_indices)
+</code></pre></div>
+<strong>Subsetting of individuals</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>X_vali &lt;- geno[vali_indices, , drop=FALSE]
+y_vali &lt;- phen[vali_indices]
+X_test &lt;- geno[test_indices, , drop=FALSE]
+y_test &lt;- phen[test_indices]
+</code></pre></div>
+<br></p>
+<h2 id="step-6-prepare-the-regression-model-input-using-the-csx-derived-afr-and-eur-weights">Step 6: Prepare the regression model input using the CSX-derived AFR and EUR weights</h2>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code># Read the merged CSX output files
+AFR_betas &lt;- fread(file.path(&quot;/home/manager/data/Data_Day4/out/csx/combined_AFR_pst_eff.txt&quot;), sep = &quot;\t&quot;, header = TRUE)
+EUR_betas &lt;- fread(file.path(&quot;/home/manager/data/Data_Day4/out/csx/combined_EUR_pst_eff.txt&quot;), sep = &quot;\t&quot;, header = TRUE)
+
+# Assuming the beta files have columns: &quot;CHR&quot;, &quot;rsid&quot;, &quot;pos&quot;, &quot;ref&quot;, &quot;alt&quot;, &quot;beta&quot;
+overlap_prs &lt;- merge(AFR_betas, EUR_betas, by = &quot;rsid&quot;, suffixes = c(&quot;_afr&quot;, &quot;_eur&quot;))
+
+# Filter overlap_prs to include only SNPs present in X_vali
+overlap_prs &lt;- overlap_prs[rsid %in% colnames(X_vali)]
+
+# Ensure that X_vali and X_test only contain SNPs present in W_afr and W_eur
+common_snps &lt;- intersect(colnames(X_vali), overlap_prs$rsid)
+X_vali &lt;- X_vali[, common_snps, drop=FALSE]
+X_test &lt;- X_test[, common_snps, drop=FALSE]
+
+# Reorder the columns of X_vali and X_test to match the order of SNPs in overlap_prs
+X_vali &lt;- X_vali[, match(overlap_prs$rsid, colnames(X_vali)), drop=FALSE]
+X_test &lt;- X_test[, match(overlap_prs$rsid, colnames(X_test)), drop=FALSE]
+
+# Extract the overlapping rsid and their corresponding betas
+W_afr &lt;- overlap_prs$beta_afr
+W_eur &lt;- overlap_prs$beta_eur
+
+# Convert W_afr and W_eur to numeric vectors
+W_afr &lt;- as.numeric(W_afr)
+W_eur &lt;- as.numeric(W_eur)
+</code></pre></div>
+<br></p>
+<h2 id="step-7-prepare-the-variant-weights-matrices-as-vectors">Step 7: Prepare the variant weights matrices as vectors</h2>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code># Pre-check the alignment between the different objects
+if (ncol(X_vali) != length(W_afr) || ncol(X_vali) != length(W_eur)) {
+  stop(&quot;Dimensions of X_vali and W_afr/W_eur do not match.&quot;)
+}
+
+# In the validation sample: 
+
+# (i) Compute XWafr_vali
+XWafr_vali &lt;- X_vali %*% W_afr
+# (ii) Convert XWafr_vali to have zero mean and unit variance
+XWafr_vali_z &lt;- scale(XWafr_vali)
+
+# (iii) Compute XWeur_vali
+XWeur_vali &lt;- X_vali %*% W_eur
+# (iv) Convert XWeur_vali to have zero mean and unit variance
+XWeur_vali_z &lt;- scale(XWeur_vali)
+
+# (v) Combine the normalized matrices
+XW_vali &lt;- cbind(XWafr_vali_z, XWeur_vali_z)
+
+# Fit the model
+model &lt;- lm(scale(y_vali) ~ XWafr_vali_z + XWeur_vali_z - 1) # &#39;- 1&#39; removes the intercept
+
+# Obtain the regression parameters
+a_hat &lt;- coef(model)[1]
+b_hat &lt;- coef(model)[2]
+print(paste(&quot;a_hat =&quot;, a_hat))
+print(paste(&quot;b_hat =&quot;, b_hat))
+</code></pre></div>
+<br></p>
+<h2 id="step-8-predict-phenotype-on-validation-and-test-dataset">Step 8: Predict phenotype on validation and test dataset</h2>
+<p><strong>Generate a linear combination of AFR and EUR PRSs for each individual</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code># Each ancestry component is weighted by the regression coicient of that ancestry, in the preceding step
+y_hat_vali &lt;- a_hat * XWafr_vali_z + b_hat * XWeur_vali_z
+
+# In the test sample: 
+
+# Compute XWafr_test and XWeur_test
+XWafr_test &lt;- X_test %*% W_afr
+XWafr_test_z &lt;- scale(XWafr_test)
+
+XWeur_test &lt;- X_test %*% W_eur
+XWeur_test_z &lt;- scale(XWeur_test)
+
+# y_hat in the test sample
+y_hat &lt;- a_hat * XWafr_test_z + b_hat * XWeur_test_z
+</code></pre></div>
+<br></p>
+<h2 id="step-9-plot-phenotype-distributions-of-validation-and-test-data">Step 9: Plot phenotype distributions of validation and test data:</h2>
+<p><strong>Check that both distributions are approximately normal</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>library(ggplot2)
+
+# Create data frames for validation and test sets
+vali_data &lt;- data.frame(trait = y_vali, dataset = &quot;Validation&quot;)
+test_data &lt;- data.frame(trait = y_test, dataset = &quot;Test&quot;)
+
+# Combine both data frames
+combined_data &lt;- rbind(vali_data, test_data)
+
+# Plot the distributions
+ggplot(combined_data, aes(x = trait, fill = dataset)) +
+  geom_density(alpha = 0.5) +
+  labs(title = &quot;Trait Distributions for Validation and Test Sets&quot;, x = &quot;Trait Value&quot;, y = &quot;Density&quot;) +
+  theme_minimal()
+</code></pre></div>
+<br></p>
+<h2 id="step-10-plot-true-values-against-predicted-values">Step 10: Plot true values against predicted values</h2>
+<p><strong>The next steps use standard normal phenotype data to reduce scale differences between PRS and trait values</strong>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>min_true &lt;- min(min(y_vali), min(y_test))
+max_true &lt;- max(max(y_vali), max(y_test))
+min_pred &lt;- min(min(y_hat_vali), min(y_hat))
+max_pred &lt;- max(max(y_hat_vali), max(y_hat))
+
+pdf(&quot;true_against_pred.pdf&quot;, width = 10, height = 5)
+par(mfrow = c(1, 2))
+
+plot(scale(y_vali), y_hat_vali, pch = 19, col = rgb(0, 0, 0, 0.5), xlab = &#39;True Values&#39;, ylab = &#39;Predicted Values&#39;, main = &#39;Validation Dataset&#39;)
+abline(0, 1, col = &#39;red&#39;, lty = 2)
+
+plot(scale(y_test), y_hat, pch = 19, col = rgb(0, 0, 0, 0.5), xlab = &#39;True Values&#39;, ylab = &#39;Predicted Values&#39;, main = &#39;Test Dataset&#39;)
+abline(0, 1, col = &#39;red&#39;, lty = 2)
+
+dev.off()
+</code></pre></div>
+Step 11: Calculate deviance-based <em>R<sup>2</sup></em></p>
+<hr />
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code># Calculate the deviance (SS_res)
+deviance &lt;- sum((scale(y_test) - y_hat) ^ 2)
+print(paste(&quot;deviance =&quot;, deviance))
+
+# Calculate the mean of the scaled y_test
+y_test_mean &lt;- mean(scale(y_test))
+
+# Calculate the null deviance (SS_tot)
+deviance_null &lt;- sum((scale(y_test) - y_test_mean)^ 2)
+print(paste(&quot;deviance_null =&quot;, deviance_null))
+
+# Calculate R2
+R2 &lt;- 1 - (deviance / deviance_null)
+print(paste(&quot;R2 =&quot;, R2))
+</code></pre></div>
+<h2 id="results">Results</h2>
+<p>graph:</p>
+<p><img alt="" src="https://github.com/WCSCourses/PRS2024/blob/3f07962be8fc8915e8cde8666a4038f27c48fc83/images/image_afreur_merge.png" /></p>
+<p>pdf true against pred</p>
+<p><img alt="" src="https://github.com/WCSCourses/PRS2024/blob/3f07962be8fc8915e8cde8666a4038f27c48fc83/images/imagemerge_afrEur_pdf.png" /></p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/tadesouaiaia/sibArc-website" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      <script src="../../../javascripts/details.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
