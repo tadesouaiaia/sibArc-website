@@ -4,11 +4,11 @@
 
 1. [Key learning outcomes](#key-learning-outcomes)
 2. [BridgePRS input data](#BridgePRS-input-data)
-3. [Passing arguments to BridgePRS - example run]()
-4. [BridgePRS output]
-5. [Using BridgePRS without target summary statistics]
-6. [Further analyses with BridgePRS]
-7. [Using BridgePRS SNP weights]
+3. [Passing arguments to BridgePRS - example run](#passing-arguments-to-bridgePRS-example-run)
+4. [BridgePRS output](#bridgePRS-output)
+5. [Using BridgePRS without target summary statistics](#using-bridgePRS-without-target-summary-statistics)
+6. [Further analyses with BridgePRS](#further-analyses-with-bridgePRS)
+7. [Using BridgePRS SNP weights](#using-bridgePRS-snp-weights)
 
 ---
 <a href="#top">[Back to Table of Contents](#table-of-contents)</a>
