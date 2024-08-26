@@ -267,7 +267,7 @@ analysis previously but with all the weight on the EUR prior.
 * How does prediction using only EUR summary statistics compare with
 those which include information from the EAS summary statistics?
 
-## Further analysis with BridgePRS
+## Further analyses with BridgePRS
 ### African analysis
 Run BridgePRS again to estimate PRS in Africans using
 `afr.config`. Note, you should also change the command line `fst`
