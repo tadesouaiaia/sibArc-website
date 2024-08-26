@@ -11,7 +11,6 @@
 7. [Using BridgePRS SNP weights](#using-bridgePRS-snp-weights)
 
 ---
-<a href="#top">[Back to Table of Contents](#table-of-contents)</a>
 
 ## Key learning outcomes
 In the previous lecture we covered the modelling used by
@@ -25,6 +24,8 @@ this practical, you should:
   * setting up configuration files used to pass arguments to BridgePRS
 * Interpret output from BridgePRS
   * Use BridgePRS output to calculate PRS in unseen samples using SNP weights
+
+<a href="#top">[Back to Table of Contents](#table-of-contents)</a>
 
 ## BridgePRS input data
 In the BridgePRS directory there is a data folder which we will use in
@@ -109,6 +110,8 @@ information. Similarly model performance metrics will only use  samples with bot
 genotype and phenotype information, however, predictions are generated
 for all validation samples with genotype data.
 
+<a href="#top">[Back to Table of Contents](#table-of-contents)</a>
+
 ## Passing arguments to BridgePRS - example run
 Example run of BridgePRS:
 ```
@@ -184,6 +187,8 @@ downloaded [here](https://www.bridgeprs.net)**
 Can you work out what the other command line arguments are doing?
 Can you work out what the other config file arguments are doing?
 
+<a href="#top">[Back to Table of Contents](#table-of-contents)</a>
+
 ## BridgePRS output
 The main output is in the folder `out/prs-combined_EAS-EUR/`. First
 view the output summary plot
@@ -235,6 +240,8 @@ and weighted. `EAS_weighted_combined_snp_weights.dat` has the SNP
 weights for the combined to allow this model to be applied to other
 samples.
 
+<a href="#top">[Back to Table of Contents](#table-of-contents)</a>
+
 ## Using BridgePRS without target summary statistics
 Often GWAS summary statistics are only available in one
 population. BridgePRS can use these summary statistics and optimise
@@ -266,6 +273,8 @@ analysis previously but with all the weight on the EUR prior.
 ### Question?
 * How does prediction using only EUR summary statistics compare with
 those which include information from the EAS summary statistics?
+
+<a href="#top">[Back to Table of Contents](#table-of-contents)</a>
 
 ## Further analyses with BridgePRS
 ### African analysis
@@ -317,6 +326,8 @@ a new directory e.g. `out_half_eur`.
 * How has using the less well powered EUR GWAS affected the predictive
   accuracy of the BridgePRS models?
 * How do AFR and EAS results compare?
+
+<a href="#top">[Back to Table of Contents](#table-of-contents)</a>
 
 ## Using BidgePRS SNP weights
 The SNP weights in `EAS_weighted_combined_snp_weights.dat` can be used to make
