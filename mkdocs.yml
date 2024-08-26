@@ -11,6 +11,8 @@ nav:
     - About:
         - Future Work:           about_future.md 
     - Misc:
+        - Day 1 (AM):           tmp/workshop_practical_paul.docx.md
+        - Day 1 (PM):           tmp/workshop_practical_tade.md
         - Day 2 (AM):           workshop_practical_clive.docx.md
 
 
@@ -34,6 +36,8 @@ markdown_extensions:
     - pymdownx.betterem:
         smart_enable: all
     - pymdownx.caret
+
+
 
 extra_css:
   - css/extra.css

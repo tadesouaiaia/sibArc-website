@@ -1,0 +1,709 @@
+\documentclass[12pt,openany]{scrbook}
+
+\usepackage{booktabs} % Nicer table
+\usepackage[inline]{enumitem} % Allow inline enumeriate
+\usepackage{fancyhdr} % Nicer page format
+\usepackage{float} % allow better location setup for tables and figure
+\usepackage[T1]{fontenc} % allow copy and paste the words
+\usepackage{geometry} % Something to arrange the page
+\usepackage{cmap} % Make the pdf searchable
+% define xcolor early on to avoid clash
+\usepackage[table, dvipsnames]{xcolor}  % define colors
+\usepackage[hidelinks]{hyperref} % Nicer hyper link
+\usepackage{listings} % For printing computer codes
+\usepackage{etoolbox} % For condition
+\usepackage{mdframed} % This is require to generate the nice boxes
+\usepackage{ragged2e} % For text alignment
+\usepackage{tikz} % to  beautify the key stroke with shadows
+\usetikzlibrary{shadows}
+\usepackage{pdfpages} % Allow incorporation of a separate pdf
+\usepackage[acronym,nomain,toc,makeindex ]{glossaries} % For making the glossaries
+\usepackage{setspace} % Allow changing the spacing
+\usepackage{textcomp} % This and inputenc is required to display '
+\usepackage{subcaption} % For subfigures
+\usepackage[utf8]{inputenc} 
+% Package for code style
+\usepackage{accsupp}% http://ctan.org/pkg/accsupp
+%\newcommand{\emptyaccsupp}[1]{\BeginAccSupp{ActualText={}}#1\EndAccSupp{}}
+\newcommand\emptyaccsupp[1]{\BeginAccSupp{ActualText={}}#1\EndAccSupp{}}
+\usepackage{cleveref} % Smart reference, need to load after other packages
+\usepackage{subfiles} % For including other latex file 
+\usepackage{silence}
+\WarningFilter{scrbook}{Usage of package `fancyhdr'} % Remove the unnecessary warning
+\usepackage[hyperref=true,maxcitenames=3,maxbibnames=3,url=false,doi=false,isbn=false,backref=true,natbib=true,backend=biber,sorting=nyvt,defernumbers=false, style=authoryear]{biblatex}
+%
+% Referencing stuff
+%
+\addbibresource[datatype=bibtex]{citations.bib}
+
+\newcolumntype{P}[1]{>{\RaggedRight\hspace{0pt}}p{#1}} % Define new column type for vertical alignment 
+%
+% Generate the folder list
+%
+
+
+\usepackage{forest}
+
+\definecolor{folderbg}{RGB}{124,166,198}
+\definecolor{folderborder}{RGB}{110,144,169}
+
+\def\Size{4pt}
+\tikzset{
+	folder/.pic={
+		\filldraw[draw=folderborder,top color=folderbg!50,bottom color=folderbg]
+		(-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);  
+		\filldraw[draw=folderborder,top color=folderbg!50,bottom color=folderbg]
+		(-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+	}
+}
+% glossaries
+\makeglossaries
+\newacronym{snp}{SNP}{Single Nucleotide Polymorphism}
+\newacronym{ld}{LD}{Linkage Disequilibrium}
+\newacronym[longplural={Genome Wide Association Studies},plural={GWAS}, \glsshortpluralkey={GWAS}]{gwas}{GWAS}{Genome-Wide Association Study}
+\newacronym{prs}{PRS}{Polygenic Risk Score}
+\newacronym{pc}{PC}{Principal Component}
+\newacronym{cad}{CAD}{Coronary artery disease}
+\newacronym{or}{OR}{Odd Ratios}
+\newacronym{msigdb}{MSigDB}{Molecular Signatures Database}
+\newacronym{gmt}{GMT}{Gene Matrix Transposed file format}
+\newacronym{gtf}{GTF}{General Transfer Format}
+\newacronym{bed}{BED}{Browser Extensible Data}
+% Customize the code styles
+% Color of the code box
+\newtoggle{windows}
+\newtoggle{mac}
+\global\toggletrue{windows}
+\global\togglefalse{mac}
+
+\makeatletter
+\newcommand{\iftoggleverb}[1]{%
+	\ifcsdef{etb@tgl@#1}
+	{\csname etb@tgl@#1\endcsname\iftrue\iffalse}
+	{\etb@noglobal\etb@err@notoggle{#1}\iffalse}%
+}
+\makeatother
+
+
+%\toggletrue{windows}
+\newtoggle{printing}
+\toggletrue{printing}
+\iftoggle{printing}{%
+	\definecolor{backcolour}{rgb}{1,1,1}
+	\definecolor{codegreen}{rgb}{0.3,0.3,0.3}
+	\definecolor{codegray}{rgb}{0,0,0}
+	\definecolor{codepurple}{rgb}{0,0,0}
+	\definecolor{codemagenta}{rgb}{0,0,0}
+	\definecolor{warningshade}{rgb}{0.86,0.86,0.86}
+	\definecolor{questionshade}{rgb}{1,1,1}
+	\definecolor{darkgreen}{rgb}{0.09, 0.45, 0.27}
+	\lstset{frame=single}
+}{%
+	\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+	\definecolor{codegreen}{rgb}{0,0.6,0}
+	\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+	\definecolor{codepurple}{rgb}{0.58,0,0.82}
+	\definecolor{codemagenta}{rgb}{1,0,1}
+	\definecolor{warningshade}{rgb}{1,0.85,0.85}
+	\definecolor{questionshade}{rgb}{1,0.95,0.85}
+	\definecolor{darkgreen}{rgb}{0.09, 0.45, 0.27}
+}
+
+\renewcommand{\ttdefault}{cmtt}
+\makeatletter
+\lst@CCPutMacro\lst@ProcessOther {"2D}{\lst@ttfamily{-{}}{-{}}}
+\@empty\z@\@empty
+\makeatother
+\lstdefinestyle{codestyle}{
+	columns=fullflexible,
+	upquote=true, 
+	aboveskip=5pt,
+	belowskip=10pt,
+	basicstyle=\tiny\ttfamily, 
+	numbers=left,                    % where to put the line-numbers
+	numberstyle=\tiny\color{codegray}\emptyaccsupp,
+	stepnumber=1,
+	numbersep=13pt, 
+	xleftmargin=20pt,
+	xrightmargin=10pt,
+	framesep=5pt,
+	framerule=3pt,
+	frame=leftline, 
+	rulecolor=\color{darkgreen},  
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{codemagenta},
+	stringstyle=\color{codepurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=true,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                      
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+	prebreak=\small\symbol{'134},
+}
+\lstset{style=codestyle}
+\lstset{emph={%  
+		Rscript.exe, Rscript%
+	},emphstyle={\color{codemagenta}}%
+}
+
+% Command to generate the keystroke picture
+\newcommand*\keystroke[1]{%
+	\tikz[baseline=(key.base)]
+	\node[%
+	draw,
+	fill=white,
+	drop shadow={shadow xshift=0.25ex,shadow yshift=-0.25ex,fill=black,opacity=0.75},
+	rectangle,
+	rounded corners=2pt,
+	inner sep=1pt,
+	line width=0.5pt,
+	font=\scriptsize\sffamily
+	](key) {#1\strut}
+	;
+}
+% add the mac cmd key for printing
+\DeclareRobustCommand{\cmdkey}{\raisebox{-.035em}{\includegraphics[height=.75em]{img/command}}}
+% add the windows flag key for printing
+\DeclareRobustCommand{\faWindows}{\raisebox{-.035em}{\includegraphics[height=.75em]{img/windows.jpg}}}
+
+% Define our question boxes' coloring and dimension
+
+\global\mdfdefinestyle{notice}{
+	leftmargin=0pt,
+	skipabove=5pt,
+	rightmargin=0pt,
+	skipbelow=5pt,
+	innermargin=0pt,
+	outermargin=0pt,
+	innerleftmargin=5pt,
+	innerrightmargin=5pt,
+	innertopmargin=5pt,
+	innerbottommargin=5pt,
+	leftline=true,
+	topline=true,
+	rightline=true,
+	bottomline=true,
+	linecolor=black,
+	linewidth=1pt,
+	roundcorner=5pt,
+}
+
+\global\mdfdefinestyle{warningbox}{
+	leftmargin=0pt,
+	skipabove=5pt,
+	rightmargin=0pt,
+	skipbelow=5pt,
+	%splittopskip=0pt,
+	%splitbottomskip=0pt,
+	innermargin=0pt,
+	outermargin=0pt,
+	innerleftmargin=0pt,
+	innerrightmargin=0pt,
+	innertopmargin=0pt,
+	innerbottommargin=0pt,
+	leftline=false,
+	topline=false,
+	rightline=false,
+	bottomline=false,
+	linecolor=black,
+	linewidth=1pt,
+	roundcorner=5pt,
+	backgroundcolor=warningshade,
+	leftline=true,
+	topline=true,
+	rightline=true,
+	bottomline=true,
+	innerleftmargin=5pt,
+	innerrightmargin=5pt,
+	innertopmargin=5pt,
+	innerbottommargin=5pt,
+	nobreak=true,
+}
+\global\mdfdefinestyle{questionsbox}{
+	leftmargin=0pt,
+	skipabove=5pt,
+	rightmargin=0pt,
+	skipbelow=5pt,
+	innermargin=0pt,
+	outermargin=0pt,
+	innerleftmargin=0pt,
+	innerrightmargin=0pt,
+	innertopmargin=0pt,
+	innerbottommargin=0pt,
+	leftline=false,
+	topline=false,
+	rightline=false,
+	bottomline=false,
+	linecolor=black,
+	linewidth=1pt,
+	roundcorner=5pt,
+	backgroundcolor=questionshade,
+	leftline=true,
+	topline=true,
+	rightline=true,
+	bottomline=true,
+	innerleftmargin=10pt,
+	innerrightmargin=10pt,
+	innertopmargin=5pt,
+	innerbottommargin=5pt,
+	nobreak=true,
+}
+
+\newlength{\iconspacinglength}
+\setlength{\iconspacinglength}{0.5cm}
+\newlength{\questionspacing}
+\setlength{\questionspacing}{1cm}
+\newenvironment{questions}{%
+	\begin{mdframed}[style=questionsbox]%
+		\setlength{\parskip}{\questionspacing}%
+		\setlength{\parindent}{0pt}%
+		\addtolength{\iconspacinglength}{\mdflength{leftmargin}}%
+		\addtolength{\iconspacinglength}{\mdflength{innerleftmargin}}%
+		\makebox[0pt][r]{\smash{\raisebox{-.25\height}{%
+					\includegraphics[height=1cm]{./img/questions.png}%
+					\hspace{\iconspacinglength}%
+		}}}\ignorespaces%
+	}%
+	{%
+		\vspace{\questionspacing}%
+	\end{mdframed}%
+}
+\newenvironment{warning}{%
+	\begin{mdframed}[style=warningbox]%
+		\makebox[0pt][r]{\smash{\raisebox{-.6\height}{%
+					\includegraphics[height=1cm]{./img/warning.png}%
+					\hspace{\iconspacinglength}%
+		}}}\ignorespaces%
+	}%
+	{%
+	\end{mdframed}%
+}
+
+
+\newenvironment{information}{%
+	\begin{mdframed}[style=notice]%
+		%\addtolength{\iconspacinglength}{\mdflength{leftmargin}}%
+		%\addtolength{\iconspacinglength}{\mdflength{innerleftmargin}}%
+		\makebox[0pt][r]{\smash{\raisebox{-.6\height}{%
+					\includegraphics[height=1cm]{./img/info.png}%
+					\hspace{\iconspacinglength}%
+		}}}\ignorespaces%
+	}%
+	{%
+	\end{mdframed}%
+}
+
+
+\newenvironment{note}
+{%
+	\begin{mdframed}[style=notice]%
+		\makebox[0pt][r]{\smash{\raisebox{-.6\height}{%
+					\includegraphics[height=1cm]{./img/notes.png}%
+					\hspace{\iconspacinglength}%
+		}}}\ignorespaces%
+	}%
+	{%
+	\end{mdframed}%
+}
+
+
+
+%
+%
+%	FORMATING SECTION
+%
+%
+\renewcommand\chaptername{Practical}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[LE,RO]{\thepage}
+\renewcommand{\footrulewidth}{1pt}
+\fancyhead[LE]{\leftmark}
+\fancyhead[RO]{\rightmark}
+
+\geometry{
+	top=1in,            % <-- you want to adjust this
+	inner=1in,
+	outer=3.5cm,
+	bottom=3.5cm,
+	headheight=3ex,       % <-- and this
+	headsep=2ex,          % <-- and this
+}
+
+\raggedbottom %Remove it before printing as this is something to do with global settings. Can make each page look uneven but more dense. 
+%\onehalfspacing
+%\doublespacing
+\makeindex
+
+\title{Polygenic Risk Score Analyses Workshop}
+\author{Dr Paul O'Reilly \and Dr Shing Wan Choi}
+
+
+\begin{document}\thispagestyle{empty}
+	\pagestyle{empty}
+	\begin{titlepage}
+		\begingroup% 
+		\vfill
+		\hbox{%
+			\rule{1pt}{\dimexpr\textheight-28pt\relax}%
+			\hspace*{0.1\textwidth}% 
+			\parbox[b]{0.75\textwidth}{
+				\vbox{
+					\vspace{0.1\textheight}
+					\begin{center}
+						{\Huge\bfseries Polygenic Risk Score Analyses Workshop 2022\par}
+						\vskip2.1\baselineskip
+						\includegraphics[width=0.5\textwidth]{img/unim.png}\par
+						\vspace{15mm}
+						\Huge\bfseries Day 1: GWAS \& relevant Statistics
+						\vspace{0.3\textheight}
+					\end{center}
+				}
+			}
+		}% end of hbox
+		\vfill
+		\null
+		\endgroup
+		
+	\end{titlepage}
+	%\frontmatter 
+	
+	\mainmatter
+	\pagestyle{fancy}
+	\setlength{\parindent}{4em}
+	\setlength{\parskip}{0.75em}
+		
+	\chapter*{Day 1 Timetable}
+	\label{chapter:info}
+	\addcontentsline{toc}{chapter}{\nameref{chapter:info}}
+	
+	%\section*{Timetable}
+	\label{sec:timetable}
+	\addcontentsline{toc}{section}{\nameref{sec:timetable}}
+	\begin{table}[h]
+		\begin{tabular}{P{0.2\textwidth} P{0.5\textwidth}P{0.3\textwidth}}
+			\toprule
+			\textbf{Time} & \textbf{Title} & \textbf{Presenter} \\
+			\midrule
+			\vspace{9mm}
+			9:00 - 9:15 & \begin{tabular}{l} Welcome Address \end{tabular} & Dr Daneshwar and Dr Baichoo   \\
+			\vspace{11mm}
+			9:15 - 9:30 & Opening Speech from Organisers & Dr Segun Fatumo and Dr Nicki Tiffin \\
+			\vspace{9mm}
+			9:30 - 10:30 & \underline{Lecture}: Background to PRS: GWAS \& relevant Statistics & Dr Paul O'Reilly \\
+			\vspace{7mm}
+			10:30 - 11:00 & Coffee Break and Q\&A & - \\
+			\vspace{6mm}
+			11:00 - 12:00 & \underline{Practical}: Introduction to Bash and R & Dr Paul O'Reilly \& Tutors \\
+			\vspace{6mm}
+			12:00 - 13:30 & Lunch & - \\
+			\vspace{10mm}
+			13:30 - 15:00 & \underline{Practical}: Introduction to PLINK I - Basics & Dr Conrad Iyegbe \& Tutors \\
+			\vspace{6mm}
+			15:00 - 15:30 & Coffee Break and Q\&A & - \\
+			\vspace{7mm}
+			15:30 - 16:30 & \underline{Practical}: Introduction to PLINK II - QC \& GWAS & Dr Conrad Iyegbe \& Tutors \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	\tableofcontents
+	\glsresetall
+
+
+\chapter{Introduction to Bash}
+Most software in Bioinformatics and Statistical Genetics need to be run in a Unix environment (e.g. Linux or Mac OS) and most high-performance computer clusters run Unix systems. Therefore, although there are alternatives available on Windows (command line, Linux subsystems or Virtual Machines), it will be highly beneficial to become familiar with performing research in a Unix-only environment. \\
+
+\begin{note}
+In this practical, we will only go through some basic operations. \\
+
+\noindent Please refer to online tutorials after this workshop to learn more about the details (e.g. \href{https://www.digitalocean.com/community/tutorials/basic-linux-navigation-and-file-management}{\color{blue}{here}} or \href{https://linuxconfig.org/bash-scripting-tutorial-for-beginners}{\color{blue}{here}}) or more advanced commands. 
+
+\end{note}
+
+\section{Moving around the File System}
+
+\noindent To begin our practical, please open up a "terminal" on your computer (on a Mac this is stored in Applications/Utilities/). 
+
+\noindent We can change our directory using the following command:\\
+
+\begin{lstlisting}[language=bash]
+cd <Path>
+\end{lstlisting}
+where \textit{<Path>} is the path to the target directory. \\
+\begin{information}
+	\lstinline[language=bash]|cd| stands for \underline{c}hange \underline{d}irectory
+\end{information}
+
+\noindent Some common usage of \lstinline|cd| includes
+
+\begin{lstlisting}[language=bash]
+cd ~ # will bring you to your home directory
+cd ../  # will bring you to the parent directory (up one level)
+cd XXX # will bring you to the XXX directory, so long as it is in the current directory 
+\end{lstlisting}
+
+\noindent As an example, we can move to the \textbf{PRS\_Workshop} directory by typing:
+
+\begin{lstlisting}[language=bash]
+cd ~/Desktop/PRS_Workshop/
+\end{lstlisting}
+
+\section{Looking at the Current Directory}
+Once we have moved into the \textbf{PRS\_Workshop} folder, we can list out the folder content by typing: 
+\begin{lstlisting}[language=bash]
+	ls
+\end{lstlisting}
+
+\begin{information}
+	\lstinline[language=bash]|ls| stands for \underline{l}i\underline{s}t	
+\end{information}
+
+\noindent For \lstinline|ls|, there are a number of additional Unix command options that you can append to it to get additional information, for example: 
+\begin{lstlisting}[language=bash]
+ls -l # shows files as list
+ls -lh # shows files as a list with human readable format
+ls -lt # shows the files as a list sorted by time-last-edited
+ls -lS # shows the files as a list sorted by size
+\end{lstlisting}
+
+\begin{note}
+\lstinline|ls| provides information about \emph{files} in a directory and does not provide information about the contents of \emph{sub-directories}. Therefore, a sub-directory containing a large amount of data may not appear at the top of an \lstinline|ls -lS| command because the size of files within that directory are not considered.
+\end{note}
+
+
+\begin{questions}
+Using the terminal, can you tell what the \textbf{PRS Workshop} folder contains? \\
+
+Use \lstinline|cd| to navigate into the Day\_1a/ directory and then to navigate into the Data/ folder inside Day\_1a/, and then use one of the \lstinline|ls| commands above to find out what the largest file is inside Data/. What is the name of the largest file and how big is it? 
+\end{questions}
+
+\section{Counting Number of Lines in File}
+We can also count the number of lines in a file with the following command (where \textit{<file>} is the file of interest): \\
+
+\begin{lstlisting}[language=bash]
+wc -l <file>
+\end{lstlisting}
+
+\begin{questions}
+	How many lines are there in the \textbf{Data/GIANT\_Height.txt} file?
+\end{questions}
+
+\noindent Often we would like to store the output of a command, which we can do by \textit{redirecting} the output of the command to a file. 
+For example, we can redirect the count of the \textbf{GIANT\_Height.txt} to \textbf{giant\_count } using the following command: 
+
+\begin{lstlisting}[language=bash]
+wc -l GIANT_Height.txt > giant_count.txt 
+\end{lstlisting}
+
+\section{Search File Content}
+Another common task is to search for specific words or characters in a file (e.g. does this file contain our gene of interest?). 
+This can be performed using the "\lstinline|grep|" command as follows:\\
+
+\begin{lstlisting}[language=bash]
+grep <string> <file>
+\end{lstlisting}
+
+\noindent For example, to check if the \gls{snp} \emph{rs10786427} is present in \textbf{GIANT\_Height.txt}, we can do: \\
+\begin{lstlisting}[language=bash]
+	grep rs10786427 GIANT_Height.txt
+\end{lstlisting}
+
+\noindent In addition, \lstinline|grep| allows us to check if patterns contained in one file can be found in another file. 
+\noindent For example, if we want to extract a subset of samples from the phenotype file (e.g. extract the list of samples in \textbf{Data/Select.sample}), we can do:
+
+\begin{lstlisting}[language=bash]
+grep -f  Select.sample TAR.height
+\end{lstlisting}
+
+\noindent An extremely useful feature of the terminal is chaining multiple commands into one command, which we call \textbf{\textit{piping}}.
+
+\noindent For example, we can use piping to count the number of samples in \textbf{Select.sample} that were found in \textbf{TAR.height} in a single command, as follows:
+
+\begin{lstlisting}[language=bash]
+grep -f  Select.sample TAR.height | wc -l
+\end{lstlisting}
+
+\begin{questions}
+	How many samples from \textbf{Select.sample} were found in \textbf{TAR.height}?
+\end{questions}
+
+\section{Filtering and Reshuffling Files}
+A very powerful feature of the terminal is the \textbf{awk} programming language, which allows us to extract subsets of a data file, filter data according to some criteria or perform arithmetic operations on the data. \lstinline|awk| manipulates a data file by performing operations on its \textbf{columns} - this is extremely useful for scientific data sets because typically the columns features or variables of interest.
+
+\noindent For example, we can use \lstinline|awk| to produce a new results file that only contains SNP rsIDs (column 1), allele frequencies (column 4) and $P$-values (column 7) as follows: \\
+
+\begin{lstlisting}[language=awk]
+awk '{ print $1,$4,$7}' GIANT_Height.txt > GIANT_Height_3cols.txt 
+\end{lstlisting}
+
+\begin{questions}
+See if you can work out how to create a new file from GIANT\_Height.txt that contains the SNP rsIDs, Allele1, Allele2, the allele frequency \textbf{as a percentage}, and the sample size (N). 
+\end{questions}
+
+\noindent We can also use a "conditional statement" in \lstinline|awk| to extract all \emph{significant \glspl{snp}} from the results file, using the following command: \\
+
+\begin{lstlisting}[language=awk]
+awk '{if($7 < 5e-8) { print } }' GIANT_Height.txt > Significant_SNPs.txt
+# Or the short form:
+awk '$7 < 5e-8{ print}' GIANT_Height.txt > Significant_SNPs.txt 
+\end{lstlisting}
+
+\noindent 
+"\lstinline[language=awk]|if($7<5e-8)|" and "\lstinline[language=awk]|$7 < 5e-8|" tell \lstinline|awk| to extract any rows with column 7 (the column containing $P$-value) with a value of smaller than 5e-8 and \lstinline[language=awk]|{print}| means that we would like to print the entire row when this criterion is met. \\
+
+\begin{questions}
+	How many \glspl{snp} from the Height GWAS passed the significance threshold?
+\end{questions}
+
+
+\chapter{Introduction to R}
+\textbf{R} is a useful programming language that allows us to perform a variety of statistical tests and data manipulation. 
+It can also be used to generate fantastic data visualisations.
+Here we will go through some of the basics of \textbf{R} so that you can better understand the practicals throughout the workshop. \\
+
+\begin{information}
+	\href{https://www.rstudio.com/products/rstudio/download/#download}{R Studio} is a very useful graphical user interface (GUI) for \textbf{R}. You may prefer to use R Studio rather than running R from the terminal. 
+\end{information}
+
+\section{Basics}
+If you are not using R Studio then you can type \textbf{R} in your terminal to run \textbf{R} in the terminal. 
+\subsubsection{Working Directory}
+When we start \textbf{R}, we will be working in a specific folder called the \textbf{working directory}.
+We can check the current/working directory we are in by typing: 
+\begin{lstlisting}[language=R]
+getwd()
+\end{lstlisting}
+
+\noindent And we can change our working directory to the \textbf{Practical} folder by
+\begin{lstlisting}[language=R]
+setwd("~/Desktop/PRS\_Workshop/Day_1a/")
+\end{lstlisting}
+
+\subsection{Libraries}
+Most functionality of \textbf{R} is organised in "packages" or "libraries". To access these functions, 
+we will have to install and "load" these packages. Most commonly used packages are installed 
+together with the standard installation process. You can install a new library using the 
+\lstinline[language=R]|install.packages| function.
+
+\noindent For example, to install \textit{ggplot2}, run the command:
+\begin{lstlisting}[language=R]
+install.packages("ggplot2")
+\end{lstlisting}
+
+\noindent After installation, you can load the library by typing
+\begin{lstlisting}[language=R]
+library(ggplot2)
+\end{lstlisting}
+
+% Mention function here?
+\noindent Alternatively, we can import functions (e.g. that we have written) from an R script file on our computer. 
+For example, you can load the Nagelkerke $R^2$ function by typing
+\begin{lstlisting}[language=R]
+source("Software/nagelkerke.R")
+\end{lstlisting}
+And you are now able to use the \lstinline[language=R]|NagelkerkeR2| function (we will use this function at the end of this worksheet).
+
+\subsection{Variables in R}
+You can assign a value or values to any variable you want using \lstinline[language=R]|<-|. 
+e.g
+\begin{lstlisting}[language=R]
+# Assign a number to a
+a <- 1
+# Assign a vector containing a,b,c to b
+v1 <- c("a", "b","c")
+\end{lstlisting}
+
+\subsection{Functions}
+You can perform lots of operations in \textbf{R} using different built-in R functions. 
+Some examples are below:\\
+
+\begin{lstlisting}[language=R]
+# Assign number of samples
+nsample <- 10000
+# Generate nsample random normal variable with mean = 0 and sd = 1
+normal <- rnorm(nsample, mean=0,sd=1)
+normal.2 <- rnorm(nsample, mean=0,sd=1)
+# We can examine the first few entries of the result using head
+head(normal)
+# And we can obtain the mean and sd using
+mean(normal)
+sd(normal)
+# We can also calculate the correlation between two variables using cor
+cor(normal, normal.2)
+\end{lstlisting}
+
+\section{Plotting}
+While \textbf{R} contains many powerful plotting functions in its base packages, customisation can be difficult (e.g. changing the colour scales, arranging the axes).
+\textbf{ggplot2} is a powerful visualization package that provides extensive flexibility and customisation of plots.
+As an example, we can do the following
+\begin{lstlisting}[language=R]
+# Load the package
+library(ggplot2)
+# Specify sample size
+nsample<-1000
+# Generate random grouping using sample with replacement
+groups <- sample(c("a","b"), nsample, replace=T)
+# Now generate the data
+dat <- data.frame(x=rnorm(nsample), y=rnorm(nsample), groups)
+# Generate a scatter plot with different coloring based on group
+ggplot(dat, aes(x=x,y=y,color=groups))+geom_point()
+\end{lstlisting}
+
+\section{Regression Models}
+In statistical modelling, regression analyses are a set of statistical techniques for estimating the relationships among variables or features. We can perform regression analysis in \textbf{R}.
+
+\noindent Use the following code to perform linear regression on simulated variables "x" and "y": 
+\begin{lstlisting}[language=R]
+# Simulate data
+nsample <- 10000
+x <- rnorm(nsample)
+y <- rnorm(nsample)
+# Run linear regression
+lm(y~x)
+# We can store the result into a variable
+reg <- lm(y~x)
+# And get a detailed output using summary
+summary(lm(y~x))
+# We can also extract the coefficient of regression using 
+reg$coefficient
+# And we can obtain the residuals by 
+residual <- resid(reg)
+# Examine the first few entries of residuals
+head(residual)
+# We can also include covariates into the model
+covar <- rnorm(nsample)
+lm(y~x+covar)
+# And can even perform interaction analysis
+lm(y~x+covar+x*covar)
+\end{lstlisting}
+
+\noindent Alternatively, we can use the glm function to perform the regression:
+\begin{lstlisting}[language=R]
+glm(y~x)
+\end{lstlisting}
+
+\noindent For binary traits (case controls studies), logistic regression can be performed using \gls{glm}
+\begin{lstlisting}[language=R]
+# Simulate samples
+nsample<- 10000
+x <- rnorm(nsample)
+# Simulate binary traits (must be coded with 0 and 1)
+y <- sample(c(0,1), size=nsample, replace=T)
+# Perform logistic regression
+glm(y~x, family=binomial)
+# Obtain the detail output
+summary(glm(y~x, family=binomial))
+# We will need the NagelkerkeR2 function
+# to calculate the pseudo R2 for logistic model
+source("Software/nagelkerke.R")
+reg <- glm(y~x, family=binomial)
+# Calculate the Nagelkerke R2 using the NagelkerkeR2 function
+NagelkerkeR2(reg)
+\end{lstlisting}
+
+\end{document}
