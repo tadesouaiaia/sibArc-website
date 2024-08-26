@@ -1,7 +1,20 @@
-## BridgePRS
+# BridgePRS
 
-### Learning Objectives
-In the previous lecture we covered in detail the modelling used by
+## Table of Contents
+
+1. [Key learning outcomes](#key-learning-outcomes)
+2. [BridgePRS input data](#BridgePRS-input-data)
+3. [Passing arguments to BridgePRS - example run]()
+4. [BridgePRS output]
+5. [Using BridgePRS without target summary statistics]
+6. [Further analyses with BridgePRS]
+7. [Using BridgePRS SNP weights]
+
+---
+<a href="#top">[Back to Table of Contents](#table-of-contents)</a>
+
+## Key learning outcomes
+In the previous lecture we covered the modelling used by
 BridgePRS. Here we will use the BridgePRS software to apply the method.
 The aim of this practical is to provide you with a basic understanding
 and some experience of running BridgePRS software. After completing
@@ -13,7 +26,7 @@ this practical, you should:
 * Interpret output from BridgePRS
   * Use BridgePRS output to calculate PRS in unseen samples using SNP weights
 
-### BridgePRS input data
+## BridgePRS input data
 In the BridgePRS directory there is a data folder which we will use in
 this practical. View the data directory
 ```
@@ -96,7 +109,7 @@ information. Similarly model performance metrics will only use  samples with bot
 genotype and phenotype information, however, predictions are generated
 for all validation samples with genotype data.
 
-### Passing arguments to run BridgePRS
+## Passing arguments to BridgePRS - example run
 Example run of BridgePRS:
 ```
 ./bridgePRS pipeline go -o out/ --config_files data/eas.config data/eur.config --fst 0.11 --phenotype y --cores 4 --restart
@@ -116,7 +129,7 @@ files, e.g. `EAS_valid.dat`. The `--cores` argument specifies
 the number of cores used in the analysis.  A full list of arguments
 that can be used on the command line can be found [here](https://www.bridgeprs.net/guide_args/).
 
-#### The \*.config files
+### The \*.config files
 .config files tell BridgePRS where to find the required input files 
 and the column headers of the summary statistics files for a
 population data set, take a look, e.g.
@@ -148,7 +161,7 @@ between the argument name and the argument being passed.
 The `POP` argument simply labels the population used in this .config
 file for output.
 
-#### Estimating Linkage Dissequilibrium (LD)
+### Estimating Linkage Dissequilibrium (LD)
 BridgePRS requires individual level genetic data in `plink` binary
 format to estimate linkage dissequilibrium (LD) in the populations
 which produced the GWAS summary statistics. The genotype test and
@@ -171,7 +184,7 @@ downloaded [here](https://www.bridgeprs.net)**
 Can you work out what the other command line arguments are doing?
 Can you work out what the other config file arguments are doing?
 
-### BridgePRS output
+## BridgePRS output
 The main output is in the folder `out/prs-combined_EAS-EUR/`. First
 view the output summary plot
 ```
@@ -184,7 +197,7 @@ four PRS models BridgePRS estimates. The weighted model is BridgePRS
 estimated "best" PRS.
 
 
-#### The models estimated by BridgePRS
+### The models estimated by BridgePRS
 The three separate target population PRS estimated by BridgePRS are:
 * **Stage2 model** -- estimated using target population data with prior effect-size distribution from the base (European) population
 * **Stage 1 model** -- estimated using only the target (Non-European) data
@@ -210,7 +223,7 @@ Look at the following output file
 ```
 cat out/prs-combined_AFR-EUR/EAS_weighted_combined_var_explained.txt
 ```
-#### Question?
+### Question?
 * Which plot in the summary plot was constructed from this output
   file?
 * How do the Manhattan plots of the base and target populations
@@ -222,7 +235,7 @@ and weighted. `EAS_weighted_combined_snp_weights.dat` has the SNP
 weights for the combined to allow this model to be applied to other
 samples.
 
-### Using BridgePRS without target summary statistics
+## Using BridgePRS without target summary statistics
 Often GWAS summary statistics are only available in one
 population. BridgePRS can use these summary statistics and optimise
 them to estimate a PRS for another target population given individual
@@ -254,17 +267,17 @@ analysis previously but with all the weight on the EUR prior.
 * How does prediction using only EUR summary statistics compare with
 those which include information from the EAS summary statistics?
 
-### Further analysis with BridgePRS
-#### African analysis
+## Further analysis with BridgePRS
+### African analysis
 Run BridgePRS again to estimate PRS in Africans using
 `afr.config`. Note, you should also change the command line `fst`
 argument to match the Fst between Africans and Europeans, use 0.15.
 
-#### Qustions?
+### Qustions?
 * Which population, EAS or AFR, has the best prediction?
 * What are the reasons for the differences in prediction between the populations?
   
-#### Analyses with other GWAS summary statistics
+### Analyses with other GWAS summary statistics
 For each population the config files contain commented out links to GWAS summary
 statistics of the same phenotype using half the same size: 40k for EUR
 and 10k for both EAS and AFR.
@@ -295,7 +308,7 @@ If you have made a mistake, correct and run again using the
   accuracy of the BridgePRS models?
 * How do AFR and EAS results compare?
 
-##### Analyses with smaller EUR GWAS summary statistics
+#### Analyses with smaller EUR GWAS summary statistics
 Edit the config files again to run analyses using the 40k EUR GWAS
 (i.e. `EUR_half`) and the 20k EAS and AFR GWAS and write to results to
 a new directory e.g. `out_half_eur`.
@@ -305,7 +318,7 @@ a new directory e.g. `out_half_eur`.
   accuracy of the BridgePRS models?
 * How do AFR and EAS results compare?
 
-### Using BidgePRS SNP weights
+## Using BidgePRS SNP weights
 The SNP weights in `EAS_weighted_combined_snp_weights.dat` can be used to make
 predictions in other samples for which we have overlapping genotype data. We demonstrate
 this using `plink` and data in `data/pop_EAS/genotypes/`. The genotype data is split
