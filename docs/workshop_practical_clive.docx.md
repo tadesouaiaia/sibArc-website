@@ -204,7 +204,7 @@ estimated "best" PRS.
 
 ### The models estimated by BridgePRS
 The three separate target population PRS estimated by BridgePRS are:
-* **Stage2 model** -- estimated using target population data with prior effect-size distribution from the base (European) population
+* **Stage 2 model** -- estimated using target population data with prior effect-size distribution from the base (European) population
 * **Stage 1 model** -- estimated using only the target (Non-European) data
 * **Stage1+2 model** -- estimated using both stage 1 and stage 2 models
 
@@ -216,12 +216,12 @@ The weighted combined PRS should typically be used.  The models,
 stage1, stage2 and stage1+2, should not be used unless users have a
 strong prior belief that a particular model is better. The hypotheses
 of the three models are:
-* Stage 2 model reflects the belief that the target population GWAS is only
+* **Stage 2 model** reflects the belief that the target population GWAS is only
   informative in conjugtion with the base population GWAS.
-* Stage 1 model reflects the belief that the target population GWAS is
+* **Stage 1 model** reflects the belief that the target population GWAS is
   informative and the base population GWAS gives no addition
   information.
-* Stage 1+2 model reflects the belief both the base and target population
+* **Stage 1+2 model** reflects the belief both the base and target population
   GWAS contribute independent information.
 
 Look at the following output file
