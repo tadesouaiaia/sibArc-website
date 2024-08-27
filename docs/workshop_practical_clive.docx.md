@@ -17,13 +17,13 @@ In the previous lecture we covered the modelling used by
 BridgePRS. Here we will use the BridgePRS software to apply the method.
 The aim of this practical is to provide you with a basic understanding
 and some experience of running BridgePRS software. After completing
-this practical, you should:
+this practical, you should be able to:
 
-* Be able to perform cross-population analyses using BridgePRS
+* perform cross-population analyses using BridgePRS
   * understand what input files are required by BridgePRS
   * set up configuration files to pass arguments to BridgePRS
-* Interpret output from BridgePRS
-  * Use BridgePRS output to calculate PRS in unseen samples using SNP weights
+* interpret output from BridgePRS
+  * use BridgePRS output to calculate PRS in unseen samples using SNP weights
 
 <a href="#top">[Back to Table of Contents](#table-of-contents)</a>
 
