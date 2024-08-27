@@ -1,6 +1,6 @@
 # BridgePRS
 
-## Table of Contents
+## Table of contents
 
 1. [Key learning outcomes](#key-learning-outcomes)
 2. [BridgePRS input data](#BridgePRS-input-data)
@@ -164,7 +164,7 @@ between the argument name and the argument being passed.
 The `POP` argument simply labels the population used in this .config
 file for output.
 
-### Estimating Linkage Dissequilibrium (LD)
+### Estimating linkage dissequilibrium (LD)
 BridgePRS requires individual level genetic data in `plink` binary
 format to estimate linkage dissequilibrium (LD) in the populations
 which produced the GWAS summary statistics. The genotype test and
