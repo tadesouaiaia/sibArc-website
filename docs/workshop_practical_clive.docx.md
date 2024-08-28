@@ -80,9 +80,9 @@ random subset of HapMap SNPs.
 ### Questions?
 * Which population has the most polymorphic SNPs?
 * Which population has the least polymorphic SNPs?
-* Why do you think this bias exists?
+* Do you think there is a bias in the SNP ascertainment?
 * Which population would you expect to have the most polymorphic SNPs
-  if SNPs were ascertained from 1000G?
+  if SNPs were ascertained randomly from 1000G?
 
 Take a look a look at the files, e.g.
 ```
@@ -98,7 +98,7 @@ EUR population. The same SNPs are contained in each set of summary statistics.
 
 The `phenotypes` folders has two files: "test" and "validation" with
 IDs, the outcome phenotype and covariates. "Test" data is used to
-optimise the PRS and "validation" data is is just to assess model performance,
+optimise the PRS and "validation" data is used only to assess model performance,
 it is not used to estimate the PRS.
 
 The `genotypes` folders are in `plink` binary format and are split by
@@ -106,7 +106,7 @@ chromosome. These folders contain the genetic data for both test and
 validation individuals in the phenotypes folder.
 
 Test data will only be used for individuals with both genotype and phenotype
-information. Similarly model performance metrics will only use  samples with both
+information. Similarly model performance metrics will only use validation samples with both
 genotype and phenotype information, however, predictions are generated
 for all validation samples with genotype data.
 
