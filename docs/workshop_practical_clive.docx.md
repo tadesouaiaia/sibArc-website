@@ -182,9 +182,9 @@ European (Eur), African (AFR) and American (AMR).
 **For real data analyses 1000G reference data for larger subsets of SNPs can be
 downloaded [here](https://www.bridgeprs.net)**
 
-### Qustion?
-Can you work out what the other command line arguments are doing?
-Can you work out what the other config file arguments are doing?
+### Qustions?
+* Can you work out what the other command line arguments are doing?
+* Can you work out what the other config file arguments are doing?
 
 <a href="#top">[Back to table of contents](#table-of-contents)</a>
 
