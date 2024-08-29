@@ -57,7 +57,7 @@ drwxr-xr-x  68 hoggac01  staff  2176 12 Aug 11:02 sumstats
 ```
 Look at each directory e.g. `ls pop_AFR/genotypes`. There are two sets of summary
 statistics in each `sumstats` folder from the analysis of the same simulated
-continuos phenotype, the "half" files were generated using half the
+continuous phenotype, the "half" files were generated using half the
 sample size. For computation speed the summary statistics
 only have a small subset of SNPs, 19k-20k genomewide, the following
 commands count the number of lines in each set of summary statistics
@@ -117,7 +117,7 @@ Example run of BridgePRS:
 ```
 ./bridgePRS pipeline go -o out/ --config_files data/eas.config data/eur.config --fst 0.11 --phenotype y --cores 4 --restart
 ```
-Arguments can be passed to BridgePRS on both the commandline and in
+Arguments can be passed to BridgePRS on both the command-line and in
 config files. config files, used above, are a neat way to store population
 specific arguments, for a standard two population analysis
 two config are required. By default the first config file is for the target
@@ -156,17 +156,17 @@ SSF-BETA=BETA
 SSF-REF=REF
 SSF-ALT=A1
 ```
-This config file conatins all possible arguments that can be used in
+This config file contains all possible arguments that can be used in
 config files. config files use the same argument names as the
-commandline arguments but in uppercase, and use "=" instead of a space
+command-line arguments but in uppercase, and use "=" instead of a space
 between the argument name and the argument being passed.
 
 The `POP` argument simply labels the population used in this .config
 file for output.
 
-### Estimating linkage dissequilibrium (LD)
+### Estimating linkage disequilibrium (LD)
 BridgePRS requires individual level genetic data in `plink` binary
-format to estimate linkage dissequilibrium (LD) in the populations
+format to estimate linkage disequilibrium (LD) in the populations
 which produced the GWAS summary statistics. The genotype test and
 validation data could be used, e.g. data here
 `pop_EUR/genotypes/`. If these data are small, less than 500 samples, or
@@ -182,7 +182,7 @@ European (Eur), African (AFR) and American (AMR).
 **For real data analyses 1000G reference data for larger subsets of SNPs can be
 downloaded [here](https://www.bridgeprs.net)**
 
-### Qustions?
+### Questions?
 * Can you work out what the other command line arguments are doing?
 * Can you work out what the other config file arguments are doing?
 
@@ -196,7 +196,7 @@ evince  out/prs-combined_AFR-EUR/bridge.afr-eur.prs-combined.result.pdf
 ```
 on a Mac use `open` instead of `evince`.
 
-The barplot at the top shows the varaince explained (R2) by the
+The barplot at the top shows the variance explained (R2) by the
 four PRS models BridgePRS estimates. The weighted model is BridgePRS
 estimated "best" PRS.
 
@@ -216,18 +216,18 @@ stage1, stage2 and stage1+2, should not be used unless users have a
 strong prior belief that a particular model is better. The hypotheses
 of the three models are:
 * **Stage 2 model** reflects the belief that the target population GWAS is only
-  informative in conjugtion with the base population GWAS.
+  informative when used with the base population GWAS
 * **Stage 1 model** reflects the belief that the target population GWAS is
   informative and the base population GWAS gives no addition
   information.
 * **Stage 1+2 model** reflects the belief both the base and target population
-  GWAS contribute independent information.
+  GWAS contribute independent information
 
 Look at the following output file
 ```
 cat out/prs-combined_AFR-EUR/EAS_weighted_combined_var_explained.txt
 ```
-### Question?
+### Questions?
 * Which plot in the summary plot was constructed from this output
   file?
 * How do the Manhattan plots of the base and target populations
@@ -266,7 +266,7 @@ included EAS GWAS summary statistics.
 cat out_single/prs-single_EAS/quantify/EAS_quantify_var_explained.txt
 cat out/prs-combined_EAS-EUR/EAS_weighted_combined_var_explained.txt
 ```
-This single summary statistic analysis is equilvant to the stage 2
+This single summary statistic analysis is equivalent to the stage 2
 analysis previously but with all the weight on the EUR prior.
 
 ### Question?
@@ -309,9 +309,9 @@ grep Sumstats out_half_target/logs/bridgePRS.afr-eur.pipeline.go.log
 ```
 
 If you have made a mistake, correct and run again using the
-`--restart` flag which deletes the previously genereated results.
+`--restart` flag which deletes the previously generated results.
 
-### Qustions?
+### Questions?
 * How has using the less well powered EAS and AFR GWAS affected the predictive
   accuracy of the BridgePRS models?
 * How do AFR and EAS results compare?
@@ -321,7 +321,7 @@ Edit the config files again to run analyses using the 40k EUR GWAS
 (i.e. `EUR_half`) and the 20k EAS and AFR GWAS and write to results to
 a new directory e.g. `out_half_eur`.
 
-### Qustions?
+### Questions?
 * How has using the less well powered EUR GWAS affected the predictive
   accuracy of the BridgePRS models?
 * How do AFR and EAS results compare?
