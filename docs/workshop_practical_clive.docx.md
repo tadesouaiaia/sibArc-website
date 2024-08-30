@@ -323,9 +323,10 @@ If you have made a mistake, correct and run again using the
 * How do AFR and EAS results compare?
 
 #### Analyses with smaller EUR GWAS summary statistics
-Edit the config files again to run analyses using the 40k EUR GWAS
-(i.e. `EUR_half`) and the 20k EAS and AFR GWAS and write to results to
-a new directory e.g. `out_half_eur`.
+Run BridgePRS analysis using using the 40k EUR GWAS (use `EUR_half`) as base and 20k EAS GWAS as target.
+You will need to edit `eur.config` and `eas.config` to use the correct summary statistics and pass the
+correct GWAS sample size. Write to results to a new directory e.g. `out_half_eur`.
+Run the equivalent analysis for AFR.
 
 ### Questions?
 * How has using the less well powered EUR GWAS affected the predictive
@@ -345,7 +346,7 @@ we first make a directory to write these predictions to
 mkdir out/preds
 for chr in {1..22}
 do
-    plink --score out/prs-combined_EAS-EUR/EAS_weighted_combined_snp_weights.dat 1 2 4 list-variants \
+    plink --score out/prs-combined_EAS-EUR/EAS_weighted_combined_snp_weights.dat 1 2 4 sum \
           --bfile data/pop_EAS/genotypes/chr$chr \
           --out out/preds/EAS_chr$chr
 done
@@ -354,11 +355,11 @@ We then read these predictions into R to combine
 ```
 R
 library(data.table)
-tmp <- fread(paste0('out1/preds/EAS_chr1.profile'))
+tmp <- fread(paste0('out/preds/EAS_chr1.profile'))
 pred <- data.frame( tmp$IID, tmp$SCORESUM )
 colnames(pred) <- c('IID','Score')
 for( chr in 2:22 ){
-    tmp <- fread(paste0('out1/preds/EAS_chr',chr,'.profile'))
+    tmp <- fread(paste0('out/preds/EAS_chr',chr,'.profile'))
     pred[,2] <- pred[,2] + tmp$SCORESUM
 }
 
