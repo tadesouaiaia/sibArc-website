@@ -214,9 +214,9 @@ following command to query the number of European ancestry individuals in the do
     grep -F "EUR" data/all_phase3.king.psam | wc -l
 
 
-Next, repeat the same command for East Asian, African, South Asian and Amerindian superpopulations, by inserting the relevant ancestry codes (EAS, AFR, SAS, AMR).
+Next, repeat the same command for East Asian, African, South Asian and American super-populations, by inserting the relevant ancestry codes (EAS, AFR, SAS, AMR).
 
-🗒️ Make note of how many individuals from each ancestry group are available. 
+🗒️ Make note how many individuals there are from each ancestry. 
 
 
 <h5>Number of Genetic Variants</h5>
@@ -242,10 +242,10 @@ See the output file plink.snplist, which contains a list of all the SNPs in the 
 
 <h5>Quantification of variable SNPs</h5>
 
-The rate at which a genetic variant occurs in a population is also known as its allelic
+The rate at which a genetic variant occurs in a population is known as its allele
 frequency. Allele frequencies are shaped by evolutionary forces over a long period
-of time and hence can vary. This has implications for PRS research as the allelic
-frequency distribution of a disease or trait may vary between populations. It is
+of time and hence can vary. This has implications for PRS research as the allele
+frequency distribution of variants typically varies between populations. It is
 possible to generate allele frequency statistics for each SNP in a given population,
 using the population information in the file pop_info.pheno.
 
