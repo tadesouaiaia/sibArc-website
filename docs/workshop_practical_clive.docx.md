@@ -367,7 +367,9 @@ for( chr in 2:22 ){
 valid <- fread('out/prs-combined_EAS-EUR/EAS_weighted_combined_preds.dat')
 # Match IDs
 ptr <- match( valid$IID, pred$IID )
-plot( pred$Score[ptr], valid$Weighted )
+plot( pred$Score[ptr], valid$Weighted, main="Individual PRS"
+      xlab="PRS estimated by BridgePRS",
+      ylab="PRS re-estimated from SNP weights" )
 ```
 Predictions are the same \+/\- rounding error and a constant.
 
