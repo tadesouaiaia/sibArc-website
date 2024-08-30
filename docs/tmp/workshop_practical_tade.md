@@ -133,7 +133,8 @@ Next type the commands below to reuse the European GWAS data and PRSice with the
     ./code/PRSice --base data/EURO_GWAS.assoc --target data/japanTarget/japanTarget --binary-target F --out japanRun
     Rscript --vanilla code/plot_prs_results.R data/japanTarget/japanTarget.pheno japanRun.best
 ```
-View the resulting scatterplot and answer the questions below. 
+View the resulting scatterplot and answer the questions below.
+
 **❓QUESTIONS:**
 
 <details>
