@@ -463,7 +463,7 @@ the following commands from within an R terminal:
 The next set of scripts will allow us to visualise the distribution of LD block length across different 1000Genomes populations.
 
 
-    ./code/plink --bfile data/chr1-22 --keep-cluster-names AFR --blocks no-pheno-req no-small-max-span --blocks-max-kb 250 --within data/pop_info.pheno  --threads 30 --out AFR
+    ./code/plink --bfile data/chr1-22 --blocks no-pheno-req no-small-max-span --blocks-max-kb 250 --within data/pop_info.pheno  --threads 30 --keep-cluster-names AFR --out AFR
 
 
 The “–block" flag estimates haplotype blocks using the same block definition implemented by the software Haploview. The default setting for the flag --blocks-max-kb
