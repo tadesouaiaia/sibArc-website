@@ -80,7 +80,7 @@ Using R, Python, or another program, consider calculating the correlation betwee
 
         R
         # read-in prs-file 
-        prs <- read.table("ukRun.best", header = TRUE, sep = "", stringsAsFactors = FALSE)                                                                                                                                            
+        prs1 <- read.table("ukRun.best", header = TRUE, sep = "", stringsAsFactors = FALSE)                                                                                                                                            
         prs.data <- prs1[,4]                                                                                                                                                                                                       
         
         # read-in pheno-file 
