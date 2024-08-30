@@ -228,7 +228,7 @@ time required to complete the tutorial. The following command derives the number
 of genetic variants on chromosomes 1 to chromosome 22 by counting the number of
 lines in the relevant (.bim) file, which contains a single variant per line.
 
-    wc data/chr1-22.bim -l
+    wc -l data/chr1-22.bim
 
 
 To quantify the number of single nucleotide polymorphisms (SNPs) we can ask plink to write a
