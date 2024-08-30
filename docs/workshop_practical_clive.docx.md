@@ -116,23 +116,24 @@ for all validation samples with genotype data.
 Example run of BridgePRS:
 ```
 ./bridgePRS pipeline go -o out/ --config_files data/eas.config data/eur.config --fst 0.11 --phenotype y --cores 4 --restart
+
+Arguments can be passed to BridgePRS both directly on the command-line and in
+config files. The command-line arguments used above are:
 ```
-Arguments can be passed to BridgePRS on both the command-line and in
-config files. config files, used above, are a neat way to store population
-specific arguments, for a standard two population analysis
-two config are required. By default the first config file is for the target
-population and the second is for the base population. The `-o` argument
-specifies the output folder. The `--fst` argument is used to specify a prior
-distribution used in the BridgePRS analysis and should be the Fst
-between the base and target populations used in the analysis. Our
-first analysis uses European base data and East Asian target data, the
-Fst between these populations is 0.11. The `--phenotype` argument
-specifies the column label of the phenotype in the test and validation
-files, e.g. `EAS_valid.dat`. The `--cores` argument specifies
-the number of cores used in the analysis.  A full list of arguments
-that can be used on the command line can be found [here](https://www.bridgeprs.net/guide_args/).
+* `-o` - output folder
+* `--config_files` - configuration files, see below
+* `--fst`- Fst between the base and target populations used in the analysis, used to specify a prior
+distribution used in the BridgePRS analysis, the
+Fst between EAS and EUR is 0.11
+* `--phenotype` - the column label of the phenotype in the test and validation
+files, e.g. `EAS_valid.dat`
+* `--cores` - the number of cores used in the analysis.
 
 ### The \*.config files
+config files are a neat way to store population
+specific arguments. For a standard two population analysis
+two config are required, by default the first config file is for the target
+population and the second is for the base population.   
 .config files tell BridgePRS where to find the required input files 
 and the column headers of the summary statistics files for a
 population data set, take a look, e.g.
@@ -163,6 +164,8 @@ between the argument name and the argument being passed.
 
 The `POP` argument simply labels the population used in this .config
 file for output.
+
+A full list of arguments can be found [here](https://www.bridgeprs.net/guide_args/).
 
 ### Estimating linkage disequilibrium (LD)
 BridgePRS requires individual level genetic data in `plink` binary
