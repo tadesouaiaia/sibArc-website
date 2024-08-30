@@ -121,11 +121,10 @@ Using R, Python, or another program, consider calculating the correlation betwee
         R2 = (rTop/rBottom)*(rTop/rBottom)                                                                                                                                                                                                                                                                                                                                                                                                   
         print(R2)                                                                                                                                                                                                               
                 
-After you feel confident about the code, please run the Rscript in the code directory to calculate the correlation and 
-create a scatterplot using the UK PRS-result: 
-
+After you feel confident about the code, please run the following Rscript in the code directory to calculate the correlation and create a scatterplot using the UK PRS-result: 
+```
     Rscript --vanilla code/plot_prs_results.R data/ukTarget/ukTarget.pheno ukRun.best
-
+```
 This will create a scatterplot file called: **ukRunScatterplot.pdf**.  
 
 Verify that you can view it, and then type the commands below to reuse the European GWAS data and PRSice with the genotype-phenotype data from a Japan.  
