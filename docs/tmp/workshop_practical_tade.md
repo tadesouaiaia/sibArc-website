@@ -254,7 +254,7 @@ generate allele frequency statistics for each SNP in the five 1000G super-popula
 
 
 Population-stratified allele frequency results can be found in the output file plink.frq.strat.
-For each population, print the numbers of total SNPs to screen, as follows:
+For each population, print the total numbers of SNPs to screen, as follows:
 
     grep -F "AFR" plink.frq.strat | wc -l
 
