@@ -128,7 +128,7 @@ files, e.g. `EAS_valid.dat`
 * `--cores`  The number of cores used in the analysis.
 
 #### Fixation index Fst
-Fst is a measure of genetic distance between two populations. Details on the definition and calculation of Fst can be found on [Wikipedia](https://en.wikipedia.org/wiki/Fixation_index). Given genetic data from two populations Fst can be calculated in `plink`, for details see [(https://www.cog-genomics.org/plink/1.9/basic_stats#fst)].
+Fst is a measure of genetic distance between two populations. Details on the definition and calculation of Fst can be found on [Wikipedia](https://en.wikipedia.org/wiki/Fixation_index). Given genetic data from two populations Fst can be calculated in `plink`, for details see [https://www.cog-genomics.org/plink/1.9/basic_stats#fst].
 
 ### The \*.config files
 config files are a neat way to store population
