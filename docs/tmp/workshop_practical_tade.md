@@ -175,13 +175,19 @@ View the resulting scatterplot and answer the questions below.
 
 ### 1000 Genomes Data
 
-Now that you have observed the PRS-portability problem in practice we are going to consider some analysis that can be used to 
-provide a solution.  Recall from the lecture that population structure and population assignment is often accomplished using 
-principal components analysis (PCA) and that the primary population differences that drive the portability problem are 
-difference in allele frequency and linkage disequilibrium.  In the next exercise we will learn how to analyze and compare 
-data from different populations and quantify linkage disequilibrium.  In the final exercise we what PCA is and learn how 
-it can be used to separate population data by recent ancestry. Both of these exercises use the 1000Genomes dataset which contains individuals from 26 different 
-source populations from all five continents. 
+Now that you have observed the PRS-portability problem in practice
+we are going to consider some analysis that can be used to 
+provide a solution.  Recall from the lecture that population structure
+and population assignment is often accomplished using 
+principal components analysis (PCA) and that the primary population
+differences that drive the portability problem are 
+difference in allele frequency and linkage disequilibrium. 
+In the next exercise we will learn how to analyze and compare 
+data from different populations and quantify linkage disequilibrium. 
+In the final exercise we learn what PCA is and how 
+it can be used to separate population data by recent ancestry.
+Both of these exercises use the 1000 Genomes dataset which contains individuals from 26 different 
+source populations from five super-populations, Europe, East Asia, South Asian, Africa and America. 
 
 ---
 
