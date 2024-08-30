@@ -130,7 +130,7 @@ files, e.g. `EAS_valid.dat`
 ### The \*.config files
 config files are a neat way to store population
 specific arguments. For a standard two population analysis
-two config are required, by default the first config file is for the target
+two config files are required, by default the first config file is for the target
 population and the second is for the base population.   
 .config files tell BridgePRS where to find the required input files 
 and the column headers of the summary statistics files for a
