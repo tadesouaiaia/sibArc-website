@@ -176,7 +176,7 @@ are not representative of the GWAS population, we provide 1000 Genomes
 is in the 1000G_sample folder
 for the small subset of SNPs used in these examples. The `.config` files point to
 the folder with reference LD data by the `LD_PATH` argument in the
-config file. LD reference data is available for the five 1000G *super population* (abbreviations
+config file. LD reference data is available for the five 1000G super populations (abbreviations
 required to use in brackets): East Asian (EAS), South Asian (SAS),
 European (Eur), African (AFR) and American (AMR).
 
