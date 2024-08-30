@@ -254,7 +254,7 @@ them to estimate a PRS for another target population given individual
 level from the target population. Here is an example using the
 `data/eur_eas.config` config file
 ```
-./bridgePRS prs-single run -o out_single/ --config_files data/eur_eas.config --phenotype y --cores 10
+./bridgePRS prs-single run -o out_single/ --config_file data/eur_eas.config --phenotype y --cores 4
 ```
 Look at `data/eur_eas.config`.
 ### Questions?
