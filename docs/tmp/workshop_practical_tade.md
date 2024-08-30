@@ -216,7 +216,7 @@ following command to query the number of European ancestry individuals in the do
 
 Next, repeat the same command for East Asian, African, South Asian and American super-populations, by inserting the relevant ancestry codes (EAS, AFR, SAS, AMR).
 
-🗒️ Make note how many individuals there are from each ancestry. 
+🗒️ Make note how many individuals there are from each super-population.
 
 
 <h5>Number of Genetic Variants</h5>
