@@ -128,7 +128,8 @@ After you feel confident about the code, please run the following Rscript in the
 This will create a scatterplot file called: **ukRunScatterplot.pdf**.  
 Verify that you can view this pdf.
 
-Next type the commands below to reuse the European GWAS data and PRSice with the genotype-phenotype data from a Japan.  
+Next type the commands below to reuse the European GWAS data
+and PRSice with the genotype-phenotype data from Japan.  
 ```
     ./code/PRSice --base data/EURO_GWAS.assoc --target data/japanTarget/japanTarget --binary-target F --out japanRun
     Rscript --vanilla code/plot_prs_results.R data/japanTarget/japanTarget.pheno japanRun.best
