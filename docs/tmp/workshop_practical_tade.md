@@ -245,9 +245,9 @@ See the output file plink.snplist, which contains a list of all the SNPs in the 
 The rate at which a genetic variant occurs in a population is known as its allele
 frequency. Allele frequencies are shaped by evolutionary forces over a long period
 of time and hence can vary. This has implications for PRS research as the allele
-frequency distribution of variants typically varies between populations. It is
-possible to generate allele frequency statistics for each SNP in a given population,
-using the population information in the file pop_info.pheno.
+frequency distribution of variants typically varies between populations. The following
+plink command uses the population information in the file pop_info.pheno to
+generate allele frequency statistics for each SNP in the five 1000G super-populations:
 
 
     ./code/plink --bfile data/chr1-22 --snps-only --freq --within data/pop_info.pheno
