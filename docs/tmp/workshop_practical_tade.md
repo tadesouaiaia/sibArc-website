@@ -20,15 +20,36 @@ After completing this practical, you should be able to:
 
 <h5>Practical Specific Data</h5>
 
-The multi-ancestry data/software required for this practical can be downloaded here.  
+The data/software required for this practical can be found in the folder **day1b**.  Inside of this folder 
+there are two folders, one for each operating system.  Please enter the correct directory, by typing one 
+of the following two commands: 
 
-Please download, unzip the data, and move it into a suitable directory on your laptop.  
+    cd day1b/mac_version   # for users of macOs 
+    cd day1b/linux_version # for users of Linux  
+
 
 After doing this you should see the following directories: 
 
-  - exercise1: Data/Code to run multi-ancestry PRS    
-  - exercise2: Data/Code for principal component analysis 
-  - exercise3: Data/Code for population genetics analysis 
+  - exercise1: Includes Data/Code to run multi-ancestry PRS    
+  - exercise2: Includes Data/Code for principal component analysis 
+  - exercise3: Includes Data/Code for population genetics analysis 
+
+The downloaded code in these directories needs to be made executable on your machine.  You can do that now by 
+typing: 
+
+    chmod +x exercise*/code/* 
+
+Additionally, if you are using macOs where there is extra security, you should do the following: 
+
+![Screenshot](images2/mac_execute.png) 
+
+ 1. User finder navigate to the exercise1/code directory. 
+ 2. Right click on the PRSice icon and select **open**.  
+ 3. A warning will pop-up (shown below), click open. 
+ 4. Repeat the process for exercise2/code/plink and exercise3/code/plink.   
+
+
+![Screenshot](images2/mac_warn.png) 
 
 ---
 
@@ -48,7 +69,7 @@ see **code** and **data** directories.  Looking in the data directory by typing 
 To start, run PRSice using the European GWAS and target data from the UK: 
 
     
-    ./code/PRSice --base data/EURO_GWAS.assoc --target data/ukTarget/ukTarget --binary-target F --out ukRun
+    ./code/PRSice --base data/EURO_GWAS.assoc --target data/ukTarget/ukTarget --binary-target F --pheno data/ukTarget/ukTarget.pheno --out ukRun
 
 Verify that this command produce a file called **"ukRun.best"** that contains individual prs-scores in fourth column.  This file can 
 compared to the file **data/ukTarget/ukTarget.pheno** which contains phenotype-values in the third column. 
@@ -127,7 +148,7 @@ Verify that you can view this pdf.
 Next type the commands below to reuse the European GWAS data
 and PRSice with the genotype-phenotype data from Japan.  
 ```
-    ./code/PRSice --base data/EURO_GWAS.assoc --target data/japanTarget/japanTarget --binary-target F --out japanRun
+    ./code/PRSice --base data/EURO_GWAS.assoc --target data/japanTarget/japanTarget --binary-target F --pheno data/japanTarget/japanTarget.pheno --out japanRun
     Rscript --vanilla code/plot_prs_results.R data/japanTarget/japanTarget.pheno japanRun.best
 ```
 View the resulting scatterplot and answer the questions below.
@@ -442,7 +463,7 @@ the following commands from within an R terminal:
 The next set of scripts will allow us to visualise the distribution of LD block length across different 1000Genomes populations.
 
 
-    ./code/plink --bfile chr1-22 --keep-cluster-names AFR --blocks no-pheno-req no-small-max-span --blocks-max-kb 250 --within data/pop_info.pheno  --threads 30 --out AFR
+    ./code/plink --bfile data/chr1-22 --keep-cluster-names AFR --blocks no-pheno-req no-small-max-span --blocks-max-kb 250 --within data/pop_info.pheno  --threads 30 --out AFR
 
 
 The “–block" flag estimates haplotype blocks using the same block definition implemented by the software Haploview. The default setting for the flag --blocks-max-kb
@@ -525,7 +546,7 @@ spend some time identifying the principle components or sketching the line acros
 
 <details>
   <summary>What line represents the principle component for the third shape?</summary> 
-  The X and Y axis already maximize the variance. 
+  The original X axis already maximize the variance.  
 </details>
 
 
@@ -553,8 +574,8 @@ that maximizes the variance in two dimensions:
 
 To run PCA with real data please enter the **exercise2** directory, and type the following command to run PCA on the 1000 Genome data: 
 
-    plink --bfile data/chr1-22 --indep-pairwise 250 25 0.1 --maf 0.1 --threads 30 --out chr1-22.ldpruned_all_1kgv2
-    plink --bfile data/chr1-22 --extract chr1-22.ldpruned_all_1kgv2.prune.in  --pca --threads 30
+    ./code/plink --bfile data/chr1-22 --indep-pairwise 250 25 0.1 --maf 0.1 --threads 30 --out chr1-22.ldpruned_all_1kgv2
+    ./code/plink --bfile data/chr1-22 --extract chr1-22.ldpruned_all_1kgv2.prune.in  --pca --threads 30
 
 This will generate the principal components that maximize the variance in the data.  To plot the result run the following commands from with an R-terminal: 
 
