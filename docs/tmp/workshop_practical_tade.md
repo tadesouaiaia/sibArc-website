@@ -101,7 +101,7 @@ Using R, Python, or another program, consider calculating the correlation betwee
 
         R
         # read-in prs-file 
-        prs <- read.table("ukRun.best", header = TRUE, sep = "", stringsAsFactors = FALSE)                                                                                                                                            
+        prs1 <- read.table("ukRun.best", header = TRUE, sep = "", stringsAsFactors = FALSE)                                                                                                                                            
         prs.data <- prs1[,4]                                                                                                                                                                                                       
         
         # read-in pheno-file 
@@ -237,7 +237,7 @@ following command to query the number of European ancestry individuals in the do
 
 Next, repeat the same command for East Asian, African, South Asian and American super-populations, by inserting the relevant ancestry codes (EAS, AFR, SAS, AMR).
 
-🗒️ Make note how many individuals there are from each ancestry. 
+🗒️ Make note how many individuals there are from each super-population.
 
 
 <h5>Number of Genetic Variants</h5>
@@ -249,7 +249,7 @@ time required to complete the tutorial. The following command derives the number
 of genetic variants on chromosomes 1 to chromosome 22 by counting the number of
 lines in the relevant (.bim) file, which contains a single variant per line.
 
-    wc data/chr1-22.bim -l
+    wc -l data/chr1-22.bim
 
 
 To quantify the number of single nucleotide polymorphisms (SNPs) we can ask plink to write a

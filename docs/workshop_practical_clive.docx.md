@@ -1,4 +1,4 @@
-# BridgePRS
+# Day 2 Morning practical: Cross-ancestry PRS analyses using BridgePRS
 
 ## Table of contents
 
