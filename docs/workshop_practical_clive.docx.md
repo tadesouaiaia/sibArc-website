@@ -198,7 +198,7 @@ downloaded [here](https://www.bridgeprs.net)**
 The main output is in the folder `out/prs-combined_EAS-EUR/`. First
 view the output summary plot
 ```
-evince  out/prs-combined_AFR-EUR/bridgePRS-combo.pdf
+evince  out/prs-combined_EAS-EUR/bridgePRS-combo.pdf
 ```
 on a Mac use `open` instead of `evince`.
 
@@ -231,7 +231,7 @@ of the three models are:
 
 Look at the following output file
 ```
-cat out/prs-combined_AFR-EUR/EAS_weighted_combined_var_explained.txt
+cat out/prs-combined_EAS-EUR/EAS_weighted_combined_var_explained.txt
 ```
 ### Questions?
 * Which plot in the summary plot was constructed from this output
