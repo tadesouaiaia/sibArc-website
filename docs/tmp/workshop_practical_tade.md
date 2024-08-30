@@ -13,14 +13,10 @@
 ## Key Learning Outcomes
 After completing this practical, you should be able to:
   
-  1. Run mixed ancestry PRS and understand the PRS Portability Problem 
-  2. Understand principle component analysis and dimensional reduction 
-  3. Understand basic population genetics and know how to analyze ancestry groups. 
+  1. Run mixed ancestry PRS and understand the PRS Portability Problem.
+  2. Understand principle component analysis and dimensional reduction.
+  3. Understand basic population genetics and know how to analyze ancestry groups.
   4. Understand the challenges and limitations of applying PRS in populations with diverse genetic backgrounds.
-
-
-
-
 
 <h5>Practical Specific Data</h5>
 
