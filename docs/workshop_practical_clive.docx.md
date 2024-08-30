@@ -105,8 +105,8 @@ The `genotypes` folders are in `plink` binary format and are split by
 chromosome. These folders contain the genetic data for both test and
 validation individuals in the phenotypes folder.
 
-Test data will only be used for individuals with both genotype and phenotype
-information. Similarly model performance metrics will only use validation samples with both
+Test data is only used for individuals with both genotype and phenotype
+information. Similarly model performance metrics is only used validation samples with both
 genotype and phenotype information, however, predictions are generated
 for all validation samples with genotype data.
 
