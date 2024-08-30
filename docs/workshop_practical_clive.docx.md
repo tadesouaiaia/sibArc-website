@@ -116,10 +116,9 @@ for all validation samples with genotype data.
 Example run of BridgePRS:
 ```
 ./bridgePRS pipeline go -o out/ --config_files data/eas.config data/eur.config --fst 0.11 --phenotype y --cores 4 --restart
-
+```
 Arguments can be passed to BridgePRS both directly on the command-line and in
 config files. The command-line arguments used above are:
-```
 * `-o`  Output folder
 * `--config_files`  Configuration files, see below
 * `--fst` Fst between the base and target populations used in the analysis, used to specify a prior
