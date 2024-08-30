@@ -364,7 +364,7 @@ for( chr in 2:22 ){
 }
 
 # Check predictions are the same as those produced directly by BridgePRS
-valid <- fread('out1/prs-combined_EAS-EUR/EAS_weighted_combined_preds.dat')
+valid <- fread('out/prs-combined_EAS-EUR/EAS_weighted_combined_preds.dat')
 # Match IDs
 ptr <- match( valid$IID, pred$IID )
 plot( pred$Score[ptr], valid$Weighted )
