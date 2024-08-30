@@ -173,7 +173,7 @@ View the resulting scatterplot and answer the questions below.
 <a href="#top">[Back to Top](#table-of-contents)</a>
 
 
-<h5>1000 Genomes Data</h5>
+### 1000 Genomes Data
 
 Now that you have observed the PRS-portability problem in practice we are going to consider some analysis that can be used to 
 provide a solution.  Recall from the lecture that population structure and population assignment is often accomplished using 
