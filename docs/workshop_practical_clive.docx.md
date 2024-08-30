@@ -98,7 +98,7 @@ EUR population. The same SNPs are contained in each set of summary statistics.
 
 The `phenotypes` folders has two files: "test" and "validation" with
 IDs, the outcome phenotype and covariates. "Test" data is used to
-optimise the PRS and "validation" data is used only to assess model performance,
+estimate the PRS and "validation" data is used only to assess model performance,
 it is not used to estimate the PRS.
 
 The `genotypes` folders are in `plink` binary format and are split by
