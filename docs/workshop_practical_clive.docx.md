@@ -196,7 +196,7 @@ downloaded [here](https://www.bridgeprs.net)**
 The main output is in the folder `out/prs-combined_EAS-EUR/`. First
 view the output summary plot
 ```
-evince  out/prs-combined_AFR-EUR/bridge.afr-eur.prs-combined.result.pdf
+evince  out/prs-combined_AFR-EUR/bridgePRS-combo.pdf
 ```
 on a Mac use `open` instead of `evince`.
 
