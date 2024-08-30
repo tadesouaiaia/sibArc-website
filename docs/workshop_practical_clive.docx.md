@@ -120,14 +120,13 @@ Example run of BridgePRS:
 Arguments can be passed to BridgePRS both directly on the command-line and in
 config files. The command-line arguments used above are:
 ```
-* `-o` - output folder
-* `--config_files` - configuration files, see below
-* `--fst`- Fst between the base and target populations used in the analysis, used to specify a prior
-distribution used in the BridgePRS analysis, the
-Fst between EAS and EUR is 0.11
-* `--phenotype` - the column label of the phenotype in the test and validation
+* `-o`  Output folder
+* `--config_files`  Configuration files, see below
+* `--fst` Fst between the base and target populations used in the analysis, used to specify a prior
+distribution. The Fst between EAS and EUR is 0.11
+* `--phenotype`  The column label of the phenotype in the test and validation
 files, e.g. `EAS_valid.dat`
-* `--cores` - the number of cores used in the analysis.
+* `--cores`  The number of cores used in the analysis.
 
 ### The \*.config files
 config files are a neat way to store population
