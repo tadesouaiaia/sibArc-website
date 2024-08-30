@@ -1,7 +1,4 @@
-# Advanced Polygenic Risk Score Analyses
-
-
-## Day 2 - Afternoon Practical: Pathway PRS Analyses
+#  Day 2 - Afternoon practical: Pathway PRS analyses
 
 
 ## Table of Contents
