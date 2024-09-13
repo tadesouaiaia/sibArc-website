@@ -16,10 +16,9 @@ SibArc is a simple tool that allows inferences about complex genetic architectur
 # Package Downloads 
 | Operating System | Link | Notes | 
 | -----------------|:----------:|:----:| 
-| Linux  64-bit | [v1.0.1](https://github.com/tadesouaiaia/sibArc/archive/refs/heads/main.zip) | Updated 4-24-2024
-| Mac  64-bit | [v1.0.1](https://github.com/tadesouaiaia/sibArc/archive/refs/heads/main.zip) | Updated 4-24-2024
+| Linux  64-bit | [v1.0.2](https://github.com/tadesouaiaia/sibArc/archive/refs/heads/main.zip) | Updated 6-18-2024
+| Mac  64-bit | [v1.0.2](https://github.com/tadesouaiaia/sibArc/archive/refs/heads/main.zip) | Updated 7-31-2024
 | Windows  64-bit | [v1.0.1](https://github.com/tadesouaiaia/sibArc/archive/refs/heads/main.zip) | Updated 4-24-2024
-
 
 
 
@@ -51,7 +50,7 @@ SibArc is a simple tool that allows inferences about complex genetic architectur
 
 
 ## Contact 
-For questions about the methodology, this website, or our manuscript please contact [Dr Tade Souaiaia](https://groups.google.com/) 
+For questions about the methodology, this website, or our manuscript please contact [Dr Tade Souaiaia](mailto:tade.souaiaia@downstate.edu) 
 [Dr Clive Hoggart](http://www.pauloreilly.info/), or [Dr Paul O'Reilly](http://www.pauloreilly.info/).  For source code and coding 
 issues please visit our [github page](https://github.com/tadesouaiaia/sibarc). 
 
